@@ -1,0 +1,101 @@
+#!/bin/sh
+# dotsetup v1: Setup utility to bootstrap dotfiles.
+# Copyright © 2017 Adrian Pistol <vifino@tty.sh>
+# This work is free. You can redistribute it and/or modify it under the
+# terms of the Do What The Fuck You Want To Public License, Version 2,
+# as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+
+# To use this script for your own dotfiles,
+# you need to have a few things: Git, a git host,
+# and the bourne shell.
+#
+# Start by setting a few variables in the shell
+# you wanna use to setup your dotfiles:
+# $ export REPO_DIR="$HOME/.dotfiles"                         # or wherever you want them.
+# $ export REPO_DST="$HOME"                                   # where to check things out, shouldn't need to change this.
+# $ export REPO_URL="https://mygithost.tld/user/dotfiles.git" # shouldn't be hard to figure out what this is.
+#
+# Then, copy *this* file to `$REPO_DST/.dotsetup` and
+# change the variables there too. Not too hard.
+#
+# Setting up the repo:
+# $ git init --bare "$REPO_DIR"
+# $ alias dotfiles='git --git-dir="$REPO_DIR" --work-tree="$REPO_DST"'
+# $ dotfiles add "$REPO_DST/.dotsetup"
+# $ dotfiles commit -m "My first dotfiles commit." -m "Thanks for .dotsetup, @vifino."
+# $ dotfiles remote add origin "$REPO_URL"
+# $ dotfiles push --set-upstream origin master
+#
+# After that, given you (or I) didn't fuck
+# anything up, `curl`-ing your dotsetup file
+# into `sh`, `ash`, `bash`, or `zsh` should work.
+#
+# The aliases given out at the end should be added
+# to your favourite shell's RC.
+#
+# Good luck and happy dotfiling!
+# - vifino
+
+# Bail out on errors.
+set -e
+
+# Variables! CHANGE THIS.
+# Note: Escape $, so it's \$, will make things better.
+REPO_URL="https://github.com/vifino/.files"
+REPO_DIR="\$HOME/.dotfiles"
+REPO_DST="\$HOME"
+
+# You normally shouldn't need to change anything below here.
+
+# Private variables
+# Because having uninterpreted variables in the variables above is very good,
+# we need to `eval` them, which is... questionable. But hey, it works.
+REPO_URL_PARSED=`eval echo "$REPO_DIR"`
+REPO_DIR_PARSED=`eval echo "$REPO_DIR"`
+REPO_DST_PARSED=`eval echo "$REPO_DST"`
+
+# Helpers
+msg_info() {
+	printf ">>> %s\n" "$1"
+}
+
+msg_exec() {
+	echo "$ $@"
+	"$@"
+}
+
+dotfiles() {
+	git --git-dir="$REPO_DIR_PARSED" --work-tree="$REPO_DST_PARSED" "$@"
+}
+
+msg_dotcmd() {
+	msg_exec git --git-dir="$REPO_DIR_PARSED" --work-tree="$REPO_DST_PARSED" "$@"
+}
+
+##
+# Actual(tm) logic.
+##
+
+# Initialization logic.
+if [ ! -d "$HOME/.dotfiles" ]; then
+	msg_info "No dotfiles clone found, cloning..."
+	git clone --bare "$REPO_URL_PARSED" "$REPO_DIR_PARSED"
+	dotfiles config --local status.showUntrackedFiles no
+fi
+
+# Updating logic.
+msg_info "Updating dotfiles repo..."
+msg_dotcmd pull
+
+msg_info "Checking out..."
+msg_dotcmd checkout
+
+# Info banner.
+DOTVERSION=`dotfiles rev-parse --short HEAD`
+msg_info "Hooray! Checked out $DOTVERSION."
+msg_info "Should you wish to update the repo, simply run this script again."
+msg_info "A couple handy aliases you might wish to have:"
+cat <<EOF
+  alias dotfiles='git --git-dir="$REPO_DIR" --work-tree="$REPO_DST"'
+  alias update-dotfiles='"$REPO_DST/.dotsetup"'
+EOF
