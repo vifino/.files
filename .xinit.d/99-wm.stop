@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# WM launcher. Yay.
+export WM=${WM:-none}
+
+case "$WM" in
+	none) ;;
+	*)
+		wmscript="${XINITD_DIR}/wms/${WM}.stop"
+		if [ -e "$wmscript" ]; then
+			source "$wmscript"
+		else
+			( pgrep -x "$WM" && killall "$WM" ) > /dev/null
+		fi
+esac

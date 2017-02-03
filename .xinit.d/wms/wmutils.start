@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Even though we don't need to launch any
+# window manager, we do need to launch our scripts.
+CONTRIB="$HOME/.wmutils-contrib"
+
+if [ ! -d "$CONTRIB" ]; then
+	mkdir -p "`dirname "$CONTRIB"`"
+	git clone https://github.com/wmutils/contrib "$CONTRIB"
+fi
+
+~/bin/generic/wplumb &
+"$CONTRIB/workspace.sh" -i
+"$CONTRIB/workspace.sh" -g 1
+
+exec sxhkd -c ~/.config/sxhkd/sxhkdrc.wmutils

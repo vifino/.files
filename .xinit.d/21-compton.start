@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Start compton.
+compton -cCGb --unredir-if-possible --paint-on-overlay --backend glx

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Launch the lovely hotkey daemon named sxhkd.
+if [ "$WM" != "wmutils" ]; then
+	sxhkd &
+fi
