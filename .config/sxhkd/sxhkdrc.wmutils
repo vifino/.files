@@ -1,0 +1,88 @@
+###
+## MEDIA KEYS
+###
+
+# Playback control
+XF86Audio{Prev,Next}
+    mpc -q {prev,next}
+XF86AudioPlay
+    mpc -q toggle
+
+# Brightness
+XF86MonBrightness{Up,Down}
+    xbacklight -{inc,dec} 10
+
+# Audio
+XF86Audio{Raise,Lower}Volume
+    pactl set-sink-volume 0 {+,-}10%
+XF86AudioMute
+    pactl set-sink-mute 0 toggle
+
+# Lock
+XF86ScreenSaver
+	i3lock -ni ~/Documents/heroku.png
+
+# Other stuff
+XF86Launch1
+	rofi -show run
+
+###
+## WMUtils stuff.
+###
+
+##
+# Window navigation and manipulation.
+##
+
+# Move focus.
+super + {h,j,k,l,Left,Down,Up,Right}
+	focus $(~/bin/generic/vroum {left,down,up,right,left,down,up,right})
+
+# Tab through windows/
+super + p
+	focus.sh next
+
+# Tab through windows in reverse.
+super + o
+	focus.sh prev
+
+# Move window.
+super + shift + {h,j,k,l,Left,Down,Up,Right}
+	wmv {-20 0, 0 20, 0 -20, 20 0,-20 0, 0 20, 0 -20, 20 0} $(pfw)
+
+# Resize window.
+super + ctrl + {h,j,k,l,Left,Down,Up,Right}
+	wrs {-20 0, 0 20, 0 -20, 20 0,-20 0, 0 20, 0 -20, 20 0} $(pfw)
+
+# Fullscreen window.
+super + f
+	fullscreen $(pfw)
+
+# Go to workspace.
+super + {1,2,3,4,5,6,7,8,9}
+	~/.wmutils-contrib/workspace.sh -g {1,2,3,4,5,6,7,8,9} && focus $(lsw) # fix
+
+# Move window to workspace.
+super + shift + {1,2,3,4,5,6,7,8,9}
+	~/.wmutils-contrib/workspace.sh -m {1,2,3,4,5,6,7,8,9}
+
+# Kill window.
+super + shift + q
+	killw $(pfw)
+
+# "Emergency" focus.
+super + i
+	focus $(lsw)
+
+##
+# Generic stuff.
+##
+
+# Show rofi's run dialogue.
+super + d
+	rofi -show run
+
+# Spawn terminal.
+super + t
+	urxvtc
+
