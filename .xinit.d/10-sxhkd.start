@@ -1,6 +1,9 @@
 #!/bin/sh
 
 # Launch the lovely hotkey daemon named sxhkd.
-if [ "$WM" != "wmutils" ]; then
-	sxhkd &
+SXHKDRC="$HOME/.config/sxhkd/sxhkdrc"
+if [ -f "${SXHKDRC}.${WM}" ]; then
+	sxhkd -c "${SXHKDRC}.${WM}" &
+else
+	sxhkd -c "$SXHKDRC" &
 fi

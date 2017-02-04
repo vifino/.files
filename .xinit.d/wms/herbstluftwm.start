@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Running herbstluftwm, starting locked.
+# It will be unlocked at the end of my config.
+exec herbstluftwm --locked

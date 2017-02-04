@@ -9,8 +9,7 @@ if [ ! -d "$CONTRIB" ]; then
 	git clone https://github.com/wmutils/contrib "$CONTRIB"
 fi
 
-~/bin/generic/wplumb &
 "$CONTRIB/workspace.sh" -i
 "$CONTRIB/workspace.sh" -g 1
 
-exec sxhkd -c ~/.config/sxhkd/sxhkdrc.wmutils
+exec ~/bin/generic/wplumb

@@ -1,0 +1,189 @@
+#!/bin/sh
+########
+#######
+######
+#####    HERBSTLUFT  AUTORUN
+####
+###    Configures the fuck out
+##        out of herbstluft
+#
+#  This file gets run on startup.
+# It makes our herbstluft usable!!
+#  You should thank it sometimes.
+#
+# Also thanks to nxll for the lovely
+#   configs, which I based mine on
+
+###
+## Helpers.
+###
+
+hc_chain() {
+	CHAINED="$CHAINED ! $@"
+}
+hc_run_chain() {
+	herbstclient chain "!" $CHAINED
+}
+
+alias hc="hc_chain"
+alias keybind="hc_chain keybind"
+alias mousebind="hc_chain mousebind"
+
+###
+## Actual startup code.
+###
+
+# Emit custom reload hook.
+hc emit_hook reload
+
+# Remove all keybinds, mousebinds and rules.
+hc keyunbind   --all
+hc mouseunbind --all
+hc unrule -F
+
+##
+# Basic keybinds.
+##
+
+MOD="Mod4" # Super key.
+
+# Quit and reload. Yay.
+keybind $MOD-Shift-e         quit
+keybind $MOD-Shift-r         reload
+
+# Window operation keybindings and settings.
+keybind $MOD-Shift-q         close
+
+keybind $MOD-Left            focus left
+keybind $MOD-h               focus left
+keybind $MOD-Down            focus down
+keybind $MOD-j               focus down
+keybind $MOD-Up              focus up
+keybind $MOD-k               focus up
+keybind $MOD-Right           focus right
+keybind $MOD-l               focus right
+
+keybind $MOD-Shift-Left      shift left
+keybind $MOD-Shift-h         shift left
+keybind $MOD-Shift-Down      shift down
+keybind $MOD-Shift-j         shift down
+keybind $MOD-Shift-Up        shift up
+keybind $MOD-Shift-k         shift up
+keybind $MOD-Shift-Right     shift right
+keybind $MOD-Shift-l         shift right
+
+RZSTEP="0.05"
+keybind $MOD-Control-Left    resize left  +$RZSTEP
+keybind $MOD-Control-h       resize left  +$RZSTEP
+keybind $MOD-Control-Down    resize down  +$RZSTEP
+keybind $MOD-Control-j       resize down  +$RZSTEP
+keybind $MOD-Control-Up      resize up    +$RZSTEP
+keybind $MOD-Control-k       resize up    +$RZSTEP
+keybind $MOD-Control-Right   resize right +$RZSTEP
+keybind $MOD-Control-l       resize right +$RZSTEP
+
+# Frames and layouts.
+keybind $MOD-Control-space   split explode
+keybind $MOD-b               split bottom 0.5
+keybind $MOD-v               split right  0.5
+keybind $MOD-n               remove
+
+keybind $MOD-space           floating toggle
+keybind $MOD-f               fullscreen toggle
+keybind $MOD-Shift-p         pseudotile toggle
+keybind $MOD-s               cycle_layout +1 vertical horizontal grid
+
+# Tags.
+# Logic plain stolen from nxll. Many thanks.
+tag_names=( {TERM,MUSIC,WEB,EDIT,MISC,CSIM,PANEL,GAME} )
+tag_keys=( {1..7} 0 )
+
+hc rename default "${tag_names[0]}" || true
+for i in ${!tag_names[@]} ; do
+	hc add "${tag_names[$i]}"
+	key="${tag_keys[$i]}"
+	if ! [ -z "$key" ] ; then
+		keybind "$MOD-$key" use_index "$i"
+		keybind "$MOD-Shift-$key" move_index "$i"
+	fi
+done
+
+# Tag keybinds.
+keybind $MOD-[               use_index +1 --skip-visible
+keybind $MOD-]               use_index -1 --skip-visible
+
+# Mouse.
+hc set focus_follows_mouse 1
+mousebind $MOD-Button1       move
+mousebind $MOD-Button2       zoom
+mousebind $MOD-Button3       resize
+
+# Focus.
+keybind $MOD-BackSpace       cycle_monitor
+keybind $MOD-Tab             cycle_all +1
+keybind $MOD-Shift-Tab       cycle_all -1
+keybind $MOD-c               cycle
+keybind $MOD-u               jumpto urgent
+
+# Rules.
+hc rule focus=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+#hc rule instance=gl  pseudotile=on
+
+
+# Theming.
+# Completely stolen from nxll, as well.
+#hc attr theme.tiling.reset         1
+#hc attr theme.floating.reset       1
+hc set frame_border_active_color    '#21211F'
+hc set frame_border_normal_color    '#21211F'
+hc set frame_bg_normal_color        '#21211F'
+hc set frame_bg_active_color        '#21211F'
+hc set frame_border_width           0
+hc set always_show_frame            0
+hc set frame_bg_transparent         1
+hc set frame_transparent_width      0
+hc set frame_gap                    6
+hc attr theme.active.color          '#A8A8A6'
+hc attr theme.normal.color          '#353533'
+hc attr theme.urgent.color          '#939490'
+hc attr theme.inner_width           1
+hc attr theme.outer_width           0
+hc attr theme.inner_color           '#21211F'
+hc attr theme.border_width          5
+hc attr theme.floating.border_width 5
+hc attr theme.floating.outer_width  0
+hc attr theme.floating.inner_width  1
+hc attr theme.floating.inner_color  '#21211F'
+hc attr theme.floating.outer_color  '#21211F'
+hc attr theme.active.inner_color    '#21211F'
+hc attr theme.active.outer_color    '#21211F'
+hc attr theme.normal.inner_color    '#21211F'
+hc attr theme.normal.outer_color    '#21211F'
+hc attr theme.background_color      '#21211F'
+hc set window_gap                   0
+hc set frame_padding                0
+hc set smart_window_surroundings    0
+hc set smart_frame_surroundings     1
+hc set mouse_recenter_gap           0
+
+hc set tree_style '╾│ ├└╼─┐'
+
+##
+# Application launching
+##
+
+keybind $MOD-d               spawn rofi -show run
+keybind $MOD-t               spawn $TERM
+
+##
+# FINISH LINE
+##
+
+# Unlock...
+hc unlock
+
+# and run chain.
+hc_run_chain
