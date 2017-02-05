@@ -1,0 +1,125 @@
+! Main stuff
+Xft*dpi: 96
+Xft.autohint: true
+Xft.antialias: true
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault
+
+! special
+*.foreground:   #8ca68c
+*.background:   #131513
+*.cursorColor:  #8ca68c
+! black
+*.color0:       #131513
+*.color8:       #687d68
+! red
+*.color1:       #e6193c
+*.color9:       #e6193c
+! green
+*.color2:       #29a329
+*.color10:      #29a329
+! yellow
+*.color3:       #c3c322
+*.color11:      #c3c322
+! blue
+*.color4:       #3d62f5
+*.color12:      #3d62f5
+! magenta
+*.color5:       #ad2bee
+*.color13:      #ad2bee
+! cyan
+*.color6:       #1999b3
+*.color14:      #1999b3
+! white
+*.color7:       #8ca68c
+*.color15:      #f0fff0
+
+! URxvt
+URxvt.font: xft:Hack:style=Regular:size=10:antialias=true:autohint=true,xft:Symbola:size=10,xft:Sans:size=10:antialias=false,xft:unifont:style=Medium:size=10:antialias=false
+URxvt.boldFont: xft:Hack:style=Bold:size=10:antialias=true:autohint=true,xft:Symbola:size=10,xft:Sans:size=10:antialias=false,xft:unifont:style=Medium:size=10:antialias=false
+URxvt.italicFont: xft:Hack:style=Italic:size=10:antialias=true:autohint=true,xft:Symbola:size=10,xft:Sans:size=10:antialias=false,xft:unifont:style=Medium:antialias=false
+URxvt.boldItalicFont: xft:Hack:style=Bold Italic:size=10:antialias=true:autohint=true,xft:Symbola:size=10,xft:Sans:size=10:antialias=false,xft:unifont:style=Medium:size=10:antialias=false
+
+!URxvt*lineSpace: -1
+!URxvt*letterSpace: -1
+
+URxvt*transparent: true
+URxvt*shading: 15
+
+URxvt*termName: xterm-256color
+
+URxvt*loginShell: false
+URxvt*scrollColor: #777777
+URxvt*scrollstyle: plain
+URxvt*scrollTtyKeypress: true
+URxvt*scrollTtyOutput: false
+URxvt*scrollWithBuffer: false
+URxvt*secondaryScreen: true
+URxvt*secondaryScroll: true
+URxvt*skipScroll: true
+
+URxvt*scrollBar: false
+URxvt*scrollBar_right: false
+URxvt*scrollBar_floating: false
+
+URxvt*fading: 30
+URxvt*utmpInhibit: false
+URxvt*urgentOnBell: true
+URxvt*visualBell: true
+URxvt*mapAlert: true
+URxvt*mouseWheelScrollPage: false
+URxvt*background: Black
+URxvt*foreground: White
+URxvt*colorUL: yellow
+URxvt*underlineColor: yellow
+URxvt*saveLines: 0
+URxvt*buffered: true
+URxvt*hold: false
+URxvt*internalBorder:
+URxvt*print-pipe: cat > /tmp/urxvt.dump.$(date +'%Y%M%d%H%m%S')
+
+! Extensions
+URxvt.perl-ext-common: default,matcher,clipboard
+
+! URLs and stuff
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
+URxvt.matcher.rend.0: Uline Bold fg5
+
+! URxvt.keysym.Control-Alt-u: perl:url-select:select_next
+! URxvt.url-select.launcher: /usr/bin/xdg-open
+! URxvt.url-select.underline: true
+
+! Paste and copy.
+URxvt.iso14755: false
+URxvt.keysym.Shift-Control-C: perl:clipboard:copy
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+
+! Disabled: Disable perl extensions.
+! URxvt.perl-ext:
+! URxvt.perl-ext-common:
+
+! rofi
+rofi.font:	xft:Hack 15
+
+! ------------------------------------------------------------------------------
+! ROFI Color theme
+! ------------------------------------------------------------------------------
+rofi.color-enabled: true
+rofi.color-window: #273238, #273238, #1e2529
+rofi.color-normal: #273238, #c1c1c1, #273238, #394249, #ffffff
+rofi.color-active: #273238, #80cbc4, #273238, #394249, #80cbc4
+rofi.color-urgent: #273238, #ff1844, #273238, #394249, #ff1844
+
+! xterm
+xterm*termName: xterm-256color
+xterm*dynamicColors: true
+xterm*utf8: 2
+xterm*metaSendsEscape: true
+xterm*saveLines: 0
+xterm*faceName: xft:Hack:style=Regular:size=10:antialias=true:autohint=true,xft:Symbola:size=10
+xterm*faceNameDoublesize: xft:Symbola:size=10
+xterm*bellIsUrgent: true
+
