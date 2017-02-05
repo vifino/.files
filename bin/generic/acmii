@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# A (probably) bad II client interface.
+# This time, specifically for acme!
+
+# Vars
+IIDIR="/tmp/ii-$USER"
+IISRV="$IIDIR/$1"
+
+# Logic
+INFILE="$IISRV/in"
+OUTFILE="$IISRV/out"
+
+if [ "$2" != "" ]; then
+	if [ ! -d "$IISRV/$2" ]; then
+		echo "/j $2" > "$INFILE"
+	fi
+	INFILE="$IISRV/$2/in"
+	OUTFILE="$IISRV/$2/out"
+fi
+
+[ -f "$OUTFILE" ] && touch "$OUTFILE"
+
+tail -f "$OUTFILE" &
+pid=$!
+
+cleanup() {
+	kill "$pid"
+	echo "Goodbye."
+	exit 0
+}
+trap cleanup INT TERM
+
+while read line; do
+	echo "$line" > "$INFILE"
+done
+
+cleanup

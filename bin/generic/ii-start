@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+###
+## IRC IT START SCRIPT
+###
+
+set -e
+
+# Vars
+IIDIR="/tmp/ii-$USER"
+URI="$1"
+PORT=6667
+PORTS=6697
+
+# irc url parsing
+proto="$(echo $URI | grep :// | sed -e's,^\(.*://\).*,\1,g')"
+url="$(echo ${URI/$proto/})"
+name="$(echo $url | grep @ | cut -d@ -f1)"
+nick=${name%%:*}
+pass=${name##*:}
+server="$(echo ${url/$name@/} | cut -d/ -f1)"
+addr=${server%%:*}
+port=${server##*:}
+
+[ "$proto" == "irc://"  ] && port=${port:-$PORT}
+[ "$proto" == "ircs://" ] && port=${port:-$PORTS}
+
+chan="$(echo $url | grep / | cut -d/ -f2-)"
+
+iiargs="-i $IIDIR -n $name -s $addr"
+
+PASS=${PASS:-$pass}
+if [ "$PASS" != "" ]; then
+	export PASS
+	iiargs="$iiargs -k PASS"
+fi
+
+INFILE="$IIDIR/$addr/in"
+
+# Setup.
+[ ! -d "$IIDIR" ] && mkdir "$IIDIR"
+
+if [ "$proto" == "irc://" ]; then
+	tcpclient "$addr" "$port" ii-ucspi $iiargs &
+	pid=$!
+elif [ "$proto" == "ircs://" ]; then
+	tcpclient "$addr" "$port" tlsc -- ii-ucspi $iiargs &
+	pid=$!
+else
+	echo "Unknown protocol $proto. Fix yo shit."
+	exit 1
+fi
+
+cleanup(){
+	kill $pid || true
+	rm -rf "$IIDIR/$addr"
+}
+trap cleanup INT TERM
+
+# Join.
+sleep 10
+[ -f "$INFILE" ] && echo "/j $chan" > "$INFILE"
+
+# Cleanup
+wait
+cleanup

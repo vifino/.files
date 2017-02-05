@@ -100,6 +100,7 @@ run_phase() {
 cleanup() {
 	run_phase "stop"
 	echo "Goodbye."
+	exit 0
 }
 trap cleanup INT TERM
 
