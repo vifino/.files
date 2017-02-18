@@ -1,5 +1,5 @@
 #!/bin/sh
-# dotsetup v1: Setup utility to bootstrap dotfiles.
+# dotsetup v1.0.1: Setup utility to bootstrap dotfiles.
 # Copyright © 2017 Adrian Pistol <vifino@tty.sh>
 # This work is free. You can redistribute it and/or modify it under the
 # terms of the Do What The Fuck You Want To Public License, Version 2,
@@ -50,7 +50,7 @@ REPO_DST="\$HOME"
 # Private variables
 # Because having uninterpreted variables in the variables above is very good,
 # we need to `eval` them, which is... questionable. But hey, it works.
-REPO_URL_PARSED=`eval echo "$REPO_DIR"`
+REPO_URL_PARSED=`eval echo "$REPO_URL"`
 REPO_DIR_PARSED=`eval echo "$REPO_DIR"`
 REPO_DST_PARSED=`eval echo "$REPO_DST"`
 
