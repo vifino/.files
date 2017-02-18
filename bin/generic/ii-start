@@ -21,8 +21,8 @@ server="$(echo ${url/$name@/} | cut -d/ -f1)"
 addr=${server%%:*}
 port=${server##*:}
 
-[ "$nick" == "" ] && ( echo "Look pal, you need a name, comprende?"; exit 1 )
-[ "$addr" == "" ] && ( echo "You do need a server to connect to, you know that, right?"; exit 1 )
+[ -z "$nick" ] && ( echo "Look pal, you need a name, comprende?"; exit 1 )
+[ -z "$addr" ] && ( echo "You do need a server to connect to, you know that, right?"; exit 1 )
 
 [ "$proto" == "irc://"  ] && port=${port:-$PORT}
 [ "$proto" == "ircs://" ] && port=${port:-$PORTS}

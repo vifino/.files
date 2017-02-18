@@ -10,7 +10,7 @@ IISRV="$IIDIR/$1"
 # Logic
 INFILE="$IISRV/in"
 
-if [ "$2" != "" ]; then
+if [ ! -z "$2" ]; then
 	chan="${2,,}"
 	if [ ! -d "$IISRV/$chan" ]; then
 		echo "/j $chan" > "$INFILE"

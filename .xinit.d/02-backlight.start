@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if [ "$BRIGHTNESS" != "" ]; then
+	xbacklight -set "$BRIGHTNESS"
+fi

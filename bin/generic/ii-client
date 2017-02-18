@@ -10,7 +10,7 @@ IISRV="$IIDIR/$1"
 INFILE="$IISRV/in"
 OUTFILE="$IISRV/out"
 
-if [ "$2" != "" ]; then
+if [ ! -z "$2" ]; then
 	chan="${2,,}"
 	if [ ! -d "$IISRV/$chan" ]; then
 		mkdir "$IISRV/$chan"

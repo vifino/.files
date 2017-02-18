@@ -1,0 +1,3 @@
+#!/bin/sh
+export vblank_mode=0 PRIMUS_SYNC=1
+exec /usr/bin/optirun "$@"
