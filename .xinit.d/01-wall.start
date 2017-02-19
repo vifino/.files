@@ -4,4 +4,11 @@
 WALLDIR="$HOME/img/walls"
 
 IMG="`find "$WALLDIR" -type f | shuf -n 1`"
-feh --bg-scale "$IMG"
+
+# Choose wether to scale or tile:
+case "$IMG" in
+	*tiled*)
+		feh --bg-tile "$IMG" ;;
+	*)
+		feh --bg-scale "$IMG" ;;
+esac
