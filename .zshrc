@@ -29,6 +29,7 @@ alias update-dotfiles='"$HOME/.dotsetup"'
 
 # PATH additions
 [ -d ~/bin/generic ] && path=(~/bin/generic "$path[@]")
+[ -d ~/bin/`uname`/generic ] && path=(~/bin/`uname`/generic "$path[@]")
 [ -d ~/bin/`uname`/`uname -m` ] && path=(~/bin/`uname`/`uname -m` "$path[@]")
 
 [ -d ~/.mix/escripts ] && path=(~/.mix/escripts "$path[@]")

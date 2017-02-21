@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Helpers
+bat_info() {
+	cat "/proc/acpi/battery/$1/info" | grep "$2:" | sed 's/.*:\s*//'
+}
+bat_state() {
+	cat "/proc/acpi/battery/$1/state" | grep "$2:" | sed 's/.*:\s*//'
+}
+
+for batdir in /proc/acpi/battery/*; do
+	bat=`basename $batdir`
+	echo "$bat:"
+	if [ "`bat_state $bat "present"`" == "yes" ]; then
+		rem=$(bat_state $bat "remaining capacity" | cut -d' ' -f1).0
+		max=$(bat_info $bat "last full capacity" | cut -d' ' -f1).0
+		(
+			printf "present:            yes\n"
+			printf "max capacity:       %s mAh\n" $max
+			printf "remaining capacity: %s mAh\n" $rem
+			printf "remaining percent:  %.0f%%\n" $(echo "scale=2; ($rem/$max)*100" | bc)
+		) | sed 's/^.*$/\t\0/'
+	else
+		printf "\tpresent:            no\n"
+	fi
+done
