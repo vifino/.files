@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Change focussed window color rainbow-esqe.
+# Idea from xero, code stolen from wmutils contrib. Thanks, z3bra.
+
+DELAY=${DELAY:-0.1}
+COLORS="#888888 #8064cc #6480cc #64cccc #80cc64 #cccc64 #cc6464"
+
+OLD=`herbstclient attr theme.active.color`
+
+cleanup() {
+	herbstclient attr theme.active.color "$OLD"
+	exit
+}
+
+trap cleanup INT TERM
+
+while true; do
+	for col in $COLORS; do
+		herbstclient attr theme.active.color "$col"
+		sleep $DELAY
+	done
+done
+
