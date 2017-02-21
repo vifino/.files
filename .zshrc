@@ -34,6 +34,9 @@ alias update-dotfiles='"$HOME/.dotsetup"'
 [ -d ~/.mix/escripts ] && path=(~/.mix/escripts "$path[@]")
 [ -d ~/.wmutils-contrib ] && path=("$path[@]" ~/.wmutils-contrib)
 
+# GEF
+[ ! -f ~/.gdbinit-gef.py ] && wget -q -O ~/.gdbinit-gef.py https://github.com/hugsy/gef/raw/master/gef.py
+
 ##
 # ZPLUG!
 ##
@@ -67,17 +70,6 @@ zplug "rimraf/k"
 
 # Specific completions
 zplug "theblazehen/lxd-zsh-completion", defer:2
-
-# Other tools
-zplug "jhawthorn/fzy", \
-    as:command, \
-    rename-to:fzy, \
-    hook-build:"make && sudo make install"
-
-zplug "stedolan/jq", \
-    from:gh-r, \
-    as:command, \
-    rename-to:jq
 
 # load oh-my-zsh plugin(s)
 zplug "plugins/git", from:oh-my-zsh
