@@ -8,7 +8,7 @@
 
 typeset -U path
 
-# small helper
+# Helpers
 bash_source() {
   alias shopt=':'
   alias _expand=_bash_expand
@@ -18,6 +18,15 @@ bash_source() {
 
   source "$@"
 }
+
+# Returns 0 if the specified string contains the specified substring, otherwise returns 1.
+contains() {
+	local string="$1"
+	local substring="$2"
+	[ "${string#*$substring}" != "$string" ] && return 0 # substring is in string
+	return 1 # substring is not in string
+}
+
 
 # DOTFILES!
 alias dotfiles='git --git-dir="$HOME/.dotfiles" --work-tree="$HOME"'
@@ -32,11 +41,16 @@ alias update-dotfiles='"$HOME/.dotsetup"'
 [ -d ~/bin/`uname`/generic ] && path=(~/bin/`uname`/generic "$path[@]")
 [ -d ~/bin/`uname`/`uname -m` ] && path=(~/bin/`uname`/`uname -m` "$path[@]")
 
-[ -d ~/.mix/escripts ] && path=(~/.mix/escripts "$path[@]")
+[ -d ~/.mix/escripts ] && path=("$path[@]" ~/.mix/escripts)
 [ -d ~/.wmutils-contrib ] && path=("$path[@]" ~/.wmutils-contrib)
+
+# Go.
+[ -z "$GOPATH" ] && export GOPATH=~/.gopath
+contains "$PATH" "$GOPATH" || path=("$path[@]" "$GOPATH/bin")
 
 # GEF
 [ ! -f ~/.gdbinit-gef.py ] && wget -q -O ~/.gdbinit-gef.py https://github.com/hugsy/gef/raw/master/gef.py
+
 
 ##
 # ZPLUG!
@@ -97,6 +111,9 @@ zplug load
 ##
 # POST-ZPLUG CUSTOMIZATION
 ##
+
+# Bash-esqe comments.
+setopt interactivecomments
 
 # ls aliases, mostly for k
 alias ls='ls --color=auto'
