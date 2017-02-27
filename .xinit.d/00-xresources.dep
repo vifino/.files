@@ -1,4 +1,15 @@
 #!/bin/sh
 
-# Load ~/.Xresources.
-xrdb -merge ~/.Xresources
+# Helpers
+load_all() {
+	for file in $1/*.conf; do
+		printf "XRDB: Loading %s\n" "$file"
+		xrdb -merge "$file"
+	done
+}
+
+# Load Xresources.
+load_all ~/.Xresources.d
+HOSTDIR=~/.Xresources.d/hosts/`hostname`
+[ -d "$HOSTDIR" ] && load_all "$HOSTDIR"
+[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
