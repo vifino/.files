@@ -11,7 +11,7 @@ bat_state() {
 for batdir in /proc/acpi/battery/*; do
 	bat=`basename $batdir`
 	echo "$bat:"
-	if [ "`bat_state $bat "present"`" == "yes" ]; then
+	if [ "`bat_state $bat "present"`" = "yes" ]; then
 		rem=$(bat_state $bat "remaining capacity" | cut -d' ' -f1).0
 		max=$(bat_info $bat "last full capacity" | cut -d' ' -f1).0
 		(

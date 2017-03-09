@@ -1,5 +1,5 @@
 #!/bin/sh
-# dotsetup v1.0.1: Setup utility to bootstrap dotfiles.
+# dotsetup v1.1: Setup utility to bootstrap dotfiles.
 # Copyright © 2017 Adrian Pistol <vifino@tty.sh>
 # This work is free. You can redistribute it and/or modify it under the
 # terms of the Do What The Fuck You Want To Public License, Version 2,
@@ -32,6 +32,9 @@
 #
 # The aliases given out at the end should be added
 # to your favourite shell's RC.
+#
+# PS: I'd love a poke about this if you decide to use it.
+#     Maybe makes me a little bit happier
 #
 # Good luck and happy dotfiling!
 # - vifino
@@ -79,7 +82,7 @@ msg_dotcmd() {
 # Initialization logic.
 if [ ! -d "$HOME/.dotfiles" ]; then
 	msg_info "No dotfiles clone found, cloning..."
-	git clone --bare "$REPO_URL_PARSED" "$REPO_DIR_PARSED"
+	git clone --depth=1 --bare "$REPO_URL_PARSED" "$REPO_DIR_PARSED"
 	dotfiles config --local status.showUntrackedFiles no
 fi
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 ########
 #######
 ######
@@ -25,9 +25,16 @@ hc_run_chain() {
 	herbstclient chain "!" $CHAINED
 }
 
-alias hc="hc_chain"
-alias keybind="hc_chain keybind"
-alias mousebind="hc_chain mousebind"
+hc() {
+	hc_chain "$@"
+}
+keybind() {
+	hc_chain keybind "$@"
+}
+
+mousebind() {
+	hc_chain mousebind "$@"
+}
 
 ###
 ## Actual startup code.
