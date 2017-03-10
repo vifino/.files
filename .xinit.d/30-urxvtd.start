@@ -1,6 +1,6 @@
 #!/bin/sh
 
 # Start urxvt daemon.
-if [ "$TERM" = "urxvtc" ]; then
+if [ "$TERMINAL" = "urxvtc" ]; then
 	 urxvtd &
 fi

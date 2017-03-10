@@ -27,6 +27,8 @@ export XINITD_CONF=~/.xinit.conf
 
 # Config file.
 [ -e "$XINITD_CONF" ] && source "$XINITD_CONF"
+[ -e "$XINITD_CONF.`uname`" ] && source "$XINITD_CONF.`uname`"
+[ -e "$XINITD_CONF.`hostname`" ] && source "$XINITD_CONF.`hostname`"
 
 ###
 ## Helpers

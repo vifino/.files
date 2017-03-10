@@ -183,7 +183,7 @@ hc set tree_style '╾│ ├└╼─┐'
 ##
 
 keybind $MOD-d               spawn rofi -show run
-keybind $MOD-t               spawn $TERM
+keybind $MOD-t               spawn $TERMINAL
 
 ##
 # FINISH LINE
