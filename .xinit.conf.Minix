@@ -1,0 +1,7 @@
+#!/bin/sh
+# xinit.d config file.
+# For Minix (3).
+
+export WM=twm
+export TERMINAL=xterm
+export BRIGHTNESS=30

@@ -1,0 +1,86 @@
+# vifino's TWM RC.
+# WIP, probably very bad.
+
+NoGrabServer
+RestartPreviousState
+DecorateTransients
+TitleFont "-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+ResizeFont "-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+MenuFont "-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+IconFont "-adobe-helvetica-bold-r-normal--*-100-*-*-*-*-*-*"
+IconManagerFont "-adobe-helvetica-bold-r-normal--*-100-*-*-*"
+#ClientBorderWidth
+
+Color
+{
+	BorderColor		"#070000"
+	DefaultBackground	"#070000"
+	DefaultForeground	"#373737"
+
+	TitleBackground		"#070000"
+	TitleForeground		"#373737"
+
+	MenuBackground		"#070000"
+	MenuForeground		"#373737"
+	MenuBorderColor		"#070000"
+	MenuTitleBackground	"#070000"
+	MenuTitleForeground	"#373737"
+
+	IconBackground		"#070000"
+	IconForeground		"#373737"
+	IconBorderColor		"#070000"
+	IconManagerBackground	"#070000"
+	IconManagerForeground	"#373737"
+}
+
+#
+# Define some useful functions for motion-based actions.
+#
+MoveDelta 3
+Function "move-or-lower" { f.move f.deltastop f.lower }
+Function "move-or-raise" { f.move f.deltastop f.raise }
+Function "move-or-iconify" { f.move f.deltastop f.iconify }
+
+#
+# Set some useful bindings.  Sort of uwm-ish, sort of simple-button-ish
+#
+Button1 = : root : f.menu "defops"
+
+Button1 = m : window|icon : f.function "move-or-lower"
+Button2 = m : window|icon : f.iconify
+Button3 = m : window|icon : f.function "move-or-raise"
+
+Button1 = : title : f.function "move-or-raise"
+Button2 = : title : f.raiselower
+
+Button1 = : icon : f.function "move-or-iconify"
+Button2 = : icon : f.iconify
+
+Button1 = : iconmgr : f.iconify
+Button2 = : iconmgr : f.iconify
+
+#
+# And a menus with the usual things
+#
+menu "defops"
+{
+	"TWM"		f.title
+	"Iconify"	f.iconify
+	"Resize"	f.resize
+	"Move"		f.move
+	"Raise"		f.raise
+	"Lower"		f.lower
+	""		f.nop
+	"Focus"		f.focus
+	"Unfocus"	f.unfocus
+	"Show Iconmgr"	f.showiconmgr
+	"Hide Iconmgr"	f.hideiconmgr
+	""		f.nop
+	"Terminal"	f.exec "exec $TERMINAL &"
+	""		f.nop
+	"Kill"		f.destroy
+	"Delete"	f.delete
+	""		f.nop
+	"Restart"	f.restart
+	"Exit"		f.quit
+}
