@@ -1,0 +1,16 @@
+# Bourne-shell compatible init file.
+
+# Helpers
+source_all() {
+	for file in $1/*.sh; do
+		. "$file"
+	done
+}
+
+INTERACTIVE=no
+case "$-" in
+	*i*) INTERACTIVE=yes;
+esac
+export INTERACTIVE
+
+source_all ~/.shrc.d
