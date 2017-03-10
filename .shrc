@@ -1,4 +1,5 @@
 # Bourne-shell compatible init file.
+# This file is only here for shells which don't explicitly have an alternative init file.
 
 # Helpers
 source_all() {
