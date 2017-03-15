@@ -37,9 +37,12 @@ alias update-dotfiles='"$HOME/.dotsetup"'
 . ~/.asdf/asdf.sh
 
 # PATH additions
+OS=`uname`
+ARCH=`uname -m`
 [ -d ~/bin/generic ] && path=(~/bin/generic "$path[@]")
-[ -d ~/bin/`uname`/generic ] && path=(~/bin/`uname`/generic "$path[@]")
-[ -d ~/bin/`uname`/`uname -m` ] && path=(~/bin/`uname`/`uname -m` "$path[@]")
+[ -d ~/bin/$OS/generic ] && path=(~/bin/$OS/generic "$path[@]")
+[ $ARCH = x86_64 ] && [ -d ~/bin/$OS/i386 ] && path=(~/bin/$OS/i386 "$path[@]")
+[ -d ~/bin/$OS/$ARCH ] && path=(~/bin/$OS/$ARCH "$path[@]")
 
 [ -d ~/.mix/escripts ] && path=("$path[@]" ~/.mix/escripts)
 [ -d ~/.wmutils-contrib ] && path=("$path[@]" ~/.wmutils-contrib)
