@@ -190,7 +190,7 @@ keybind $MOD-t               spawn $TERMINAL
 ##
 
 HOST=`hostname`
-[ -f ~/.config/herbstluftwm/$HOST ] && . ~/.config/herbstluftwm/$HOST
+[ -f ~/.config/herbstluftwm/hosts/$HOST ] && . ~/.config/herbstluftwm/hosts/$HOST
 
 ##
 # FINISH LINE
