@@ -141,7 +141,7 @@ hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 
 
 # Theming.
-# Completely stolen from nxll, as well.
+# More or less stolen from nxll, as well.
 #hc attr theme.tiling.reset         1
 #hc attr theme.floating.reset       1
 hc set frame_border_active_color    '#373737'
@@ -184,6 +184,13 @@ hc set tree_style '╾│ ├└╼─┐'
 
 keybind $MOD-d               spawn rofi -show run
 keybind $MOD-t               spawn $TERMINAL
+
+##
+# Host specific config
+##
+
+HOST=`hostname`
+[ -f ~/.config/herbstluftwm/$HOST ] && . ~/.config/herbstluftwm/$HOST
 
 ##
 # FINISH LINE
