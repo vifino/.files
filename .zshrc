@@ -55,6 +55,7 @@ path=()
 
 [ -d ~/.mix/escripts ] && path=("$path[@]" ~/.mix/escripts)
 [ -d ~/.wmutils-contrib ] && path=("$path[@]" ~/.wmutils-contrib)
+[ -d ~/.cargo/bin ] && path=("$path[@]" ~/.cargo/bin)
 
 # Go.
 [ -z "$GOPATH" ] && export GOPATH=~/.gopath
@@ -131,5 +132,9 @@ setopt interactivecomments
 # ls aliases, mostly for k
 alias ll='k -h'
 alias la='k -ah'
+
+# Completions:
+# - asdf
+. ~/.asdf/completions/asdf.bash
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
