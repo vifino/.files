@@ -1,4 +1,4 @@
-###
+##
 ## ZSH! Yay!
 ###
 
@@ -94,8 +94,9 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-completions", defer:2
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "b4b4r07/enhancd", on:"jhawthorn/fzy"
+zplug "b4b4r07/enhancd", use:init.sh, defer:2
 zplug "rimraf/k"
+zplug "$HOME/.zshplugs/fzy", from:local
 
 # Specific completions
 zplug "theblazehen/lxd-zsh-completion", defer:2
@@ -136,5 +137,3 @@ alias la='k -ah'
 # Completions:
 # - asdf
 . ~/.asdf/completions/asdf.bash
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
