@@ -39,10 +39,19 @@ alias update-dotfiles='"$HOME/.dotsetup"'
 # PATH additions
 OS=`uname`
 ARCH=`uname -m`
+[ $ARCH = amd64 ] && ARCH=x86_64
+
+ospath=( "$path[@]" )
+path=()
+
 [ -d ~/bin/generic ] && path=(~/bin/generic "$path[@]")
 [ -d ~/bin/$OS/generic ] && path=(~/bin/$OS/generic "$path[@]")
 [ $ARCH = x86_64 ] && [ -d ~/bin/$OS/i386 ] && path=(~/bin/$OS/i386 "$path[@]")
 [ -d ~/bin/$OS/$ARCH ] && path=(~/bin/$OS/$ARCH "$path[@]")
+
+# FreeBSD linuxulator stuff
+[ $OS = FreeBSD ] && [ $ARCH = x86_64 ] && [ -d ~/bin/Linux/i386 ] && path=("$path[@]" ~/bin/Linux/i386)
+[ $OS = FreeBSD ] && [ -d ~/bin/Linux/$ARCH ] && path=("$path[@]" ~/bin/Linux/$ARCH)
 
 [ -d ~/.mix/escripts ] && path=("$path[@]" ~/.mix/escripts)
 [ -d ~/.wmutils-contrib ] && path=("$path[@]" ~/.wmutils-contrib)
@@ -51,9 +60,10 @@ ARCH=`uname -m`
 [ -z "$GOPATH" ] && export GOPATH=~/.gopath
 contains "$PATH" "$GOPATH" || path=("$path[@]" "$GOPATH/bin")
 
-# GEF
-[ ! -f ~/.gdbinit-gef.py ] && wget -q -O ~/.gdbinit-gef.py https://github.com/hugsy/gef/raw/master/gef.py
+path=( "$path[@]" "$ospath[@]" )
 
+# GEF
+[ ! -f ~/.gdbinit-gef.py ] && curl -o ~/.gdbinit-gef.py https://github.com/hugsy/gef/raw/master/gef.py
 
 ##
 # ZPLUG!
@@ -119,7 +129,6 @@ zplug load
 setopt interactivecomments
 
 # ls aliases, mostly for k
-alias ls='ls --color=auto'
 alias ll='k -h'
 alias la='k -ah'
 
