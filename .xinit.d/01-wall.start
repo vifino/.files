@@ -3,7 +3,7 @@
 # Select a random wallpaper.
 WALLDIR="$HOME/img/walls"
 
-IMG="`find "$WALLDIR" -type f | shuf -n 1`"
+IMG="`find "$WALLDIR" -type f | rndline`"
 
 # Choose wether to scale or tile:
 case "$IMG" in

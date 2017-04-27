@@ -1,0 +1,8 @@
+#!/bin/sh
+# Print one random line.
+
+if command -v shuf >/dev/null 2>&1; then
+	exec shuf -n 1
+fi
+
+exec perl -e '@a = <STDIN>; print @a[rand @a];'
