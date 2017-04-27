@@ -1,0 +1,5 @@
+# Scripts!
+load perl
+
+# Show crap like whois output in channels.
+window level -CRAP
