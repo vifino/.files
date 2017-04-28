@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Font path and such.
+[ -d ~/.bmfonts ] && xset +fp ~/.bmfonts
