@@ -1,5 +1,7 @@
 #!/bin/sh
 
+[ -z "$BACKLIGHTTOOL" ] && BACKLIGHTTOOL="xbacklight -set"
+
 if [ "$BRIGHTNESS" != "" ]; then
-	xbacklight -set "$BRIGHTNESS"
+	$BACKLIGHTTOOL "$BRIGHTNESS"
 fi

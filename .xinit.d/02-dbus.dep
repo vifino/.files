@@ -2,5 +2,5 @@
 
 # Launch a dbus session, but only if we actually have dbus...
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-	command -v dbus-launch >/dev/null 2>&1 && eval `dbus-launch --sh-syntax`
+	command -v dbus-launch >/dev/null 2>&1 && eval `dbus-launch --exit-with-session --sh-syntax`
 fi
