@@ -5,8 +5,13 @@ WALLDIR="$HOME/img/walls"
 
 IMG="`find "$WALLDIR" -type f | rndline`"
 
-# Choose wether to scale or tile:
+# Choose whether to scale or tile:
 case "$IMG" in
+	*.xbm)
+		COLORS=$(xrdb -query)
+		#FG=$(echo "$COLORS" | awk '/\*.foreground:/ {print $2}')
+		BG=$(echo "$COLORS" | awk '/\*.background:/ {print $2}')
+		xsetroot -bitmap "$IMG" -bg "$BG" ;;
 	*tiled*)
 		feh --bg-tile "$IMG" ;;
 	*)
