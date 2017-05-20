@@ -1,0 +1,4 @@
+# Composition related config
+
+# Convert written markdown to html
+macro compose \e5 "F pandoc -s -f markdown -t html \ny^T^Utext/html; charset=utf-8\n"

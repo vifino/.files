@@ -1,0 +1,2 @@
+# Certs
+set certificate_file = "~/.mutt/certs"

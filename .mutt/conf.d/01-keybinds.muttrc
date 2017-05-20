@@ -1,0 +1,26 @@
+# Keybinds
+# vim-esqe! Maybe!
+
+bind editor      <space>  noop
+bind pager       <up>     previous-line
+bind pager       <down>   next-line
+
+bind pager       q        exit
+bind pager       /        search
+bind pager       <up>     previous-line
+bind pager	 <down>   next-line
+bind pager       k        previous-line
+bind pager       j        next-line
+bind pager       gg       top
+bind pager       G        bottom
+bind index       gg       first-entry
+bind index       G        last-entry
+bind pager       K        previous-undeleted
+bind pager       J        next-undeleted
+bind index       K        previous-unread
+bind index       J        next-unread
+bind index       W        clear-flag
+bind index       w        set-flag
+bind index,pager R        group-reply
+bind compose     p        pgp-menu
+bind attach      <return> view-mailcap

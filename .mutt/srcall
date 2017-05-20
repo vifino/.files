@@ -1,0 +1,4 @@
+#!/bin/sh
+# Simply cats all files together.
+
+exec cat -- "$1"/*.muttrc

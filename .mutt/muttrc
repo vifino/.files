@@ -1,0 +1,7 @@
+####
+###
+##  vifino's muttrc
+#  email responsibly
+
+# Sourc config dir.
+source 'exec -- ~/.mutt/srcall ~/.mutt/conf.d|'

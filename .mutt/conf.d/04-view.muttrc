@@ -1,0 +1,17 @@
+# Viewing related config.
+
+set sleep_time = 0 # be fast
+set smart_wrap
+
+# autoview
+auto_view text/html
+
+# urlview
+macro index,pager,attach,compose go "\
+	<enter-command> set my_pipe_decode=~4~pipe_decode pipe_decode<Enter>\
+	<pipe-message> urlview<Enter>\
+	<enter-command> set pipe_decode=~4~my_pipe_decode; unset my_pipe_decode<Enter>" \
+	"call urlview to extract URLs out of a message"
+
+# Show incoming.
+macro index y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"

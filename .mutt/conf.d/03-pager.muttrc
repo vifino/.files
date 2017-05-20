@@ -1,0 +1,10 @@
+# Pager
+
+#set pager=less
+set pager_stop
+set menu_scroll
+set tilde
+unset markers
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set status_on_top
+set edit_headers

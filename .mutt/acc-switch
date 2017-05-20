@@ -1,0 +1,36 @@
+#!/bin/sh
+
+cat <<HEAD
+# Sync, refresh
+exec sync-mailbox
+exec refresh
+
+# Remove all mailboxes.
+unmailboxes *
+
+HEAD
+
+# Try to switch to the new one
+F=~/.mutt/accs.d/"$1".muttrc
+DFLT=~/.mutt/acc.dflt
+
+if [ -f "$F" ]; then
+	cat -- "$F"
+elif [ -f "$DFLT" ]; then
+	# Not found, load assigned default instead.
+	cat ~/.mutt/accs.d/$(cat "$DFLT").muttrc
+else
+	# Default.
+	first() {
+		echo "$1"
+	}
+
+	FRST=`first ~/.mutt/accs.d/*.muttrc`
+	[ -z "$FRST" ] || cat "$FRST"
+fi
+
+cat <<TAIL
+
+# Finish up
+push '<change-folder>!<enter>'
+TAIL

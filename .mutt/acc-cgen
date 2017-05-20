@@ -1,0 +1,21 @@
+#!/bin/sh
+# Generate an account list and bindings and what not.
+
+# Vars
+ACC_SWITCH=~/.mutt/acc-switch
+
+echo "# Macros for switching."
+
+i=1
+for f in ~/.mutt/accs.d/*.muttrc ; do
+	AN=$(basename "$f" | cut -d. -f1)
+	cat <<MCRO
+macro index A$i "<enter-command>source 'exec -- $ACC_SWITCH $AN|'<enter>"
+MCRO
+	i=$((i+1))
+done
+
+echo
+
+# Invoke for default.
+exec -- $ACC_SWITCH
