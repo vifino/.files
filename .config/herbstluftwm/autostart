@@ -196,6 +196,9 @@ HOST=`hostname`
 # FINISH LINE
 ##
 
+# Detect monitors.
+hc detect_monitors
+
 # Unlock...
 hc unlock
 
