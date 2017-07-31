@@ -7,5 +7,8 @@ set mem inaccessible-by-default off
 # Disable pager
 set pagination off
 
+# purrdy
+set print pretty on
+
 # GEF
 source ~/.gdbinit-gef.py

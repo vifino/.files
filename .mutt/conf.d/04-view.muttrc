@@ -7,6 +7,7 @@ set smart_wrap
 auto_view text/html
 
 # urlview
+bind attach g noop
 macro index,pager,attach,compose go "\
 	<enter-command> set my_pipe_decode=~4~pipe_decode pipe_decode<Enter>\
 	<pipe-message> urlview<Enter>\

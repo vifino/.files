@@ -1,0 +1,9 @@
+# GPGME.
+
+set crypt_use_gpgme = yes
+set crypt_use_pka = yes
+
+set crypt_autosign = yes
+set crypt_replyencrypt = yes
+set crypt_verify_sig = yes
+set crypt_replysignencrypted = yes
