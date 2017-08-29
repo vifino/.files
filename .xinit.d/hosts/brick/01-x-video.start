@@ -1,0 +1,10 @@
+#!/bin/sh
+
+for disp in DP1 DP2 HDMI1 HDMI2; do
+	xrandr --output $disp --set "Broadcast RGB" "Full"
+done
+
+# OC internal display, example, it accepts it but doesn't change anything, really.
+#xutl newm 1366 768 120 -b
+#xutl addm LVDS1 1366x768_120.00_rb
+#xutl selm LVDS1 1366x768_120.00_rb

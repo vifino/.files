@@ -1,0 +1,12 @@
+#!/bin/sh
+
+DIR=~/.xinit.d/hosts/`hostname`
+if [ -d "$DIR" ]; then
+	echo ">> Host configs found, running..."
+	for f in $DIR/*.start; do
+		echo "  >> running `basename $f`"
+		"$f"
+	done
+else
+	echo ">> No host configs found."
+fi

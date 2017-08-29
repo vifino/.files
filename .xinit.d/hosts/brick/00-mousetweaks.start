@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Disable accel
+xset m 1/1 1
+
+# Disable useless sysmouse
+#xinput disable 8

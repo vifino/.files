@@ -7,3 +7,6 @@ export QT_QPA_PLATFORMTHEME='gtk2' DESKTOP_SESSION=gnome
 
 # Fix Java's... weirdness.
 export _JAVA_AWT_WM_NONREPARENTING=1
+
+# GTK theme.
+export GTK_THEME=Adwaita:dark
