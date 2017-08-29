@@ -1,0 +1,73 @@
+#!/bin/sh
+# Generic X11 tool
+set -e
+
+CMD="$1"
+
+usage() {
+	cat <<USAGE
+Usage: $0 cmd [opts]
+Known commands:
+  lao     # list active outputs, no args
+  newm    # def new monitor mode, args: x y hz [cvt12 opts]
+          # ex: newm 1366 768 60 -b
+  addm    # add mode to output, args: mon modename
+          # ex: addm LVDS1 1366x768_70.00_rb
+  selm    # select mode, args: mon [modename]
+          # if modename is not given, it automatically selects
+          # ex: selm LVDS1 1366x768_70.00_rb
+  arr     # arrange displays, args: mon side ref
+          # ex: arr DP1 left LVDS1
+          #   positions DP1 left of LVDS1
+          # valid sides: left, right, up/above, down/down
+  rot     # rotate display, args: rot mon dir
+          # ex: rot DP1 right
+          # valid dirs: normal, left, right, inverted
+USAGE
+}
+
+check_args() {
+	for arg in "$@" ; do
+		[ -z "$arg" ] && usage && exit 1
+	done
+	true
+}
+
+check_args "$CMD"
+
+shift
+case "$CMD" in
+	lao) # list active outputs
+		xrandr -q | grep -o '.* connected' | cut -d" " -f1 ;;
+	newm) # add mode, opts: x y hz [cvt12 opts]
+		tmp=$(cvt12 "$@")
+		ml=$(echo "$tmp" | tail -n-1 | cut -d" " -f2- | sed 's/"//g')
+		xrandr --newmode $ml
+		echo $ml | cut -d" " -f1
+		;;
+	addm) # add mode to output
+		check_args "$1"
+		xrandr --addmode "$@" ;;
+	selm) # select mode
+		check_args "$1"
+		if [ -z "$2" ]; then
+			exec xrandr --output "$1" --auto
+		else
+			exec xrandr --output "$1" --mode "$2"
+		fi
+		;;
+	arr) # arrange
+		check_args "$1" "$2" "$3"
+		case "$2" in
+			left)       exec xrandr --output "$1" --left-of "$3" ;;
+			right)      exec xrandr --output "$1" --right-of "$3" ;;
+			above|up)   exec xrandr --output "$1" --above--of "$3" ;;
+			below|down) exec xrandr --output "$1" --below-of "$3" ;;
+			*) usage && exit 1
+		esac
+		;;
+  rot) # rotate
+  	check_args "$1" "$2"
+  	exec xrandr --output "$1" --rotate "$2" ;;
+	*) usage && exit 1
+esac

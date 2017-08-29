@@ -1,0 +1,9 @@
+#! /bin/sh
+# Pretend to support OpenGL 4.3 and GLSL 4.30
+export MESA_GL_VERSION_OVERRIDE=4.3
+export MESA_GLSL_VERSION_OVERRIDE=430
+
+# Turn on 90% complete Broadwell and Skylake compute shader support
+export MESA_EXTENSION_OVERRIDE=GL_ARB_compute_shader
+
+exec "$@"
