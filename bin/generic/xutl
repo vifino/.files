@@ -66,8 +66,8 @@ case "$CMD" in
 			*) usage && exit 1
 		esac
 		;;
-  rot) # rotate
-  	check_args "$1" "$2"
-  	exec xrandr --output "$1" --rotate "$2" ;;
+	rot) # rotate
+		check_args "$1" "$2"
+		exec xrandr --output "$1" --rotate "$2" ;;
 	*) usage && exit 1
 esac
