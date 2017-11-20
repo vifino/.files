@@ -17,3 +17,5 @@ contains() {
 	[ "${string#*$substring}" != "$string" ] && return 0 # substring is in string
 	return 1 # substring is not in string
 }
+
+[ -z "$HOST" ] && export HOST=$(hostname)
