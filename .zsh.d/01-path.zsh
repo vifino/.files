@@ -15,8 +15,8 @@ path=()
 
 [ -d ~/bin/generic ] && path=(~/bin/generic "$path[@]")
 [ -d ~/bin/$OS/generic ] && path=(~/bin/$OS/generic "$path[@]")
-[ $ARCH = x86_64 ] && [ -d ~/bin/$OS/i386 ] && path=(~/bin/$OS/i386 "$path[@]")
 [ -d ~/bin/$OS/$ARCH ] && path=(~/bin/$OS/$ARCH "$path[@]")
+[ $ARCH = x86_64 ] && [ -d ~/bin/$OS/i386 ] && path+=(~/bin/$OS/i386)
 
 # FreeBSD linuxulator stuff
 [ $OS = FreeBSD ] && [ -d ~/bin/Linux/$ARCH ] && path+=(~/bin/Linux/$ARCH)
@@ -26,10 +26,17 @@ path=()
 [ -d ~/.wmutils-contrib ] && path+=(~/.wmutils-contrib)
 [ -d ~/.cargo/bin ] && path+=(~/.cargo/bin)
 
-#[ -z "$PLAN9" ] || path=("$path[@]" $PLAN9/bin)
-
 # Go.
 [ -z "$GOPATH" ] && export GOPATH=~/.gopath
 path+=("$GOPATH/bin")
 
+# Generic local bins
+[ -d /usr/local/bin ] && path+=(/usr/local/bin)
+
+##
+# Additions after system path
+##
 path+=("$ospath[@]")
+
+# Plan9
+[ -z "$PLAN9" ] || path+=("$PLAN9/bin")
