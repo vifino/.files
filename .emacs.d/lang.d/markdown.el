@@ -1,5 +1,7 @@
 ;; Markdown
 (use-package markdown-mode
-  :mode "\\.md\\'"
-  :diminish "Markdown"
-  :commands markdown-mode)
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "pandoc"))

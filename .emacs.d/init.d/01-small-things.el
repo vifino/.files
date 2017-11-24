@@ -3,6 +3,9 @@
 ;; Not worth own files.
 ;; Mostly 'sane' (for me) defaults.
 
+;; hide startup stuff
+(setq inhibit-startup-screen t)
+
 ;; ido - ivy now
 ;(require 'ido)
 ;(ido-mode t)

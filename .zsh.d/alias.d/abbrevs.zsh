@@ -15,6 +15,7 @@ silent() {
 # Generic
 alias h=hostname
 alias wh=which
+alias j=jobs
 
 # Applications
 alias t=tmux

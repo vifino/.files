@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Change focussed window color rainbow-esqe.
+# Change focussed window color rainbow-esqe in herbstluft.
 # Idea from xero, code stolen from wmutils contrib. Thanks, z3bra.
 
 DELAY=${DELAY:-0.1}
