@@ -28,3 +28,5 @@
 (add-hook 'c++-mode-hook 'vifino/c-hook)
 (add-hook 'c-mode-hook 'vifino/c-hook)
 (add-hook 'objc-mode-hook 'vifino/c-hook)
+
+(add-to-list 'auto-mode-alist '("\\.ino\\'" . c-mode))
