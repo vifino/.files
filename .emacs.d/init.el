@@ -42,6 +42,6 @@
 
 (eval-and-compile
   ;; load our init.d directory
-  (sautoloaddir "~/.emacs.d/helpers.d")
+  (sautoloaddir "~/.emacs.d/fn.d")
   ;; load our init.d directory
   (floaddir "~/.emacs.d/init.d"))
