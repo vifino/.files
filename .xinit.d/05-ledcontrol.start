@@ -1,0 +1,3 @@
+#!/bin/sh
+# Allow explicit control of the keyboard LED indicators.
+xkbcomp "$DISPLAY" - | sed 's/!allowExplicit/allowExplicit/' | xkbcomp - "$DISPLAY"
