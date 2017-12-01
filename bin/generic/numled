@@ -1,0 +1,46 @@
+#!/bin/sh
+# Num Lock LED control script.
+# Supports TTY's and X.
+# X: Make sure allowExplicit is not disabled in the indicator XKB configuration.
+# TTY: setleds might affect the actual modifier. It isn't supposed to, but sometimes it does??
+
+usage() {
+	echo "Usage: $0 (on|off) [(on|off)..]"
+	exit 1
+}
+
+[ $# -eq 0 ] && usage
+
+on() {
+	if [ -z "$DISPLAY" ]; then
+		setleds +num
+	else
+		xset led named "Num Lock"
+	fi
+}
+
+off() {
+ 	if [ -z "$DISPLAY" ]; then
+		setleds -num
+	else
+		xset -led named "Num Lock"
+	fi
+}
+
+DELAY=0.5 # todo, make something like `numled 2s on off 1s on off` possible
+while true; do
+	ACTION="$1"
+
+	if   [ "$ACTION" = "" ]; then exit
+	elif [ "$ACTION" = "on" ]; then on
+	elif [ "$ACTION" = "off" ]; then off
+	else
+		echo "Unknown action '$ACTION'."
+		usage
+	fi
+
+	# Only sleep when there is a following action
+	[ ! -z "$2" ] && sleep $DELAY
+
+	shift
+done
