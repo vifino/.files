@@ -1,0 +1,44 @@
+#!/bin/sh
+# Scroll Lock LED control script.
+# Supports TTY's and X.
+
+usage() {
+	echo "Usage: $0 (on|off) [(on|off)..]"
+	exit 1
+}
+
+[ $# -eq 0 ] && usage
+
+on() {
+	if [ -z "$DISPLAY" ]; then
+		setleds +scroll
+	else
+		xset led named "Scroll Lock"
+	fi
+}
+
+off() {
+ 	if [ -z "$DISPLAY" ]; then
+		setleds -scroll
+	else
+		xset -led named "Scroll Lock"
+	fi
+}
+
+DELAY=0.5 # todo, make something like `scrled 2s on off 1s on off` possible
+while true; do
+	ACTION="$1"
+
+	if   [ "$ACTION" = "" ]; then exit
+	elif [ "$ACTION" = "on" ]; then on
+	elif [ "$ACTION" = "off" ]; then off
+	else
+		echo "Unknown action '$ACTION'."
+		usage
+	fi
+
+	# Only sleep when there is a following action
+	[ ! -z "$2" ] && sleep $DELAY
+
+	shift
+done

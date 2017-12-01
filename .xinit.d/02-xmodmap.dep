@@ -1,0 +1,6 @@
+#!/bin/sh
+# Apply the XModMap.
+[ -f ~/.Xmodmap ] && xmodmap ~/.Xmodmap
+
+# Not *quite* xmodmap, but...
+setxkbmap -option compose:caps
