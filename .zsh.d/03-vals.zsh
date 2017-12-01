@@ -1,5 +1,7 @@
 # Some vals to set
 
+[ -z "$LANG" ] && export LANG="en_US.UTF-8" # might break things, but could fix things, too.
+
 export CLICOLOR=true
 
 # Fixup for tiling WMs
