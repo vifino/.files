@@ -1,0 +1,15 @@
+#!/bin/sh
+# Script to run on every notification
+# Arguments are: appname summary body icon urgency
+
+blink() {
+	capsled "$@" &
+	scrled "$@" &
+	wait
+}
+
+case $5 in
+	LOW) blink on off ;;
+	NORMAL) blink on off on off ;;
+	CRITICAL) blink on off on off on off ;;
+esac

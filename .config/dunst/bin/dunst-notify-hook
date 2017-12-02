@@ -1,0 +1,15 @@
+#!/bin/sh
+# Script to run everything in notify.d on every notification
+# Arguments are: appname summary body icon urgency
+
+if [ ! $# -eq 5 ]; then
+	echo "Usage: $0 appname summary body icon urgency"
+	exit 1
+fi
+
+for file in ~/.config/dunst/notify.d/*; do
+	if [ -x "$file" ]; then
+		"$file" "$@" &
+	fi
+done
+wait

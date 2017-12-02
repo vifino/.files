@@ -1,0 +1,4 @@
+#!/bin/sh
+# Mod the path so that dunst finds our notify.d hook script.
+
+PATH="$HOME/.config/dunst/bin:$PATH" dunst &
