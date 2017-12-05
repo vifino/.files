@@ -1,0 +1,43 @@
+# Finch/Pidgin config.
+
+[general]
+mouse = 1
+
+[Finch]
+mouse = 1
+
+# colors
+color-available = green; black
+color-away = blue; black
+color-idle = gray; black
+color-offline = red; black
+color-message-sent = cyan; black
+color-message-received = red; default
+color-message-highlight = black; green
+color-message-action = yellow; black
+color-timestamp = blue; black
+
+[colors]
+# The RGB values range in [0, 1000]
+# Kinda Gruvbox-y.
+black = 113; 125; 129
+red = 799; 141; 113
+green = 595; 591; 101
+yellow = 842; 599; 129
+blue = 270; 521; 533
+purple = 693; 384; 525
+aqua = 407; 615; 415
+gray = 486; 435; 392
+darkgray = 196; 188; 184
+white = 1000; 1000; 1000
+
+[colorpairs]
+normal = white; black
+highlight = green; black
+highlightd = blue; black
+shadow = black; darkgray
+title = green; black
+titled = default; black
+text = white; black
+disabled = gray; black
+urgent = red; black
