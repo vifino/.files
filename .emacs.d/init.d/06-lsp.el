@@ -5,8 +5,8 @@
   :defer t
   :diminish (lsp-mode "LSP")
   :commands (lsp-mode lsp-define-stdio-client lsp-client-on-notification
-            lsp-make-traverser)
-  :config
+            lsp-make-traverser lsp-capabilites lsp-mode-line lsp-define-tcp-client)
+  :init
   (setq lsp-enable-eldoc t)
-  (with-eval-after-load 'lsp-mode
-    (require 'lsp-flycheck)))
+  :config
+  (require 'lsp-flycheck))

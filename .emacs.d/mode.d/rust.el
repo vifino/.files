@@ -18,10 +18,13 @@
 
 ;; sadly not ready yet. crashes often. very often.
 ;(use-package lsp-rust :ensure t
-;  :init (add-hook 'rust-mode #'lsp-mode))
+;  :commands lsp-rust-enable
+;  :init (add-hook 'rust-mode (progn
+;    (require 'lsp-mode)
+;    (require 'lsp-rust))))
 
-(use-package flycheck-rust :ensure t
-  :commands flycheck-rust-setup
-  :init
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-  (add-hook 'racer-mode-hook #'flycheck-mode))
+;(use-package flycheck-rust :ensure t
+;  :commands flycheck-rust-setup
+;  :init
+;  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+;  (add-hook 'racer-mode-hook #'flycheck-mode))
