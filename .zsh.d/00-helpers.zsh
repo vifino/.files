@@ -18,4 +18,14 @@ contains() {
 	return 1 # substring is not in string
 }
 
+silent() {
+	[ -z "$1" ] && echo "Usage: silent prog [args..]" && return 1
+
+	local prog="$1" resolved
+	resolved=$(whence "$1")
+	[ $? = 0 ] && prog="$resolved"
+	"$prog" "$@" &> /dev/null
+}
+
+
 [ -z "$HOST" ] && export HOST=$(hostname)

@@ -36,6 +36,12 @@ servers = (
     chatnet = "Nixers";
     port = "6697";
     use_tls = "yes";
+  },
+  {
+    address = "irc.hackint.net";
+    chatnet = "HackInt";
+    port = "9999";
+    use_tls = "yes";
   }
 );
 
@@ -66,6 +72,12 @@ chatnets = {
     max_whois = "1";
   };
   Nixers = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
+  HackInt = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "1";

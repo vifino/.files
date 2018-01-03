@@ -2,16 +2,6 @@
 # Short abbreviations and helpers
 ##
 
-# Helpers
-silent() {
-	[ -z "$1" ] && echo "Usage: silent prog [args..]" && return 1
-
-	local prog="$1" resolved
-	resolved=$(whence "$1")
-	[ $? = 0 ] && prog="$resolved"
-	"$prog" "$@" &> /dev/null
-}
-
 # Generic
 alias h=hostname
 alias wh=which
