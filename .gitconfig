@@ -7,6 +7,15 @@
 [alias]
 #	squash = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
 	squash = !EDITOR="\"_() { sed -n 's/^pick //p' \"\\$1\"; sed -i .tmp '2,\\$s/^pick/f/' \"\\$1\"; }; _\"" git rebase -i
+	contributors = shortlog --summary --numbered
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 
 [commit]
 	gpgsign = false # for now
+
+[color]
+        branch = auto
+        diff = auto
+        interactive = auto
+        status = auto
