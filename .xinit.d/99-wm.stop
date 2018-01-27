@@ -10,6 +10,6 @@ case "$WM" in
 		if [ -e "$wmscript" ]; then
 			source "$wmscript"
 		else
-			( pgrep -x "$WM" && killall "$WM" ) > /dev/null
+			running "$WM" && killall "$WM"
 		fi
 esac

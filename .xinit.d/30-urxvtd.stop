@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # Kill urxvt daemon.
-( pgrep -x urxvtd && killall urxvtd ) > /dev/null
+running urxvtd && killall urxvtd

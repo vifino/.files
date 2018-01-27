@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # Kill compton. Sorry, good friend.
-( pgrep -x compton && killall -9 compton ) > /dev/null
+running compton && killall -9 compton
