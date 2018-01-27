@@ -1,0 +1,11 @@
+#!/bin/sh
+
+[ -z "$BACKLIGHTTOOL" ] && echo "Error: \$BACKLIGHTTOOL not set. Set it to 'xbacklight -set', 'intel_backlight', etc..." && exit 1
+
+[ -z "$1" ] && cat <<EOF && exit 1
+Usage: $0 <percentage>
+Example: $0 50
+EOF
+
+# Deliberatly NOT escaping the tool variable.
+exec $BACKLIGHTTOOL "$1"

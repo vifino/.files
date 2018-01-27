@@ -1,0 +1,3 @@
+#!/bin/sh
+[ -z "$1" ] && echo "Usage: silent prog [args..]" && exit 1
+exec "$@" > /dev/null 2>&1
