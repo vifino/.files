@@ -208,6 +208,10 @@ key_bindings:
   - { key: Back,     mods: Alt,           chars: "\x1b\x7f"                    }
   - { key: Insert,                        chars: "\x1b[2~"                     }
   - { key: Delete,                        chars: "\x1b[3~",                    }
+  - { key: Key0,     mods: Control,       action: ResetFontSize                }
+  - { key: Equals,   mods: Control,       action: IncreaseFontSize             }
+  - { key: Subtract, mods: Control,       action: DecreaseFontSize             }
+
 
 # Mouse bindings
 #
