@@ -1,24 +1,51 @@
 #!/bin/sh
 
 # Helpers
-bat_info() {
-	cat "/proc/acpi/battery/$1/info" | grep "$2:" | sed 's/.*:\s*//'
-}
-bat_state() {
-	cat "/proc/acpi/battery/$1/state" | grep "$2:" | sed 's/.*:\s*//'
-}
+if [ -d /proc/acpi/battery ]; then
+		bat_cap() {
+				echo $(grep "last full capacity:" "/proc/acpi/battery/$1/info" | sed 's/.*:\s*//' | cut -d' ' -f1).0
+		}
+		bat_rem() {
+				grep "remaining capacity:" "/proc/acpi/battery/$1/state" | sed 's/.*:\s*//'
+		}
+		bat_present() {
+				grep "present:" "/proc/acpi/battery/$1/state" | sed 's/.*:\s*//'
+		}
+		BATTERIES=$(ls /proc/acpi/battery)
+else
+		UPOWER_PATH=/org/freedesktop/UPower/devices
+		BATTERIES=$(upower -e | grep '_battery$' | sed -e "s#^$UPOWER_PATH/##" -e "s/_battery$//")
 
-for batdir in /proc/acpi/battery/*; do
-	bat=`basename $batdir`
+		bat_info() {
+				upower -i "$UPOWER_PATH/$1_battery" | \
+							 grep "$2:" | \
+							 sed 's/^.*:\s*//'
+		}
+
+		bat_present() {
+				bat_info "$1" "present"
+		}
+		bat_cap() {
+				bat_info "$1" "energy-full"
+		}
+		bat_rem() {
+				bat_info "$1" "energy"
+		}
+fi
+
+
+for bat in $BATTERIES; do
 	echo "$bat:"
-	if [ "`bat_state $bat "present"`" = "yes" ]; then
-		rem=$(bat_state $bat "remaining capacity" | cut -d' ' -f1).0
-		max=$(bat_info $bat "last full capacity" | cut -d' ' -f1).0
+	if [ "`bat_present $bat`" = "yes" ]; then
+		rem=$(bat_rem $bat)
+		max=$(bat_cap $bat)
+		rem_no=$(echo $rem | cut -d' ' -f1)
+		max_no=$(echo $max | cut -d' ' -f1)
 		(
 			printf "present:            yes\n"
-			printf "max capacity:       %s mAh\n" $max
-			printf "remaining capacity: %s mAh\n" $rem
-			printf "remaining percent:  %.0f%%\n" $(echo "scale=2; ($rem/$max)*100" | bc)
+			printf "max capacity:       %s\n" "$max"
+			printf "remaining capacity: %s\n" "$rem"
+			printf "remaining percent:  %.0f%%\n" $(echo "scale=2; ($rem_no/$max_no)*100" | bc)
 		) | sed 's/^.*$/\t\0/'
 	else
 		printf "\tpresent:            no\n"

@@ -5,8 +5,8 @@
 [ "$TERM" = "linux" ] || return 0
 
 # Setup cursor
-printf '\033[?17;255c' # set black/white block cursor
-printf '\033[%sm\033[8]' '1;37' # set foreground to brightwhite
+#printf '\033[?17;255c' # set black/white block cursor
+#printf '\033[%sm\033[8]' '1;37' # set foreground to brightwhite
 
 lxsetcolor() {
 	printf '\033]P%X%s' "$1" "$2"
