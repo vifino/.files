@@ -14,6 +14,10 @@
         (progn
           (package-refresh-contents)
           (package-install 'use-package)))
+    (if (not (package-installed-p 'diminish))
+        (progn
+          (package-refresh-contents)
+          (package-install 'diminish)))
     (require 'use-package)
     (add-to-list 'load-path "~/.emacs.d/pkg")))
 
