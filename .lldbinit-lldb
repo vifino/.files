@@ -1,0 +1,2 @@
+# LLDB config for interactive usage.
+command script import ~/.lldb/scripts/loadscripts_cli.py
