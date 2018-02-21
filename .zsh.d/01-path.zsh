@@ -31,6 +31,7 @@ path=()
 path+=("$GOPATH/bin")
 
 # Generic local bins
+[ -d /usr/local/sbin ] && path+=(/usr/local/sbin)
 [ -d /usr/local/bin ] && path+=(/usr/local/bin)
 
 ##

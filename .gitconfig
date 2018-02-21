@@ -19,3 +19,10 @@
         diff = auto
         interactive = auto
         status = auto
+
+# LFS stuff.
+[filter "lfs"]
+	required = true
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	clean = git-lfs clean -- %f
