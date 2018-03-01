@@ -1,16 +1,19 @@
 ;; C and friends.
 
 ;; irony
-(use-package irony :ensure t
+(req-package irony :ensure t
   :commands (irony-mode irony-cdb-autosetup-compile-options))
 
-(use-package company-irony :ensure t
+(req-package company-irony :ensure t
+	:require company irony
 	:commands company-irony)
 
-(use-package flycheck-irony :ensure t
+(req-package flycheck-irony :ensure t
+	:require flycheck irony
 	:commands flycheck-irony-setup)
 
-(use-package irony-eldoc :ensure t
+(req-package irony-eldoc :ensure t
+	:require irony
 	:commands irony-eldoc)
 
 ;; irony hooks

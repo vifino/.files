@@ -2,7 +2,7 @@
 ;;  - AUCTeX
 ;;  - RefTeX
 ;;  - company-auctex
-(use-package reftex :ensure t
+(req-package reftex :ensure t
   :diminish "RefTeX"
   :commands (reftex-mode)
   :defines reftex-plug-into-AUCTex
@@ -11,7 +11,7 @@
   :init
   (add-hook 'LaTeX-mode-hook #'reftex-mode))
 
-(use-package tex
+(req-package tex
   :ensure auctex
   :mode ("\\.tex\\'" . TeX-latex-mode)
   :diminish (LaTeX-mode . "LaTeX")
@@ -27,7 +27,7 @@
                                 (outline-minor-mode 1)
                                 (flycheck-mode 1))))
 
-(use-package company-auctex :ensure t
+(req-package company-auctex :ensure t
   :commands company-auctex-mode
   :init
   (add-hook 'LaTeX-mode-hook #'company-auctex-init))

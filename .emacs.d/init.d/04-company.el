@@ -1,5 +1,5 @@
 ;; company mode.
-(use-package company :ensure t
+(req-package company :ensure t
   :diminish "Company"
   :bind (("C-;" . company-complete-common)
          ("TAB" . company-indent-or-complete-common))

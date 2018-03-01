@@ -1,7 +1,7 @@
 ;; Tramp settings.
 ;; Not really a language, but close enough.
 
-(use-package tramp
+(req-package tramp
 	:commands (tramp-version tramp-cleanup-all-buffers)
   :config
   (progn

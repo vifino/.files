@@ -1,5 +1,5 @@
 ;; org mode!
-(use-package org
+(req-package org
   :mode (("\\.org\\'" . org-mode))
   :commands (org-mode org-store-link org-insert-link
              org-agenda-files org-schedule)

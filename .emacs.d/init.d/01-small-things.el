@@ -41,7 +41,7 @@
       dired-use-ls-dired nil)
 
 ;; small keybinding
-(use-package compile
+(req-package compile
   :functions compile
   :defines compile-command
   :bind (("<f5>" . compile)))

@@ -23,4 +23,5 @@
 
 (require 'diminish)
 (require 'bind-key)
+(use-package req-package :ensure t)
 ;; (setq use-package-always-ensure t)

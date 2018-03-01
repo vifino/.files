@@ -5,8 +5,8 @@
   (add-to-list 'write-file-functions 'delete-trailing-whitespace)
   (eldoc-mode)
   (flycheck-mode)
-  (setq flycheck-checkers '(emacs-lisp))
-  (setq indent-tabs-mode nil)
+  (set (make-local-variable 'flycheck-checkers) '(emacs-lisp))
+  (set (make-local-variable 'indent-tabs-mode) nil)
   (add-hook 'after-save-hook ; byte-compile .el on save if it's .elc exists.
             (lambda ()
               (let ((fn (buffer-file-name)))
