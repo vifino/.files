@@ -13,6 +13,17 @@ set pagination off
 
 # purrdy
 set print pretty on
+set print object on
+set print static-members off
+set print vtbl on
+set print demangle on
+set demangle-style gnu-v3
+set print sevenbit-strings off
+set print asm-demangle on
+
+# These make gdb never pause in its output.
+set height 0
+set width 0
 
 # GEF
 source ~/.gdbinit-gef.py

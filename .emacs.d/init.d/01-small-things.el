@@ -45,3 +45,7 @@
   :functions compile
   :defines compile-command
   :bind (("<f5>" . compile)))
+
+;; rainbow delimiters, these need to be specifically activated by each mode.
+(use-package rainbow-delimiters :ensure t
+  :commands (rainbow-delimiters-mode))

@@ -1,10 +1,16 @@
 ;; (e)lisp settings.
 
+;; eldoc
+(req-package eldoc :ensure t
+  :commands (turn-on-eldoc-mode eldoc-mode)
+  :config (add-hook 'emacs-lisp-mode-hook 'eldoc-mode))
+
 ;; elisp mode
 (defun vifino/elisp-hook ()
   (add-to-list 'write-file-functions 'delete-trailing-whitespace)
   (eldoc-mode)
   (flycheck-mode)
+  (rainbow-delimiters-mode)
   (set (make-local-variable 'flycheck-checkers) '(emacs-lisp))
   (set (make-local-variable 'indent-tabs-mode) nil)
   (add-hook 'after-save-hook ; byte-compile .el on save if it's .elc exists.

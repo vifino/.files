@@ -18,10 +18,11 @@
 
 ;; irony hooks
 (defun vifino/c-hook ()
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+  (rainbow-delimiters-mode)
+  (irony-cdb-autosetup-compile-options)
   (setq company-backends '(company-irony))
-  (add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
-  (add-hook 'irony-mode-hook #'irony-eldoc)
+  (flycheck-irony-setup)
+  (irony-eldoc)
   (add-to-list 'write-file-functions 'delete-trailing-whitespace)
   (flycheck-mode)
   (set (make-local-variable 'compile-command)
