@@ -38,7 +38,9 @@
       auto-save-default nil
       gc-cons-threshold (* 10 1024 1024)
       large-file-warning-threshold (* 10 1024 1024)
-      dired-use-ls-dired nil)
+      dired-use-ls-dired nil
+      tls-checktrust t
+      gnutls-verify-error t)
 
 ;; small keybinding
 (req-package compile
