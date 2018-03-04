@@ -15,4 +15,4 @@
 (req-package company-lsp :ensure t
   :require company lsp-mode
   :init
-  (push '(company-lsp) company-backends))
+  (push 'company-lsp company-backends))
