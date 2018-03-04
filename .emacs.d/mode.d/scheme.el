@@ -6,4 +6,6 @@
   (setq tab-width 2))
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 
-(use-package geiser :ensure t)
+(use-package geiser :ensure t
+  :config
+  (setq geiser-repl-use-other-window nil))
