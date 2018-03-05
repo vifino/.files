@@ -13,8 +13,8 @@
   (add-to-list 'company-backends 'company-go))
 
 ;; also errors out. q_q
-;(req-package lsp-go
-;  :require lsp-mode
-;  :commands (lsp-go-enable)
-;  :config
-;  (add-hook 'go-mode-hook 'lsp-golang-enable))
+(req-package lsp-go
+  :require lsp-mode
+  :commands (lsp-go-enable)
+  :config
+  (add-hook 'go-mode-hook 'lsp-golang-enable))
