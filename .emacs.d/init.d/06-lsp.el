@@ -5,14 +5,16 @@
   :defer t
   :require flycheck
   :diminish (lsp-mode "LSP")
-;;  :commands (lsp-mode lsp-define-stdio-client lsp-client-on-notification
-;;            lsp-make-traverser lsp-capabilites lsp-mode-line lsp-define-tcp-client)
+  :commands (lsp-mode lsp-define-stdio-client lsp-client-on-notification
+            lsp-make-traverser lsp-capabilites lsp-mode-line lsp-define-tcp-client)
   :config
   (setq lsp-enable-eldoc t)
-  (with-eval-after-load 'flycheck
-    (require 'lsp-flycheck)))
+  (require 'lsp-flycheck))
 
 (req-package company-lsp :ensure t
   :require company lsp-mode
+  :commands company-lsp
   :init
-  (push 'company-lsp company-backends))
+  (add-hook 'lsp-mode-hook (lambda () (progn
+                                        (require 'company-lsp)
+                                        (push 'company-lsp company-backends)))))

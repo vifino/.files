@@ -40,7 +40,8 @@
       large-file-warning-threshold (* 10 1024 1024)
       dired-use-ls-dired nil
       tls-checktrust t
-      gnutls-verify-error t)
+      gnutls-verify-error t
+      auto-window-vscroll t)
 
 ;; small keybinding
 (req-package compile

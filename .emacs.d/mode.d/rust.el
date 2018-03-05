@@ -9,25 +9,25 @@
               (set (make-local-variable 'compile-command) "cargo build")
               (add-to-list 'write-file-functions 'delete-trailing-whitespace))))
 
-(req-package racer :ensure t
-  :commands racer-mode company
-  :init
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode))
+;(req-package racer :ensure t
+;  :commands racer-mode company
+;  :init
+;  (add-hook 'rust-mode-hook #'racer-mode)
+;  (add-hook 'racer-mode-hook #'eldoc-mode)
+;  (add-hook 'racer-mode-hook #'company-mode))
 
 ;; sadly not ready yet. crashes often. very often.
-;(req-package lsp-rust :ensure t
-;  :mode "\\.rs\\'"
+(req-package lsp-rust :ensure t
 ;  :require lsp-mode rust-mode
-;  :init
-;  (add-hook 'rust-mode-hook (progn
-;                              (require 'lsp-rust)
-;                              (lsp-rust-enable))))
-
-(req-package flycheck-rust :ensure t
-  :require flycheck racer
-  :commands flycheck-rust-setup
+  :commands lsp-rust-enable
   :init
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-  (add-hook 'racer-mode-hook #'flycheck-mode))
+  (add-hook 'rust-mode-hook (lambda ()
+                              (eval-after-load 'lsp-mode
+                                     (lsp-rust-enable)))))
+
+;(req-package flycheck-rust :ensure t
+;  :require flycheck racer
+;  :commands flycheck-rust-setup
+;  :init
+;  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+;  (add-hook 'racer-mode-hook #'flycheck-mode))
