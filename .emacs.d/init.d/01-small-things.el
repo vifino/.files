@@ -30,6 +30,12 @@
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
 
+;; gc
+(setq gc-cons-threshold (* 64 1024 1024))
+(add-hook 'after-init-hook (lambda ()
+                             ;; restore to saneish levels after startup
+                             (setq gc-cons-threshold (* 8 1024 1024))))
+
 (setq inhibit-default-init t
       load-prefer-newer t
       enable-recursive-minibuffers t
