@@ -40,7 +40,7 @@ servers = (
   {
     address = "irc.hackint.net";
     chatnet = "HackInt";
-    port = "9999";
+    port = "6697";
     use_tls = "yes";
   }
 );
