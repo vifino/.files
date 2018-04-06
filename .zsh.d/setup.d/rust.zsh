@@ -1,2 +1,3 @@
 # Rust stuff
-export RUSTFLAGS="-C target-cpu=native"
+
+[ -z "$RUSTFLAGS" ] && export RUSTFLAGS="-C target-cpu=native"

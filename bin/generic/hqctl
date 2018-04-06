@@ -1,0 +1,24 @@
+#!/bin/sh
+
+door() {
+	case "$1" in
+		open)
+			ssh -F /dev/null open@192.168.2.10
+			;;
+		close)
+			ssh -F /dev/null close@192.168.2.10
+			;;
+		*)
+			echo "Usage: hqctl door open/close"
+			exit 1
+	esac
+}
+
+FN="$1"
+shift
+case "$FN" in
+	door) door "$@" ;;
+	*)
+		echo "Usage hqctl door ..."
+		exit 1
+esac
