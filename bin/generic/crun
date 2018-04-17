@@ -1,0 +1,50 @@
+#!/bin/sh
+# Runs a C source file like a script.
+# Parses comments looking like this:
+# // @ CFLAGS = -Os -Wall
+# Variables you can set: CC, CFLAGS, CPPFLAGS
+#
+# Made by vifino, with love.
+# Copyright (C) vifino 2018 under the WTFPL.
+# Do what the fuck you want to.
+
+set -e
+
+[ -z "$1" ] && echo "Usage: $0 myscript.c" && exit 1
+
+SOURCE="$(realpath "$1")"
+shift # rest is arguments
+
+# Where we store our build.
+CACHEFILE="$HOME/.cache/crun/$SOURCE"
+mkdir -p "$(dirname "$CACHEFILE")"
+
+if [ -f "$CACHEFILE" ] && [ "$CACHEFILE" -nt "$SOURCE" ]; then
+	# Cache file exists and is newer than the source code.
+	exec "$CACHEFILE" "$@"
+fi
+
+getvar() {
+	# $1 is the param, $2 is the file
+	# parses lines that look like this: // @ CFLAGS = -Os -lwhatever
+	# ugly because of the eval, but it works.
+	VAR="$(awk -F "=" "/^\\/\\/ @ $1/ {print \$2}" "$2")"
+	[ -z "$VAR" ] && eval "echo \$$1" && return
+	echo $VAR
+}
+
+# Load all kinds of variables.
+CC_NEW=$(getvar CC "$SOURCE")
+[ -z "$CC" ] && CC=cc
+CFLAGS=$(getvar CFLAGS "$SOURCE")
+CPPFLAGS=$(getvar CPPFLAGS "$SOURCE")
+LDFLAGS=$(getvar LDFLAGS "$SOURCE")
+
+export CC CFLAGS CPPFLAGS LDFLAGS
+
+# Compile.
+# Sorta unsafe, because we have to leave flags and stuff to parsing of the shell..
+"$CC" $CPPFLAGS $CFLAGS -o "$CACHEFILE" "$SOURCE" $LDFLAGS
+
+# We're done now, run it.
+exec "$CACHEFILE" "$@"
