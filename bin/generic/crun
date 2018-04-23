@@ -44,7 +44,7 @@ export CC CFLAGS CPPFLAGS LDFLAGS
 
 # Compile.
 # Sorta unsafe, because we have to leave flags and stuff to parsing of the shell..
-"$CC" $CPPFLAGS $CFLAGS -o "$CACHEFILE" "$SOURCE" $LDFLAGS
+tail -n+2 "$SOURCE" | "$CC" $CPPFLAGS $CFLAGS -o "$CACHEFILE" -x c $LDFLAGS
 
 # We're done now, run it.
 exec "$CACHEFILE" "$@"
