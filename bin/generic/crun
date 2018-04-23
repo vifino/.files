@@ -11,12 +11,13 @@
 set -e
 
 [ -z "$1" ] && echo "Usage: $0 myscript.c" && exit 1
+[ ! -f "$1" ] && echo "crun: file not found: $1" && exit 1
 
 SOURCE="$(realpath "$1")"
 shift # rest is arguments
 
 # Where we store our build.
-CACHEFILE="$HOME/.cache/crun/$SOURCE"
+CACHEFILE="$HOME/.cache/crun/$SOURCE.bin"
 mkdir -p "$(dirname "$CACHEFILE")"
 
 if [ -f "$CACHEFILE" ] && [ "$CACHEFILE" -nt "$SOURCE" ]; then
@@ -44,7 +45,7 @@ export CC CFLAGS CPPFLAGS LDFLAGS
 
 # Compile.
 # Sorta unsafe, because we have to leave flags and stuff to parsing of the shell..
-tail -n+2 "$SOURCE" | "$CC" $CPPFLAGS $CFLAGS -o "$CACHEFILE" -x c $LDFLAGS
+tail -n+2 "$SOURCE" | "$CC" $CPPFLAGS $CFLAGS -o "$CACHEFILE" -x c - $LDFLAGS
 
 # We're done now, run it.
 exec "$CACHEFILE" "$@"
