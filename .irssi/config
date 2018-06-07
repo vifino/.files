@@ -42,6 +42,12 @@ servers = (
     chatnet = "HackInt";
     port = "6697";
     use_tls = "yes";
+  },
+  {
+    address = "tty.sh";
+    chatnet = "ZNC";
+    port = "1337";
+    use_tls = "yes";
   }
 );
 
@@ -82,6 +88,12 @@ chatnets = {
     max_kicks = "1";
     max_msgs = "1";
     max_whois = "1";
+  };
+  ZNC = {
+    type = "IRC";
+    max_kicks = "10";
+    max_msgs = "10";
+    max_whois = "10";
   };
 };
 
@@ -142,6 +154,7 @@ aliases = {
   WN = "WINDOW NEW HIDDEN";
   WQUERY = "QUERY -window";
   WW = "WHOWAS";
+  ZNC = "QUERY *status";
   1 = "WINDOW GOTO 1";
   2 = "WINDOW GOTO 2";
   3 = "WINDOW GOTO 3";
