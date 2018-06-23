@@ -1,0 +1,5 @@
+#!/bin/sh
+# xinit.d defaults for OpenBSD.
+
+export WM=fvwm
+export TERMINAL=xterm

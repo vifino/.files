@@ -88,7 +88,7 @@ run_stage() {
 # run_phase $phase
 # simply runs stages 00 through 99 for phase $phase
 run_phase() {
-	for stage in `seq 0 9`; do
+	for stage in {0..9}; do
 		local files=(${XINITD_DIR}/${stage}[0-9]*)
 		if [ -e "${files[0]}" ]; then
 			run_stage "$1" $stage
