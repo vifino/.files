@@ -1,5 +1,8 @@
 #!/bin/sh
 # xinit.d defaults for OpenBSD.
 
+# Set UTF-8 locale. This is the only valid option, really.
+export LC_CTYPE=en_US.UTF-8
+
 export WM=fvwm
 export TERMINAL=xterm
