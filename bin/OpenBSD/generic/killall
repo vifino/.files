@@ -1,4 +1,4 @@
 #!/bin/sh
 # OpenBSD `killall` clone, because it doesn't have that.
 # It's terrible.
-kill $(ps ax -o "pid,command" | cut -d" " -f1-2 | grep "$1\$" | cut -d" " -f1)"
+kill -9 $(ps ax -o "pid,command" | cut -d" " -f1-2 | grep "$1\$" | cut -d" " -f1)

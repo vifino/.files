@@ -4,4 +4,4 @@
 #  email responsibly
 
 # Sourc config dir.
-source 'exec -- ~/.mutt/srcall ~/.mutt/conf.d|'
+source 'exec ~/.mutt/srcall ~/.mutt/conf.d|'

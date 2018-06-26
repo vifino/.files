@@ -13,7 +13,7 @@ set -e
 [ -z "$1" ] && echo "Usage: $0 myscript.c" && exit 1
 [ ! -f "$1" ] && echo "crun: file not found: $1" && exit 1
 
-SOURCE="$(realpath "$1")"
+SOURCE="$(readlink -f "$1")"
 shift # rest is arguments
 
 # Where we store our build.

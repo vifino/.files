@@ -6,3 +6,4 @@ export LC_CTYPE=en_US.UTF-8
 
 export WM=fvwm
 export TERMINAL=xterm
+export BACKLIGHTTOOL="xbacklight -set"
