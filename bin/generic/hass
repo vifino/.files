@@ -1,0 +1,31 @@
+#!/bin/sh
+
+usage() {
+	cat <<HELP
+Usage: $0 [action] ...
+Valid actions:
+ switch: switch on or off a switch
+         usage: sw switch_name {on/off}
+HELP
+	exit 1
+}
+
+[ -z "$1" ] && usage
+ACTION="$1"
+shift
+[ -z "$HASS" ] && echo "Set \$HASS to the Home Assistant URL." && exit 1
+
+# api "services/switch/turn_off" '{"entity_id": "switch.lounge_blue_light"}'
+api() {
+	curl -sL -o /dev/null -d "$2" "$HASS/api/$1"
+}
+
+case "$ACTION" in
+	sw|switch)
+		[ -z "$1" ] && echo "Need switch name." && usage
+		[ "$2" != "on" ] && [ "$2" != "off" ] && echo "Third argument not on or off." && usage
+		api "services/switch/turn_$2" "{\"entity_id\": \"switch.$1\"}"
+		;;
+	*)
+		usage
+esac

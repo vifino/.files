@@ -66,6 +66,7 @@ Button2 = : iconmgr : f.iconify
 menu "defops"
 {
 	"TWM"		f.title
+	"Rofi"		f.exec "exec rofi -show run"
 	"Terminal"	f.exec "exec $TERMINAL"
 	""		f.nop
 	"Iconify"	f.iconify

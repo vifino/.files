@@ -18,6 +18,13 @@ FN="$1"
 shift
 case "$FN" in
 	door) door "$@" ;;
+	cyber)
+		export HASS="http://hub.cccffm.space"
+		hass switch lounge_blue_light on
+		[ -z "$1" ] || sleep "$1"
+		[ -z "$1" ] && sleep 4
+		hass switch lounge_blue_light off
+		;;
 	*)
 		echo "Usage hqctl door ..."
 		exit 1
