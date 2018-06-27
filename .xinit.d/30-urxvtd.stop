@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # Kill urxvt daemon.
-running urxvtd && killall urxvtd
+running urxvtd && murder urxvtd

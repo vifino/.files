@@ -10,6 +10,6 @@ case "$WM" in
 		if [ -e "$wmscript" ]; then
 			source "$wmscript"
 		else
-			running "$WM" && killall "$WM"
+			running "$WM" && murder "$WM"
 		fi
 esac

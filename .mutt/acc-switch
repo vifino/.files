@@ -8,6 +8,14 @@ exec refresh
 # Remove all mailboxes.
 unmailboxes *
 
+# Remove all relevant variables
+unset mbox_type
+unset mbox
+unset folder
+unset record
+unset postponed
+unset mask
+
 HEAD
 
 # Try to switch to the new one

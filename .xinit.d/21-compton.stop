@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # Kill compton. Sorry, good friend.
-running compton && killall -9 compton
+running compton && murder compton
