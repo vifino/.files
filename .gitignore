@@ -8,3 +8,5 @@
 # Ignore Mutt Accounts.
 .mutt/accs.d
 
+# IRSSI
+.irssi/saved_nick_colors

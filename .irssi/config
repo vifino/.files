@@ -31,7 +31,7 @@ servers = (
     chatnet = "QuakeNet";
     port = "6667";
   },
-  { 
+  {
     address = "irc.unix.chat";
     chatnet = "Nixers";
     port = "6697";
@@ -43,7 +43,7 @@ servers = (
     port = "6697";
     use_tls = "yes";
   },
-  {
+  { 
     address = "tty.sh";
     chatnet = "ZNC";
     port = "1337";
@@ -77,7 +77,7 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
-  Nixers = {
+  Nixers = { 
     type = "IRC";
     max_kicks = "1";
     max_msgs = "1";
@@ -89,7 +89,7 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
-  ZNC = {
+  ZNC = { 
     type = "IRC";
     max_kicks = "10";
     max_msgs = "10";
@@ -114,6 +114,7 @@ aliases = {
   DEHIGHLIGHT = "DEHILIGHT";
   DESCRIBE = "ACTION";
   DHL = "DEHILIGHT";
+  ECHXEC = "say $$ $*; exec -o - $*";
   EXEMPTLIST = "MODE $C +e";
   EXIT = "QUIT";
   GOTO = "SCROLLBACK GOTO";
@@ -353,7 +354,11 @@ settings = {
     recode_transliterate = "no";
   };
   "fe-text" = { actlist_sort = "refnum"; };
-  "fe-common/core" = { term_charset = "utf-8"; theme = "beastiefino"; };
+  "fe-common/core" = {
+    term_charset = "utf-8";
+    theme = "beastiefino";
+    beep_msg_level = "MSGS NOTICES DCC DCCMSGS HILIGHT";
+  };
   "perl/core/scripts" = {
     colorize_nicks_skip_formats = "0";
     colorize_nicks_repeat_formats = "yes";
