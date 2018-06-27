@@ -49,7 +49,7 @@ escape() {
 
 case "$ACTION" in
 	switch|light)
-		[ -z "$2" ] && echo "Need switch name." && usage
+		[ -z "$2" ] && echo "Need $ACTION name." && usage
 		[ "$1" != "on" ] && [ "$1" != "off" ] && [ "$1" != "toggle" ] && \
 			echo "Third argument not on or off." && usage
 		SVC="turn_$1"
