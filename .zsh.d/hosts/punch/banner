@@ -1,0 +1,3 @@
+#!/bin/sh
+cat ~/doc/art/unix/unix-dmr
+echo "`hostname`, $OS $ARCH: $(date)"
