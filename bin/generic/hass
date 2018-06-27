@@ -1,11 +1,24 @@
 #!/bin/sh
+# HomeAssistant shell client V1, yay!
+# Some functionality requires jq.
+# Licensed under the MIT, (C) vifino.
 
 usage() {
 	cat <<HELP
 Usage: $0 [action] ...
 Valid actions:
  switch: switch on or off a switch
-         usage: sw switch_name {on/off}
+         usage: switch {on/off/toggle} switch_name
+  light: turn on or off a light
+         usage: light {on/off/toggle} light_name
+   call: call a script
+         usage: script script_name
+   mqtt: publish a MQTT message
+         usage: mqtt topic "message"
+   list: list entities, requires jq.
+         usage: list [{switch,light,script}]
+    api: do your own api calls
+         usage: api request_name ['{"json": "data"}']
 HELP
 	exit 1
 }
@@ -17,15 +30,49 @@ shift
 
 # api "services/switch/turn_off" '{"entity_id": "switch.lounge_blue_light"}'
 api() {
-	curl -sL -o /dev/null -d "$2" "$HASS/api/$1"
+	if [ -z "$2" ]; then
+		curl -sL "$HASS/api/$1"
+	else
+		curl -sL \
+			 -H "Content-Type: application/json" \
+			 -d "$2" "$HASS/api/$1"
+	fi
+}
+
+list_entities() {
+	api states | jq -r '.[].entity_id'
+}
+
+escape() {
+	printf "$1" | tr '"' '\"' | tr '\\' tr '\\\\'
 }
 
 case "$ACTION" in
-	sw|switch)
-		[ -z "$1" ] && echo "Need switch name." && usage
-		[ "$2" != "on" ] && [ "$2" != "off" ] && echo "Third argument not on or off." && usage
-		api "services/switch/turn_$2" "{\"entity_id\": \"switch.$1\"}"
+	switch|light)
+		[ -z "$2" ] && echo "Need switch name." && usage
+		[ "$1" != "on" ] && [ "$1" != "off" ] && [ "$1" != "toggle" ] && \
+			echo "Third argument not on or off." && usage
+		SVC="turn_$1"
+		[ "$1" == "toggle" ] && SVC=toggle
+		api "services/homeassistant/$SVC" "{\"entity_id\": \"$ACTION.$2\"}"
 		;;
-	*)
-		usage
+	script)
+		[ -z "$1" ] && echo "Need script name." && usage
+		api "services/script/$1"
+		;;
+	mqtt)
+		[ -z "$1" ] && echo "Need MQTT topic." && usage
+		[ -z "$2" ] && echo "Need MQTT message." && usage
+		api "services/mqtt/publish" \
+			"{\"topic\": \"$1\", \"payload\": \"$(escape "$2")\"}"
+		;;
+	list)
+		if [ -z "$1" ]; then
+			list_entities
+		else
+			list_entities | grep "^$1" | sed -E "s/^$1.*\.//"
+		fi
+		;;
+	api) api "$@" ;;
+	*) usage
 esac
