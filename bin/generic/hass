@@ -1,5 +1,5 @@
 #!/bin/sh
-# HomeAssistant shell client V1, yay!
+# HomeAssistant shell client V1.1, yay!
 # Some functionality requires jq.
 # Licensed under the MIT, (C) vifino.
 
@@ -12,7 +12,7 @@ Valid actions:
   light: turn on or off a light
          usage: light {on/off/toggle} light_name
    call: call a script
-         usage: script script_name
+         usage: call script_name
    mqtt: publish a MQTT message
          usage: mqtt topic "message"
    list: list entities, requires jq.
@@ -53,7 +53,7 @@ case "$ACTION" in
 		[ "$1" != "on" ] && [ "$1" != "off" ] && [ "$1" != "toggle" ] && \
 			echo "Third argument not on or off." && usage
 		SVC="turn_$1"
-		[ "$1" == "toggle" ] && SVC=toggle
+		[ "$1" = "toggle" ] && SVC=toggle
 		api "services/homeassistant/$SVC" "{\"entity_id\": \"$ACTION.$2\"}"
 		;;
 	script)
