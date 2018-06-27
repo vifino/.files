@@ -1,0 +1,10 @@
+# Gitignore for my dotfiles.
+
+# Ignore garbage.
+*.core
+*.un~
+*.swp
+
+# Ignore Mutt Accounts.
+.mutt/accs.d
+

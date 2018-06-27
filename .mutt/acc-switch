@@ -9,6 +9,10 @@ exec refresh
 unmailboxes *
 
 # Remove all relevant variables
+unset from
+unset realname
+unset signature
+
 unset mbox_type
 unset mbox
 unset folder
