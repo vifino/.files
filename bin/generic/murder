@@ -1,4 +1,6 @@
 #!/bin/sh
 # Killall alternative, but more hacky.
-PIDS="$(ps ax -o "pid,command" | cut -d" " -f1-2 | grep "$1\$" | cut -d" " -f1)"
+[ -z "$1" ] && echo "Usage: murder <process name>" && exit 1
+
+PIDS="$(ps ax -o "pid,args" | cut -d" " -f1-2 | grep "$1\$" | cut -d" " -f1)"
 [ -z "$PIDS" ] || kill -9 $PIDS
