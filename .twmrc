@@ -14,7 +14,7 @@ IconManagerFont "-adobe-helvetica-bold-r-normal--*-100-*-*-*"
 Color
 {
 	BorderColor		"#070000"
-	BorderTileBackground	"070000"
+	BorderTileBackground	"#070000"
 	DefaultBackground	"#070000"
 	DefaultForeground	"#373737"
 
@@ -66,6 +66,8 @@ Button2 = : iconmgr : f.iconify
 menu "defops"
 {
 	"TWM"		f.title
+	"Terminal"	f.exec "exec $TERMINAL"
+	""		f.nop
 	"Iconify"	f.iconify
 	"Resize"	f.resize
 	"Move"		f.move
@@ -74,11 +76,6 @@ menu "defops"
 	""		f.nop
 	"Focus"		f.focus
 	"Unfocus"	f.unfocus
-	"Show Iconmgr"	f.showiconmgr
-	"Hide Iconmgr"	f.hideiconmgr
-	""		f.nop
-	"Terminal"	f.exec "exec $TERMINAL &"
-	""		f.nop
 	"Kill"		f.destroy
 	"Delete"	f.delete
 	""		f.nop

@@ -4,6 +4,6 @@
 # Set UTF-8 locale. This is the only valid option, really.
 export LC_CTYPE=en_US.UTF-8
 
-export WM=fvwm
+export WM=twm
 export TERMINAL=xterm
 export BACKLIGHTTOOL="xbacklight -set"
