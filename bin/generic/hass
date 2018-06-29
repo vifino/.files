@@ -5,7 +5,7 @@
 
 usage() {
 	cat <<HELP
-Usage: $0 [action] ...
+Usage: $(basename $0) [action] ...
 Valid actions:
  switch: switch on or off a switch
          usage: switch {on/off/toggle} switch_name

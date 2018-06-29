@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # Life without colors.
 # What a time to be alive.
 exec sed "s/\x1B\[\([0-9]\{1,2\}\(;[0-9]\{1,2\}\)\?\)\?[mGK]//g"

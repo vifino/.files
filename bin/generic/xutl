@@ -6,7 +6,7 @@ CMD="$1"
 
 usage() {
 	cat <<USAGE
-Usage: $0 cmd [opts]
+Usage: $(basename $0) cmd [opts]
 Known commands:
   lao     # list active outputs, no args
   newm    # def new monitor mode, args: x y hz [cvt12 opts]

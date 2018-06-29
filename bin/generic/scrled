@@ -3,7 +3,7 @@
 # Supports TTY's and X.
 
 usage() {
-	echo "Usage: $0 (on|off) [(on|off)..]"
+	echo "Usage: $(basename $0) (on|off) [(on|off)..]"
 	exit 1
 }
 

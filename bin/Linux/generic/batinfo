@@ -2,35 +2,35 @@
 
 # Helpers
 if [ -d /proc/acpi/battery ]; then
-		bat_cap() {
-				echo $(grep "last full capacity:" "/proc/acpi/battery/$1/info" | sed 's/.*:\s*//' | cut -d' ' -f1).0
-		}
-		bat_rem() {
-				grep "remaining capacity:" "/proc/acpi/battery/$1/state" | sed 's/.*:\s*//'
-		}
-		bat_present() {
-				grep "present:" "/proc/acpi/battery/$1/state" | sed 's/.*:\s*//'
-		}
-		BATTERIES=$(ls /proc/acpi/battery)
+	bat_cap() {
+		echo $(grep "last full capacity:" "/proc/acpi/battery/$1/info" | sed 's/.*:\s*//' | cut -d' ' -f1).0
+	}
+	bat_rem() {
+		grep "remaining capacity:" "/proc/acpi/battery/$1/state" | sed 's/.*:\s*//'
+	}
+	bat_present() {
+		grep "present:" "/proc/acpi/battery/$1/state" | sed 's/.*:\s*//'
+	}
+	BATTERIES=$(ls /proc/acpi/battery)
 else
-		UPOWER_PATH=/org/freedesktop/UPower/devices
-		BATTERIES=$(upower -e | grep '_battery$' | sed -e "s#^$UPOWER_PATH/##" -e "s/_battery$//")
+	UPOWER_PATH=/org/freedesktop/UPower/devices
+	BATTERIES=$(upower -e | grep '_battery$' | sed -e "s#^$UPOWER_PATH/##" -e "s/_battery$//")
 
-		bat_info() {
-				upower -i "$UPOWER_PATH/$1_battery" | \
-							 grep "$2:" | \
-							 sed 's/^.*:\s*//'
-		}
+	bat_info() {
+		upower -i "$UPOWER_PATH/$1_battery" | \
+			 grep "$2:" | \
+			 sed 's/^.*:\s*//'
+	}
 
-		bat_present() {
-				bat_info "$1" "present"
-		}
-		bat_cap() {
-				bat_info "$1" "energy-full"
-		}
-		bat_rem() {
-				bat_info "$1" "energy"
-		}
+	bat_present() {
+		bat_info "$1" "present"
+	}
+	bat_cap() {
+		bat_info "$1" "energy-full"
+	}
+	bat_rem() {
+		bat_info "$1" "energy"
+	}
 fi
 
 

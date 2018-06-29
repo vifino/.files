@@ -1,5 +1,14 @@
 #!/bin/sh
 
+usage() {
+	echo "Usage: $(basename $0) {door,cyber} [...]"
+	exit 1
+}
+
+FN="$1"
+[ -z "$FN" ] && usage
+shift
+
 door() {
 	case "$1" in
 		open)
@@ -14,8 +23,6 @@ door() {
 	esac
 }
 
-FN="$1"
-shift
 case "$FN" in
 	door) door "$@" ;;
 	cyber)

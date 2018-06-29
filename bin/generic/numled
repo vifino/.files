@@ -5,7 +5,7 @@
 # TTY: setleds might affect the actual modifier. It isn't supposed to, but sometimes it does??
 
 usage() {
-	echo "Usage: $0 (on|off) [(on|off)..]"
+	echo "Usage: $(basename $0) (on|off) [(on|off)..]"
 	exit 1
 }
 
