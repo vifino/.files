@@ -1,0 +1,2 @@
+# OpenBSD doesn't seem to wanna eat the unicode tree_style.
+hc set tree_style "#| |'>-."

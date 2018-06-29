@@ -170,10 +170,10 @@ hc attr theme.active.outer_color    '#373737'
 hc attr theme.normal.inner_color    '#373737'
 hc attr theme.normal.outer_color    '#373737'
 hc attr theme.background_color      '#373737'
-hc set window_gap                   0
+hc set window_gap                   4
 hc set frame_padding                0
 hc set smart_window_surroundings    0
-hc set smart_frame_surroundings     1
+hc set smart_frame_surroundings     0
 hc set mouse_recenter_gap           0
 
 hc set tree_style '╾│ ├└╼─┐'

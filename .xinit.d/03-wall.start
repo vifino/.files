@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# In case nothing is found..
+xsetroot -solid "#1d2021"
+
 # Select a random wallpaper.
 WALLDIR="$HOME/img/walls"
 
