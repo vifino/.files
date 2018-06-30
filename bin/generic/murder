@@ -4,3 +4,4 @@
 
 PIDS="$(ps ax -o "pid,args" | cut -d" " -f1-2 | grep "$1\$" | cut -d" " -f1)"
 [ -z "$PIDS" ] || kill -9 $PIDS
+[ -z "$PIDS" ] && echo "No processes found named '$1'." && exit 1
