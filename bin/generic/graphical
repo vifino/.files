@@ -1,0 +1,8 @@
+#!/bin/sh
+# Simple script that checks if the current session is graphical or not.
+
+for var in "$DISPLAY" "$XDG_SESSION_TYPE"; do
+	[ ! -z "$var" ] && exit 0
+done
+
+exit 1

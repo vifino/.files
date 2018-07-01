@@ -1,0 +1,15 @@
+# RSS feeds I'm interested in.
+
+# Update feeds.
+http://openbsd-current-rss.appspot.com/ "BSD" "Technology" "Open Source"
+https://www.FreeBSD.org/news/rss.xml "BSD" "Technology" "Open Source"
+https://github.com/shinyblink/sled/commits/master.atom "~shinyblink/sled:master" "GitHub" "Open Source"
+
+# Tech news feeds.
+https://www.phoronix.com/rss.php "Technology" "News" "BSD" "Linux" "UNIX" "Open Source"
+http://feeds.arstechnica.com/arstechnica/open-source "Ars Technica" "News" "Technology" "Open Source"
+http://feeds.arstechnica.com/arstechnica/technology-lab "Ars Technica" "News" "Technology"
+
+# "Regular" news feeds.
+http://www.the-postillon.com/feeds/posts/default?alt=rss "News" "Independant" # Only the most serious news.
+http://www.spiegel.de/international/index.rss "Real" "News" # I like the tag order.

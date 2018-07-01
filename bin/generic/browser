@@ -1,0 +1,32 @@
+#!/bin/sh
+# Browser selector, like a rudimentary xdg-open.
+run_browser() {
+	B="$1"
+	shift
+	if [ ! -z "$B" ]; then
+		inpath "$B" && exec "$B" "$@"
+		$B "$@"
+		exit $?
+	fi
+}
+graphical && run_browser "$GBROWSER" "$@"
+run_browser "$BROWSER" "$@"
+
+check_browser() {
+	B="$1"
+	shift
+	inpath "$B" && exec "$B" "$@"
+}
+
+if graphical; then
+	for browser in luakit firefox google-chrome dwb; do
+		check_browser "$browser" "$@"
+	done
+else
+	for browser in w3m elinks lynx links2; do
+		check_browser "$browser" "$@"
+	done
+fi
+
+echo "No browser available."
+exit 1
