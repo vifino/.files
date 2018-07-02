@@ -1,5 +1,6 @@
 #!/bin/sh
 # Browser selector, like a rudimentary xdg-open.
+
 run_browser() {
 	B="$1"
 	shift
@@ -9,6 +10,7 @@ run_browser() {
 		exit $?
 	fi
 }
+
 graphical && run_browser "$GBROWSER" "$@"
 run_browser "$BROWSER" "$@"
 
@@ -23,7 +25,7 @@ if graphical; then
 		check_browser "$browser" "$@"
 	done
 else
-	for browser in w3m elinks lynx links2; do
+	for browser in w3m elinks lynx links2 termux-open-url; do
 		check_browser "$browser" "$@"
 	done
 fi
