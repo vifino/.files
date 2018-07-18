@@ -1,0 +1,10 @@
+# Aliases for GDB
+
+# Info aliases. Very handy.
+alias regs = info registers
+alias fp = info float
+alias locals = info locals
+alias dcache = info dcache
+alias bps = info breakpoints
+alias addr = info address
+alias vtbl = info vtbl

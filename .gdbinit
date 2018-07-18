@@ -8,8 +8,10 @@ set mem inaccessible-by-default off
 # Required on OSX, slows things down on low-end devices, don't need it.
 set startup-with-shell off
 
-# Disable pager
+# Disable pager make sure gdb never pauses output.
 set pagination off
+set height 0
+set width 0
 
 # purrdy
 set print pretty on
@@ -21,10 +23,21 @@ set demangle-style gnu-v3
 set print sevenbit-strings off
 set print asm-demangle on
 
-# These make gdb never pause in its output.
-set height 0
-set width 0
+# Don't annoy me.
+set confirm off
+
+# Set a neat prompt incase GEF doesn't load.
+set prompt \01\033[32m\002>> \001\033[0m\002
+
+# Load aliases
+source ~/.gdb_aliases
 
 # GEF
-source ~/.gdbinit-gef.py
-set startup-with-shell off
+# Since GEF is overkill quite often,
+# just define an alias to load it.
+define gef
+	source ~/.gdbinit-gef.py
+end
+
+# Source per-project .gdbinit files.
+set auto-load safe-path /
