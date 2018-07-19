@@ -1,5 +1,8 @@
 # Aliases for GDB
 
+# Target aliases
+alias ext = target extended-remote
+
 # Info aliases. Very handy.
 alias regs = info registers
 alias fp = info float
@@ -8,3 +11,15 @@ alias dcache = info dcache
 alias bps = info breakpoints
 alias addr = info address
 alias vtbl = info vtbl
+
+# dlerror, for when libdl fucks up, yay.
+define dlerror
+	print (const char*) (dlerror())
+end
+
+# Complex multi-command aliases
+define ii
+	info frame
+	info args
+	info locals
+end
