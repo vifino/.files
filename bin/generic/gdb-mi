@@ -1,0 +1,9 @@
+#!/bin/sh
+# Custom wrapper around GDB to set some handy
+# command line flags for a better experience.
+
+[ -z "$GDB" ] && GDB=gdb
+
+! inpath $GDB && echo "GDB not found. Set \$GDB." && exit 1
+
+exec $GDB -i=mi -ex "set prompt >> " "$@"
