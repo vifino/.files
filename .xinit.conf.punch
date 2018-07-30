@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export WM=herbstluftwm
+export TERMINAL=urxvtc
+export BROWSER=luakit

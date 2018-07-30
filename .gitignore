@@ -10,3 +10,9 @@
 
 # IRSSI
 .irssi/saved_nick_colors
+
+# Emacs junk
+.emacs.d/auto-save-list
+.emacs.d/elpa
+.emacs.d/irony
+.emacs.d/custom.el
