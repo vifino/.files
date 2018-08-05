@@ -1,0 +1,24 @@
+#!/bin/sh
+# Song: A small (hopefully soon multi player compatible) music player controller.
+set -e
+
+export MPC_FORMAT="[[%artist% - ]%title%]|[%file%]"
+mpd() {
+	case "$1" in
+		playing) mpc status -f "" | grep playing >/dev/null ;;
+		song) mpd playing && mpc current ;;
+		play|pause|toggle) mpc -q $1; mpc current ;;
+		stop) mpc -q $1 ;;
+	esac
+}
+
+CMD="$1"
+[ -z "$CMD" ] && CMD=song || shift
+
+if [ ! -z "$MPD_HOST" ] || running mpd; then
+	mpd "$CMD" "$@"
+	exit
+fi
+
+echo "No supported players found. Currently supports: mpd."
+exit 1

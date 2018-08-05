@@ -1,0 +1,17 @@
+#!/bin/sh
+# Selects a line from stdin the most optimal way available.
+
+if graphical; then
+	if hasbin rofi; then
+		exec rofi -dmenu
+	elif hasbin dmenu; then
+		exec dmenu
+	fi
+fi
+
+for selector in fzy fzf; do
+	hasbin $selector && exec selector
+done
+
+echo "No selector available. Install rofi, dmenu or fzy?"
+exit 1

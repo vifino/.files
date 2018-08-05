@@ -5,7 +5,7 @@ run_browser() {
 	B="$1"
 	shift
 	if [ ! -z "$B" ]; then
-		inpath "$B" && exec "$B" "$@"
+		hasbin "$B" && exec "$B" "$@"
 		$B "$@"
 		exit $?
 	fi
@@ -17,7 +17,7 @@ run_browser "$BROWSER" "$@"
 check_browser() {
 	B="$1"
 	shift
-	inpath "$B" && exec "$B" "$@"
+	hasbin "$B" && exec "$B" "$@"
 }
 
 if graphical; then

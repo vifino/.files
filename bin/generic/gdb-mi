@@ -4,6 +4,6 @@
 
 [ -z "$GDB" ] && GDB=gdb
 
-! inpath $GDB && echo "GDB not found. Set \$GDB." && exit 1
+! hasbin $GDB && echo "GDB not found. Set \$GDB." && exit 1
 
 exec $GDB -i=mi -ex "set prompt >> " "$@"
