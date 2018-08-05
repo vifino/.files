@@ -12,4 +12,4 @@ fi
 "$CONTRIB/workspace.sh" -i
 "$CONTRIB/workspace.sh" -g 1
 
-exec ~/bin/generic/wplumb
+exec ~/bin/generic/wplumb >/dev/null

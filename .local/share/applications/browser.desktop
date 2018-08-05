@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=browser
+Comment=Generic Browser Opening Script
+Terminal=false
+Exec=browser %u
+Categories=Network;WebBrowser
+MimeType=text/html;text/xml;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/http

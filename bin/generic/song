@@ -7,8 +7,26 @@ mpd() {
 	case "$1" in
 		playing) mpc status -f "" | grep playing >/dev/null ;;
 		song) mpd playing && mpc current ;;
-		play|pause|toggle) mpc -q $1; mpc current ;;
+		play|pause|next|prev) mpc -q $1; mpc current ;;
 		stop) mpc -q $1 ;;
+		vol) mpc -q "$@" | cut -d" " -f2 ;;
+		*) echo "Unknown command: $1"; return 1 ;;
+	esac
+}
+
+cmus() {
+	case "$1" in
+		playing) cmus-remote -Q | grep -m 1 playing >/dev/null ;;
+		song) cmus-remote -C "format_print '%a - %t'" ;;
+		play|pause|next|prev) cmus-remote --$1 ;;
+		stop) cmus-remote --$1 ;;
+		vol)
+			if [ -z "$2" ]; then
+				cmus-remote -Q | grep vol_right | cut -d" " -f3
+			else
+				cmus-remote -v $2
+			fi ;;
+		*) echo "Unknown command: $1"; return 1 ;;
 	esac
 }
 
@@ -20,5 +38,10 @@ if [ ! -z "$MPD_HOST" ] || running mpd; then
 	exit
 fi
 
-echo "No supported players found. Currently supports: mpd."
+if running cmus; then
+	cmus "$CMD" "$@"
+	exit
+fi
+
+echo "No supported players found. Currently supports: mpd, cmus."
 exit 1

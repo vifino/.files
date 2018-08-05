@@ -30,3 +30,6 @@ silent wh gst-launch-1.0 && alias gst=gst-launch-1.0 ||
 
 # X11/WM stuff
 silent wh herbstclient && alias hc=herbstclient
+
+# Music
+alias np=song
