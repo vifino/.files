@@ -17,7 +17,7 @@ mpd() {
 cmus() {
 	case "$1" in
 		playing) cmus-remote -Q | grep -m 1 playing >/dev/null ;;
-		song) cmus-remote -C "format_print '%a - %t'" ;;
+		song) cmus playing && cmus-remote -C "format_print '%a - %t'" ;;
 		play|pause|next|prev) cmus-remote --$1 ;;
 		stop) cmus-remote --$1 ;;
 		vol)
