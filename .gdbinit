@@ -30,14 +30,15 @@ set confirm off
 # Set a neat prompt incase GEF doesn't load.
 set prompt \01\033[32m\002>> \001\033[0m\002
 
-# Load aliases
-source ~/.gdb_aliases
+# Load other files.
+source ~/.gdb/aliases
+source ~/.gdb/signals.gdb
 
 # GEF
 # Since GEF is overkill quite often,
 # just define an alias to load it.
 define gef
-	source ~/.gdbinit-gef.py
+	source ~/.gdb/gef.py
 end
 
 # Source per-project .gdbinit files.
