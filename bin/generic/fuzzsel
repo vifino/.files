@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <sys/limits.h>
+#include <limits.h>
 
 // Settings
 #define INITIAL_BUFFER 1024
