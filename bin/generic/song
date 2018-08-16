@@ -2,22 +2,38 @@
 # Song: A small (hopefully soon multi player compatible) music player controller.
 set -e
 
+usage() {
+	cat <<EOF
+song: A utility to control some media players and get the playing song.
+Usage: song [cmd] [args..]
+Commands:
+ playing:       Check if a song is playing.
+    name:       Get the playing song if the player is playing.
+   pause:       Pause the playing song.
+    play:       Resume playing.
+    next:       Skip to the next song.
+    prev:       Go to the last song/beginning of the current song.
+   vol N:       Set the volume to N.
+EOF
+}
+
+# MPD
 export MPC_FORMAT="[[%artist% - ]%title%]|[%file%]"
 mpd() {
 	case "$1" in
 		playing) mpc status -f "" | grep playing >/dev/null ;;
-		song) mpd playing && mpc current ;;
+		name) mpd playing && mpc current ;;
 		play|pause|next|prev) mpc -q $1; mpc current ;;
 		stop) mpc -q $1 ;;
 		vol) mpc -q "$@" | cut -d" " -f2 ;;
-		*) echo "Unknown command: $1"; return 1 ;;
+		*) echo "Unknown command: $1"; usage; return 1 ;;
 	esac
 }
 
 cmus() {
 	case "$1" in
 		playing) cmus-remote -Q | grep -m 1 playing >/dev/null ;;
-		song) cmus playing && cmus-remote -C "format_print '%a - %t'" ;;
+		name) cmus playing && cmus-remote -C "format_print '%a - %t'" ;;
 		play|pause|next|prev) cmus-remote --$1 ;;
 		stop) cmus-remote --$1 ;;
 		vol)
@@ -26,12 +42,12 @@ cmus() {
 			else
 				cmus-remote -v $2
 			fi ;;
-		*) echo "Unknown command: $1"; return 1 ;;
+		*) echo "Unknown command: $1"; usage; return 1 ;;
 	esac
 }
 
 CMD="$1"
-[ -z "$CMD" ] && CMD=song || shift
+[ -z "$CMD" ] && CMD=name || shift
 
 if [ ! -z "$MPD_HOST" ] || running mpd; then
 	mpd "$CMD" "$@"

@@ -1,0 +1,4 @@
+# CMUS config file.
+
+# Status program.
+set status_display_program=~/.config/cmus/status.sh
