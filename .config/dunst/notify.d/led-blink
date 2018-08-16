@@ -13,3 +13,4 @@ case $5 in
 	NORMAL) blink on off on off ;;
 	CRITICAL) blink on off on off on off ;;
 esac
+

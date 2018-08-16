@@ -181,4 +181,4 @@
 
 [notify-hook]
 	summary = "*"
-	script = dunst-notify-hook
+	script = ~/.config/dunst/bin/dunst-notify-hook

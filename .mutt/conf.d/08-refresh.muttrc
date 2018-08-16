@@ -1,0 +1,5 @@
+# Refresh settings
+
+set timeout=300
+set mail_check=10
+set beep_new

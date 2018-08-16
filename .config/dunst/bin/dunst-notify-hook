@@ -7,6 +7,8 @@ if [ ! $# -eq 5 ]; then
 	exit 1
 fi
 
+export PATH="~/bin/generic:$PATH"
+
 for file in ~/.config/dunst/notify.d/*; do
 	if [ -x "$file" ]; then
 		"$file" "$@" &

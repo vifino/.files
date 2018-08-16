@@ -1,2 +1,4 @@
 # Certs
 set certificate_file = "~/.mutt/certs"
+my_hdr X-Clacks-Overhead: GNU Terry Pratchett
+my_hdr X-NSA-ASSESSMENT: MOSTLY_HARMLESS
