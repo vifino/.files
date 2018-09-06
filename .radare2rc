@@ -1,0 +1,7 @@
+# Yay, r2rc.
+
+e scr.utf8=true
+e cfg.fortunes.clippy=true
+
+e asm.emu=true
+e asm.describe=true

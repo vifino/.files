@@ -9,8 +9,10 @@ https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml "~Analyzed CVE Feed
 http://openbsd-current-rss.appspot.com/ "BSD" "Technology" "Open Source"
 https://www.FreeBSD.org/news/rss.xml "BSD" "Technology" "Open Source"
 https://github.com/shinyblink/sled/commits/master.atom "~sled:master" "GitHub" "Open Source"
-https://github.com/opentx/opentx/commits/2.2.atom "~OpenTX:2.2" "GitHub" "Open Source" "RC"
+https://github.com/opentx/opentx/commits/2.3.atom "~OpenTX:2.3" "GitHub" "Open Source" "RC"
 https://github.com/betaflight/betaflight/commits/master.atom "~BetaFlight:master" "GitHub" "Open Source" "RC"
+https://github.com/radare/radare2/commits/master.atom "~radare2:master" "GitHub" "Open Source" "Reverse Engineering" "Debugging"
+https://github.com/blacksphere/blackmagic/commits/master.atom "~BlackMagic Debug:master" "GitHub" "Open Source" "Debugging"
 
 # Tech news feeds.
 https://www.phoronix.com/rss.php "Technology" "News" "BSD" "Linux" "UNIX" "Open Source"
@@ -23,5 +25,6 @@ http://www.spiegel.de/international/index.rss "Real" "News" # I like the tag ord
 https://en.wikinews.org/w/index.php?title=Special:NewPages&feed=atom "~Wikinews" "Real" "Independant" "News"
 
 # Blogs I find worth reading.
+https://blog.fefe.de/rss.xml "~Fefe's Blog" "German" "Blog" "Technology" "News" "Politics" 
 https://acassis.wordpress.com/feed "~Alan C. Assis' Blog" "Blog" "NuttX" "UNIX" "Technology"
 https://oscarliang.com/feed "Blog" "FPV" "RC"

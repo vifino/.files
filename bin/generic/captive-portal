@@ -1,0 +1,6 @@
+#!/bin/sh
+# Check if a captive portal exists.
+set -e
+
+res=$(curl -sL -w "%{http_code)\\n" "http://gstatic.com/generate_204" -o /dev/null)
+[ $res = 204 ]
