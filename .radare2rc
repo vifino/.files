@@ -1,5 +1,6 @@
 # Yay, r2rc.
 
+#e scr.color = 2
 e scr.utf8=true
 e cfg.fortunes.clippy=true
 

@@ -23,6 +23,8 @@
         diff = auto
         interactive = auto
         status = auto
+[pager]
+	diff = false
 
 # LFS stuff.
 [filter "lfs"]

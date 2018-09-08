@@ -1,0 +1,3 @@
+# Set notification handler.
+
+set new_mail_command="notify-send 'New Email' '%n new messages, %u unread.' &"
