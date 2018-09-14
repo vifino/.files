@@ -61,8 +61,8 @@ case "$CMD" in
 		case "$2" in
 			left)       exec xrandr --output "$1" --left-of "$3" ;;
 			right)      exec xrandr --output "$1" --right-of "$3" ;;
-			above|up)   exec xrandr --output "$1" --above--of "$3" ;;
-			below|down) exec xrandr --output "$1" --below-of "$3" ;;
+			above|up)   exec xrandr --output "$1" --above "$3" ;;
+			below|down) exec xrandr --output "$1" --below "$3" ;;
 			*) usage && exit 1
 		esac
 		;;

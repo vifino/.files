@@ -3,4 +3,4 @@
 export WM=herbstluftwm
 export TERMINAL=urxvtc
 export BROWSER=luakit
-export BRIGHTNESS=30
+export BRIGHTNESS=50

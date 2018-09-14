@@ -25,6 +25,8 @@
         status = auto
 [pager]
 	diff = false
+	branch = false
+	pull = false
 
 # LFS stuff.
 [filter "lfs"]
