@@ -1,0 +1,197 @@
+#!/usr/bin/env bash
+# Version: git
+
+if [ -z "$PUUSH_API_KEY" ]
+then
+  PUUSH_API_KEY="A9B1115B743819CC11F3835B61AEA67A" # found on teh interwebs
+fi
+
+usage()
+{
+  cat << EOF
+Usage: $0 [options] [file]
+If [file] is a hyphen, puush will read the filename from STDIN
+
+  Options:
+  -d	Delete file
+  -f	No delete prompt
+  -h	Show this message
+  -l [search]	List uploaded files
+EOF
+}
+
+[ -z "$1" ] && usage && exit
+
+exclusive()
+{
+  if [ $EXCLUSIVE ]
+  then
+    echo "Too many options."
+    exit 1
+  fi
+  EXCLUSIVE=true
+}
+
+OPERATION=UP
+
+while getopts ":d:fhl" OPTION
+do
+  case $OPTION in
+    d)
+      OPERATION=DEL
+      FILE=$OPTARG
+      exclusive
+      ;;
+    f)
+      FORCE=true
+      ;;
+    h)
+      usage
+      exit 1
+      ;;
+    l)
+      OPERATION=LIST
+      exclusive
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [ -z "$PUUSH_API_KEY" ]
+then
+  echo "Set the variable PUUSH_API_KEY in $0 or with 'export PUUSH_API_KEY=\"apiKeyHere\"'" >&2
+  exit 1
+fi
+
+validate()
+{
+  if [ -z "$2" -o "$2" = -1 ]
+  then
+    echo "$3 failed" >&2
+    exit 1
+  elif [ "$1" != 0 ]
+  then
+    return
+  else
+    echo "$3 successful"
+    if [ $4 ]
+    then
+      echo $4
+    fi
+  fi
+}
+
+printhist()
+{
+  if [ "$1" = 0 ]
+  then
+    return
+  fi
+  IFS=","
+  set $1
+  printf "ID: %s\tFilename: %s\tURL: %s\tDate: %s\n" $1 $4 $3 $2
+  ID=$1
+}
+
+printdel()
+{
+  printf "$1 ~ "
+  printhist "$2"
+  ID[$1]=$ID
+}
+
+del()
+{
+  RESP=$(curl "https://puush.me/api/del" -s -F "k=$PUUSH_API_KEY" -F "i=$1")
+  validate "0" "$RESP" "Delete"
+}
+
+case $OPERATION in
+  DEL)
+    RESP=$(curl "https://puush.me/api/hist" -s -F "k=$PUUSH_API_KEY")
+    validate "1" "$RESP" "Delete"
+    HIST=$(echo "$RESP" | grep $FILE)
+    if [ $(echo "$HIST" | wc -l) = 1 ]
+    then
+      ID=$(echo $HIST | cut -d , -f 1)
+      if [ -z "$ID" -o "$ID" = "0" ]
+      then
+        echo "File not found" >&2
+        exit 1
+      fi
+      NAME=$(echo $HIST | cut -d , -f 4)
+      if ! [ "$FILE" = "$NAME" -o "$FORCE" ]
+      then
+        echo "Delete $NAME? ($ID) [Y/n]"
+        read i
+        if ! [ "$i" = '' -o "${i^^}" = "Y" ]
+        then
+          exit 0
+        fi
+      fi
+      del $ID
+    else
+      while read line
+      do
+        if [ "$line" = "0" ]
+        then
+          continue
+        fi
+        i=$[ i + 1 ]
+        printdel $i "$line"
+      done <<< "$HIST"
+      printf "Delete number: "
+      read i
+      if [[ $i =~ ^[0-9]+$ ]]
+      then
+        del ${ID[$i]}
+      else
+        echo "Invalid number" >&2
+        exit 1
+      fi
+    fi
+    ;;
+  LIST)
+    RESP=$(curl "https://puush.me/api/hist" -s -F "k=$PUUSH_API_KEY")
+    validate "1" "$RESP" "List"
+    if [ $# -gt 1 ]
+    then
+      SEARCH=${@: -1}
+      HIST=$(echo "$RESP" | grep $SEARCH)
+    else
+      HIST="$RESP"
+    fi
+    while read line
+    do
+      if [ "$line" = "0" ]
+      then
+        continue
+      fi
+      printhist "$line"
+    done <<< "$HIST"
+    ;;
+  UP)
+    FILE=${@: -1}
+    if [ "$FILE" = "-" ]
+    then
+      read FILE
+    fi
+    
+    if ! [ -r "$FILE" ]
+    then
+      echo "Invalid file specified" >&2
+      exit 1
+    fi
+    RESP=$(curl "https://puush.me/api/up" -# -F "k=$PUUSH_API_KEY" -F "z=poop" -F "f=@$FILE")
+    validate "0" "$RESP" "Upload" "$(echo "$RESP" | cut -d , -f 2)"
+    ;;
+esac
+
+exit 0

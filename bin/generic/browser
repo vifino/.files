@@ -21,7 +21,7 @@ check_browser() {
 }
 
 if graphical; then
-	for browser in luakit firefox google-chrome dwb; do
+	for browser in luakit waterfox firefox google-chrome dwb; do
 		check_browser "$browser" "$@"
 	done
 else

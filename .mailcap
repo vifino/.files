@@ -1,0 +1,17 @@
+# HTML
+text/html; w3m -dump -T text/html -I %{charset}; copiousoutput; description=HTML Text; test=type w3m >/dev/null
+
+# pdf
+application/pdf; pdftotext -layout -l 10 -nopgbrk /dev/stdin -; copiousoutput
+content/pdf; pdftotext -layout -l 10 -nopgbrk /dev/stdin -; copiousoutput
+
+# word
+application/msword; antiword %s; copiousoutput
+application/vnd.msword; antiword %s; copiousoutput
+
+# video and audio
+video/*; mpv %s; needsterminal
+audio/*; mpv %s; copiousoutput
+
+# images
+image/*; display %s

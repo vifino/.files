@@ -3,8 +3,10 @@
 set sleep_time = 0 # be fast
 set smart_wrap
 
-# autoview
+# view stuff
 auto_view text/html
+
+alternative_order text/enriched text/plain text/html text
 
 # urlview
 bind attach g noop
