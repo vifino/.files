@@ -2,6 +2,7 @@
 
 set sleep_time = 0 # be fast
 set smart_wrap
+set implicit_autoview=yes
 
 # view stuff
 auto_view text/html

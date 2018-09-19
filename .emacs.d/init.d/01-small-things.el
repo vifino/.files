@@ -47,7 +47,8 @@
       dired-use-ls-dired nil
       tls-checktrust t
       gnutls-verify-error t
-      auto-window-vscroll t)
+      auto-window-vscroll t
+      text-quoting-style 'straight)
 
 ;; small keybinding
 (req-package compile

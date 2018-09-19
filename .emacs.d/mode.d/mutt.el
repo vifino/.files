@@ -5,7 +5,9 @@
   (flush-lines "^\\(> \n\\)*> -- \n\\(\n?> .*\\)*") ; kill quoted sigs
   (set-buffer-modified-p nil)
   (mail-text)
-  (setq make-backup-files nil)
+  (setq make-backup-files nil
+        indent-tabs-mode nil
+        tab-width 1)
   (turn-on-auto-fill)
   (font-lock-add-keywords nil
                           '(("^[ \t]*>[ \t]*>[ \t]*>.*$"

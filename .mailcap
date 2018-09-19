@@ -1,5 +1,8 @@
+# Text, why is this necessary?
+text/plain; cat %s; copiousoutput
+
 # HTML
-text/html; w3m -dump -T text/html -I %{charset}; copiousoutput; description=HTML Text; test=type w3m >/dev/null
+text/html; w3m -dump -T %t -I %{charset}; copiousoutput; description=HTML Text; test=type w3m >/dev/null
 
 # pdf
 application/pdf; pdftotext -layout -l 10 -nopgbrk /dev/stdin -; copiousoutput

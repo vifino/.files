@@ -1,2 +1,4 @@
-# Don't store duplicates.
+# Various history settings.
 setopt HIST_IGNORE_DUPS HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS HIST_IGNORE_SPACE
+setopt HIST_NO_STORE HIST_VERIFY
