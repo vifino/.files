@@ -3,7 +3,8 @@
 
 # setup zkbd
 autoload -U zkbd
-KBDFILE=$(printf '%s\n' ~/.zkbd/$TERM-* | head -n1)
+KBDFILE=~/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}
+[ ! -f "$KBDFILE" ] && KBDFILE=~/.zkbd/$TERM
 [ -f $KBDFILE ] && source $KBDFILE
 
 # setup keys accordingly
