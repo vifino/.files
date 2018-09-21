@@ -1,6 +1,7 @@
 #!/usr/bin/env crun
 // fuzzsel: Selects the closest matching line from stdin compared to argv[1]
 
+#define _WITH_GETLINE
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>

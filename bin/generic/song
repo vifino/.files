@@ -22,7 +22,7 @@ export MPC_FORMAT="[[%artist% - ]%title%]|[%file%]"
 mpd() {
 	case "$1" in
 		playing) mpc status -f "" | grep playing >/dev/null ;;
-		name) mpd playing && mpc current ;;
+		name) mpc current ;;
 		play|pause|next|prev) mpc -q $1; mpc current ;;
 		stop) mpc -q $1 ;;
 		vol) mpc -q "$@" | cut -d" " -f2 ;;
@@ -33,8 +33,8 @@ mpd() {
 cmus() {
 	case "$1" in
 		playing) cmus-remote -Q | grep -m 1 playing >/dev/null ;;
-		name) cmus playing && cmus-remote -C "format_print '%a - %t'" ;;
-		play|pause|next|prev) cmus-remote --$1 ;;
+		name) cmus-remote -C "format_print '%a - %t'" ;;
+		play|pause|next|prev) cmus-remote --$1 && cmus name ;;
 		stop) cmus-remote --$1 ;;
 		vol)
 			if [ -z "$2" ]; then
