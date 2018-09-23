@@ -1,0 +1,17 @@
+#!/bin/sh
+# Return whether laptop is docked.
+OS=`uname`
+
+first() {
+	echo "$1"
+}
+
+case "$OS" in
+	OpenBSD)
+		[ `first $(sysctl -n hw.sensors.acpidock0.indicator0)` = "On" ]
+		return $? ;;
+
+	*)
+		# can't figure out whether machine is docked or not.
+		return 1
+esac

@@ -18,14 +18,14 @@
   (with-eval-after-load 'ido
     (ido-mode-real -1)
     (ivy-mode 1))
-  (setq ivy-use-virtual-buffers nil)
-  (setq ivy-height 11)
-  (setq ivy-initial-inputs-alist nil)
-  (setq ivy-count-format "%d/%d ")
-  (setq ivy-virtual-abbreviate 'full) ; Show the full virtual file paths
-  (setq ivy-extra-directories '("./")) ; default value: ("../" "./")
-  (setq ivy-wrap t)
-  (setq ivy-re-builders-alist '((swiper . ivy--regex-plus)
+  (setq ivy-use-virtual-buffers nil
+        ivy-height 11
+        ivy-initial-inputs-alist nil
+        ivy-count-format "%d/%d "
+        ivy-virtual-abbreviate 'full ; Show the full virtual file paths
+        ivy-extra-directories '("./") ; default value: ("../" "./")
+        ivy-wrap t
+        ivy-re-builders-alist '((swiper . ivy--regex-plus)
                                 (counsel-ag . ivy--regex-plus)
                                 (counsel-grep-or-swiper . ivy--regex-plus)
                                 (t . ivy--regex-fuzzy))))
@@ -60,7 +60,7 @@
         (funcall cmd source target 1))))
   (defun confirm-delete-file (x)
     (dired-delete-file x 'confirm-each-subdirectory))
- 
+
   (setq counsel-find-file-at-point t)
   ;; ignore . files or temporary files
   (setq counsel-find-file-ignore-regexp

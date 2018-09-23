@@ -1,0 +1,17 @@
+#!/bin/sh
+# Return whether device is powered from an external source (not running on battery)
+OS=`uname`
+
+first() {
+	echo "$1"
+}
+
+case "$OS" in
+	OpenBSD)
+		[ `first $(sysctl -n hw.sensors.acpiac0.indicator0)` = "On" ]
+		return $? ;;
+
+	*)
+		# can't figure out whether machine is externally powered or not.
+		return 0
+esac
