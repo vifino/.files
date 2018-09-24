@@ -10,6 +10,13 @@ case "$OS" in
 	OpenBSD)
 		[ `first $(sysctl -n hw.sensors.acpiac0.indicator0)` = "On" ]
 		return $? ;;
+	Linux)
+		if [ -d /sys/class/power_supply/AC ]; then
+			[ `cat /sys/class/power_supply/AC/online` = 1 ]
+			return $?
+		fi 
+
+		return 0 ;;
 
 	*)
 		# can't figure out whether machine is externally powered or not.

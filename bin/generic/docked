@@ -11,6 +11,18 @@ case "$OS" in
 		[ `first $(sysctl -n hw.sensors.acpidock0.indicator0)` = "On" ]
 		return $? ;;
 
+	Linux)
+		# Bit of a hack, really, but it works.
+		if [ -d /sys/devices/platform/dock.0 ]; then
+			for D in /sys/devices/platform/dock.*; do
+				if [ `cat $D/type` = "dock_station" ]; then
+					[ `cat $D/docked` = 1 ]
+					return $?
+				fi
+			done
+		fi
+		# dunno.
+		return 1 ;;
 	*)
 		# can't figure out whether machine is docked or not.
 		return 1
