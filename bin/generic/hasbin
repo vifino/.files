@@ -1,5 +1,7 @@
 #!/bin/sh
 # Utility that returns whether a binary is in the path or not.
-[ -z "$1" ] && echo "Usage $(basename $0) prog" && exit 1
-command -v "$1" > /dev/null
-exit $?
+[ -z "$1" ] && echo "Usage $(basename $0) progs.." && exit 1
+for bin in "$@"; do
+	command -v "$bin" > /dev/null
+	[ $? -eq 0 ] || exit 1
+done

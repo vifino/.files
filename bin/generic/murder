@@ -2,6 +2,13 @@
 # Killall alternative, but more hacky.
 [ -z "$1" ] && echo "Usage: $(basename $0) <process name>" && exit 1
 
-PIDS="$(ps ax -o "pid,args" | cut -d" " -f1-2 | grep "$1\$" | cut -d" " -f1)"
-[ ! -z "$PIDS" ] && kill -9 $PIDS && exit 0
-[ -z "$PIDS" ] && echo "No processes found named '$1'." && exit 1
+PIDS="$(ps ax -o "pid,args" | awk "{if (\$2 == \"$1\") print \$1;}")"
+if [ ! -z "$PIDS" ]; then
+	kill $PIDS
+	sleep 0.1
+	kill -9 $PIDS 2> /dev/null
+	exit
+else
+	echo "No processes found named '$1'."
+	exit 1
+fi

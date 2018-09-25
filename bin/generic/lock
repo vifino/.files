@@ -1,0 +1,24 @@
+#!/bin/sh
+# Selects a program, then locks the session with it.
+
+if graphical; then
+	if [ ! -z "$GLOCKER" ]; then
+		exec "$GLOCKER"
+	fi
+
+	for locker in glitchlock i3lock slock; do
+		if hasbin $locker; then
+			"$locker"
+			[ "$?" -eq 0 ] && exit
+		fi
+	done
+	echo "No graphical locker found."
+	exit 1
+fi
+
+if [ ! -z "$TLOCKER" ]; then
+	exec "$TLOCKER"
+fi
+
+echo "No terminal session locker support yet."
+exit 1

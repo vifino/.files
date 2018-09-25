@@ -11,8 +11,8 @@ Valid actions:
          usage: switch {on/off/toggle} switch_name
   light: turn on or off a light
          usage: light {on/off/toggle} light_name
-   call: call a script
-         usage: call script_name
+    run: run a script
+         usage: run script_name
    mqtt: publish a MQTT message
          usage: mqtt topic "message"
    list: list entities, requires jq.

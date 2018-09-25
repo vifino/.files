@@ -8,6 +8,7 @@ usage() {
 	cat <<USAGE
 Usage: $(basename $0) cmd [opts]
 Known commands:
+  ######### VIDEO COMMANDS ####################################################
   lao     # list active outputs, no args
   newm    # def new monitor mode, args: x y hz [cvt12 opts]
           # ex: newm 1366 768 60 -b
@@ -23,6 +24,13 @@ Known commands:
   rot     # rotate display, args: rot mon dir
           # ex: rot DP1 right
           # valid dirs: normal, left, right, inverted
+  ######## INPUT COMMANDS #####################################################
+  lip     # list input devices, no args
+  lin     # list input device names, no args
+  eni     # enable input, args: name
+          # ex: eni "Synaptics TouchPad"
+  disi    # disable input, args: name
+          # ex: disi "Synaptics TouchPad"
 USAGE
 }
 
@@ -35,8 +43,13 @@ check_args() {
 
 check_args "$CMD"
 
+input_find() {
+	xinput --list --name-only | fuzzsel "$1"
+}
+
 shift
 case "$CMD" in
+	# video commands
 	lao) # list active outputs
 		xrandr -q | grep -o '.* connected' | cut -d" " -f1 ;;
 	newm) # add mode, opts: x y hz [cvt12 opts]
@@ -69,5 +82,20 @@ case "$CMD" in
 	rot) # rotate
 		check_args "$1" "$2"
 		exec xrandr --output "$1" --rotate "$2" ;;
+	# input commands
+	lip) # list input devices
+		exec xinput --list ;;
+	lin) # list input devices names
+		exec xinput --list --name-only ;;
+	eni) # enable input device
+		check_args "$1"
+		D=$(input_find "$1")
+		echo "Enabling $D"
+		exec xinput enable "$D" ;;
+	disi) # disable input device
+		check_args "$1"
+		D=$(input_find "$1")
+		echo "Disabling $D"
+		exec xinput disable "$D" ;;
 	*) usage && exit 1
 esac
