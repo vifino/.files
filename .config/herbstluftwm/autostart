@@ -184,6 +184,7 @@ hc set tree_style '╾│ ├└╼─┐'
 
 keybind $MOD-d               spawn rofi -show run
 keybind $MOD-t               spawn $TERMINAL
+keybind $MOD-a               spawn lock
 
 ##
 # Host specific config
