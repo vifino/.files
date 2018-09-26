@@ -3,30 +3,18 @@
 # ┃ ┳┃  ┃ ┃ ┃  ┃━┫┃  ┃ ┃┃  ┣┻┓
 # ┇━┛┇━┛┇ ┇ ┗━┛┇ ┻┇━┛┛━┛┗━┛┇ ┛
 #
-# author: xero <x@xero.nu> http://xero.nu
-# requires: i3lock-color, imagemagick, scrot
+# author: vifino <vifino@tty.sh> http://tty.sh
+# original by xero <x@xero.nu> http://xero.nu
+# requires: i3lock-color, imagemagick, 
 # modified by vifino.
 
-if ! hasbin scrot convert i3lock; then
-	echo "Need scrot, imagemagick/convert and i3lock-color."
+if ! hasbin scrot ff-glitch png2ff ff2png i3lock; then
+	echo "Need scrot, imagemagick/convert, farbfeld tools, ff-glitch and i3lock-color."
 	exit 1
 fi
 
-scrot /tmp/lock.png
-convert /tmp/lock.png /tmp/lock.jpg
-file=/tmp/lock.jpg
-
-function datamosh() {
-	fileSize=$(wc -c < "$file")
-	headerSize=1000
-	skip=$(shuf -i "$headerSize"-"$fileSize" -n 1)
-	count=$(shuf -i 1-10 -n 1)
-	for i in $(seq 1 $count);do byteStr=$byteStr'\x'$(shuf -i 0-255 -n 1); done;   
-	printf $byteStr | dd of="$file" bs=1 seek=$skip count=$count conv=notrunc >/dev/null 2>&1
-}
-
-steps=$(shuf -i 40-70 -n 1)
-for i in $(seq 1 $steps);do datamosh "$file"; done
+scrot /tmp/scrot.png
+cat /tmp/scrot.png | png2ff | ff-glitch | ff2png > /tmp/glitch.png
 
 GLITCHICON=${GLITCHICON:="$HOME/img/stop.png"}
 PARAM=(--bar-indicator --bar-position h --bar-direction 1 --redraw-thread -t "" \
@@ -52,10 +40,8 @@ do
 	fi
 done <<<"$(xrandr)"
 
-convert /tmp/lock.jpg /tmp/lock.png >/dev/null 2>&1
-rm /tmp/lock.jpg
-file=/tmp/lock.png
+convert /tmp/glitch.png "${LOCK[@]}" /tmp/lock.png
+rm /tmp/scrot.png /tmp/glitch.png
 
-convert "$file" "${LOCK[@]}" "$file"
-
-i3lock -n "${PARAM[@]}" -i "$file" > /dev/null 2>&1
+i3lock -n "${PARAM[@]}" -i "/tmp/lock.png" > /dev/null 2>&1
+rm /tmp/glitch.png
