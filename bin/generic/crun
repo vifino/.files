@@ -1,4 +1,5 @@
 #!/bin/sh
+# CRUN V1.0
 # Runs a C source file like a script.
 # Parses comments looking like this:
 # // @ CFLAGS = -Os -Wall
@@ -29,7 +30,7 @@ getvar() {
 	# $1 is the param, $2 is the file
 	# parses lines that look like this: // @ CFLAGS = -Os -lwhatever
 	# ugly because of the eval, but it works.
-	VAR="$(awk -F "=" "/^\\/\\/ @ $1/ {print \$2}" "$2")"
+	VAR="$(awk -F "=" "/\/\/ @ CPPFLAGS/ { OFS=\"=\"; \$1=\"\"; sub(FS,\"\"); print \$0}" "$2")"
 	[ -z "$VAR" ] && eval "echo \$$1" && return
 	echo $VAR
 }
@@ -38,6 +39,7 @@ getvar() {
 CC_NEW=$(getvar CC "$SOURCE")
 [ -z "$CC" ] && CC=cc
 CFLAGS=$(getvar CFLAGS "$SOURCE")
+[ -z "$CFLAGS" ] && CFLAGS="-O2 -march=native"
 CPPFLAGS=$(getvar CPPFLAGS "$SOURCE")
 LDFLAGS=$(getvar LDFLAGS "$SOURCE")
 

@@ -8,13 +8,12 @@
 # requires: i3lock-color, imagemagick, 
 # modified by vifino.
 
-if ! hasbin scrot ff-glitch png2ff ff2png i3lock; then
-	echo "Need scrot, imagemagick/convert, farbfeld tools, ff-glitch and i3lock-color."
+if ! hasbin xscreenshot ff-glitch png2ff ff2png i3lock; then
+	echo "Need xscreenshot, imagemagick/convert, farbfeld tools, ff-glitch and i3lock-color."
 	exit 1
 fi
 
-scrot /tmp/scrot.png
-cat /tmp/scrot.png | png2ff | ff-glitch | ff2png > /tmp/glitch.png
+xscreenshot | ff-glitch | ff2png > /tmp/glitch.png
 
 GLITCHICON=${GLITCHICON:="$HOME/img/stop.png"}
 PARAM=(--bar-indicator --bar-position h --bar-direction 1 --redraw-thread -t "" \
@@ -41,7 +40,7 @@ do
 done <<<"$(xrandr)"
 
 convert /tmp/glitch.png "${LOCK[@]}" /tmp/lock.png
-rm /tmp/scrot.png /tmp/glitch.png
+rm /tmp/glitch.png
 
 i3lock -n "${PARAM[@]}" -i "/tmp/lock.png" > /dev/null 2>&1
-rm /tmp/glitch.png
+#rm /tmp/lock.png

@@ -1,0 +1,7 @@
+#!/bin/sh
+# Appends something to stdin.
+POST="$1"
+[ -z "$POST"] && POST=" //" # nonsense, but i dunno
+while read str; do
+	printf "%s%s\n" "$str" "$POST"
+done

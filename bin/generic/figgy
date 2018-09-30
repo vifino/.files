@@ -1,0 +1,11 @@
+#!/bin/sh
+# Select anything figlet-y.
+FB=""
+for fb in toilet figlet; do
+	if hasbin "$fb"; then
+		FB="$fb"
+	fi
+done
+[ -z "$FB" ] && echo "Error: No Figlet found." && exit 1
+	
+"$FB" "$@"
