@@ -38,6 +38,3 @@ path+=("$GOPATH/bin")
 # Additions after system path
 ##
 path+=("$ospath[@]")
-
-# Plan9
-[ -z "$PLAN9" ] || path+=("$PLAN9/bin")

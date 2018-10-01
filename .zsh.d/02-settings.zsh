@@ -1,6 +1,9 @@
 #!/usr/bin/env zsh
 # Various settings. Mainly keybinds.
 
+# Report things taking longer than 10 seconds.
+REPORTTIME=10
+
 # setup zkbd
 autoload -U zkbd
 KBDFILE=~/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}

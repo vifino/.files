@@ -13,7 +13,7 @@
 
 #define WIPE "///"
 #define WIPEL 3
-#define SECS 1
+#define SECS 0.5
 
 // Escapes.
 #define ESC "\x1B["
@@ -47,9 +47,9 @@ int main(int argc, char* argv[]) {
 				char wb[WPL + 1] = WIPE;
 				wb[MIN(WPL, w - x)] = 0;
 				printf(ESC MOVETO " %s", y, x, wb);
-				fflush(stdout);
 			}
 		}
+		fflush(stdout);
 		usleep(sleeptime);
 	}
 
