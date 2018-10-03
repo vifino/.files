@@ -40,11 +40,11 @@ super + {h,j,k,l,Left,Down,Up,Right}
 
 # Tab through windows/
 super + p
-	focus.sh next
+	focus next
 
 # Tab through windows in reverse.
 super + o
-	focus.sh prev
+	focus prev
 
 # Move window.
 super + shift + {h,j,k,l,Left,Down,Up,Right}
@@ -84,5 +84,5 @@ super + d
 
 # Spawn terminal.
 super + t
-	urxvtc
+	$TERMINAL
 

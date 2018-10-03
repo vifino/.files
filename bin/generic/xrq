@@ -1,0 +1,4 @@
+#!/bin/sh
+# Query XResource values.
+[ -z "$1" ] && echo "Usage: $(basename $0) <xresource name>" && exit 1
+xrdb -query | grep -F "$1:" | cut -d"	" -f2

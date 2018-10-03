@@ -9,11 +9,9 @@
 # modified by vifino.
 
 if ! hasbin xscreenshot ff-glitch png2ff ff2png i3lock; then
-	echo "Need xscreenshot, imagemagick/convert, farbfeld tools, ff-glitch and i3lock-color."
+	echo "Need xscreenshot, farbfeld tools, ff-glitch, ff-overlay and i3lock-color."
 	exit 1
 fi
-
-xscreenshot | ff-glitch | ff2png > /tmp/glitch.png
 
 GLITCHICON=${GLITCHICON:="$HOME/img/stop.png"}
 PARAM=(--bar-indicator --bar-position h --bar-direction 1 --redraw-thread -t "" \
@@ -39,8 +37,7 @@ do
 	fi
 done <<<"$(xrandr)"
 
-convert /tmp/glitch.png "${LOCK[@]}" /tmp/lock.png
-rm /tmp/glitch.png
+xscreenshot | ff-glitch | ff-overlay <(cat "$GLITCHICON" | png2ff) |ff2png > /tmp/lock.png
 
 i3lock -n "${PARAM[@]}" -i "/tmp/lock.png" > /dev/null 2>&1
 #rm /tmp/lock.png

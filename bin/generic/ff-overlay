@@ -1,0 +1,105 @@
+#!/usr/bin/env crun
+// ┳━┓┳━┓  ┏━┓┓ ┳┳━┓┳━┓┳  ┳━┓┓ ┳
+// ┣━ ┣━ ━━┃ ┃┃┏┛┣━ ┃┳┛┃  ┃━┫┗┏┛
+// ┇  ┇    ┛━┛┗┛ ┻━┛┇┗┛┇━┛┛ ┇ ┇
+// ff-overlay: overlay one farbfeld image with another
+// Usage: <farbfeld source> | ff-overlay overlay.ff | <farbfeld sink>
+// made by vifino. ISC (C) vifino 2018
+
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <arpa/inet.h>
+#include <err.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+#define eprintf(...) fprintf(stderr, __VA_ARGS__)
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))
+
+typedef struct {
+	unsigned short r, g, b, a;
+} pixel;
+
+typedef unsigned char byte;
+
+// IO helpers.
+static inline void chew(FILE* file, byte* buffer, size_t bytes) {
+	if (!fread(buffer, bytes, 1, file)) {
+		eprintf("wanted more bytes, didn't get any?\n");
+		exit(1);
+	}
+}
+static inline void spew(FILE* file, byte* buffer, size_t bytes) {
+	if (file)
+		if (!fwrite(buffer, bytes, 1, file)) {
+			eprintf("write failed.\n");
+			exit(1);
+		}
+}
+
+static void ffparse(FILE* food, FILE* out, uint32_t* w, uint32_t* h) {
+	byte buf[8];
+	chew(food, buf, 8);
+	if (strncmp(buf, "farbfeld", 8) != 0) {
+		eprintf("file is not a farbfeld image?\n");
+		exit(1);
+	}
+	spew(out, buf, 8);
+
+	chew(food, buf, 8);
+	*w = ntohl(*(uint32_t*)buf);
+	*h = ntohl(*(uint32_t*)(buf + 4));
+	if (!w || !h) {
+		eprintf("image has zero dimension?\n");
+		exit(1);
+	}
+	spew(out, buf, 8);
+}
+
+int main(int argc, char* argv[]) {
+	if (argc != 2) {
+		eprintf("Usage: <farbfeld source> | %s overlay.ff | <farbfeld sink>\n", argv[0]);
+		return 1;
+	}
+
+	// parse overlay.
+	FILE* overlay = fopen(argv[1], "r");
+	if (!overlay)
+		err(2, "Failed to open file %s\n", argv[1]);
+	uint32_t ow, oh;
+	ffparse(overlay, NULL, &ow, &oh);
+
+	// parse input image
+	uint32_t w, h;
+	ffparse(stdin, stdout, &w, &h);
+
+	// MATH.
+	unsigned int sw = (w >= ow) ? ((w / 2) - (ow / 2) + (ow % 1)) : 0;
+	unsigned int sh = (h >= oh) ? ((h / 2) - (oh / 2) + (oh % 1)) : 0;
+	unsigned int ew = MIN(w, sw + ow);
+	unsigned int eh = MIN(h, sh + oh);
+
+	// dinner time.
+	byte buf[8];
+	byte obuf[8];
+	pixel* px = (pixel*) obuf;
+	uint32_t x, y;
+	for (y = 0; y < h; y++)
+		for (x = 0; x < w; x++) {
+			// nom.
+			chew(stdin, buf, 8);
+			if (sh <= y && eh > y && sw <= x && ew > x) {
+				chew(overlay, obuf, 8);
+				if (px->a) {
+					spew(stdout, obuf, 8);
+					continue;
+				}
+			}
+			spew(stdout, buf, 8);
+		}
+	return 0;
+}

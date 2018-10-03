@@ -12,6 +12,8 @@ if ! test -d "$ZPLG_HOME"; then
 fi
 
 # Essential
+MPB="$MANPATH"
 source "$ZPLG_HOME/bin/zplugin.zsh"
 autoload -Uz _zplugin
+[ -z "$MPB" ] && unset MANPATH MPB
 (( ${+_comps} )) && _comps[zplugin]=_zplugin

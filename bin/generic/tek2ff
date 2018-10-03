@@ -1,0 +1,6 @@
+#!/bin/sh
+# This only works well with EPS color output with a color scheme that works on black.
+# Alternatively, change.
+COLOR="#000000"
+[ -z "$1" ] && echo "Usage $(basename $0) <TEK.eps> | <ff sink>" && exit 1
+convert -density 288 -resize "800x600" -background "$COLOR" -flatten "$1" png:- | png2ff
