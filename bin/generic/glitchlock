@@ -6,7 +6,6 @@
 # author: vifino <vifino@tty.sh> http://tty.sh
 # original by xero <x@xero.nu> http://xero.nu
 # requires: i3lock-color, imagemagick, 
-# modified by vifino.
 
 if ! hasbin xscreenshot ff-glitch png2ff ff2png i3lock; then
 	echo "Need xscreenshot, farbfeld tools, ff-glitch, ff-overlay and i3lock-color."
@@ -19,25 +18,7 @@ PARAM=(--bar-indicator --bar-position h --bar-direction 1 --redraw-thread -t "" 
 	--bar-color 00000077 --keyhlcolor 00666666 --ringvercolor cc87875f --wrongcolor ffff0000 \
 	--veriftext="" --wrongtext="" --noinputtext="" )
 
-LOCK=()
-while read LINE
-do
-	if [[ "$LINE" =~ ([0-9]+)x([0-9]+)\+([0-9]+)\+([0-9]+) ]]; then
-		W=${BASH_REMATCH[1]}
-		H=${BASH_REMATCH[2]}
-		Xoff=${BASH_REMATCH[3]}
-		Yoff=${BASH_REMATCH[4]}
-		if [ ! -z "$GLITCHICON" -a -f "$GLITCHICON" ]; then
-			IW=`identify -ping -format '%w' $GLITCHICON`
-			IH=`identify -ping -format '%h' $GLITCHICON`
-			MIDXi=$(($W / 2 + $Xoff - $IW / 2))
-			MIDYi=$(($H / 2 + $Yoff - $IH / 2))
-			LOCK+=($GLITCHICON -geometry +$MIDXi+$MIDYi -composite)
-		fi
-	fi
-done <<<"$(xrandr)"
-
-xscreenshot | ff-glitch | ff-overlay <(cat "$GLITCHICON" | png2ff) |ff2png > /tmp/lock.png
+time xscreenshot | ff-glitch | ff-overlay <(cat "$GLITCHICON" | png2ff) | ff2png > /tmp/lock.png
 
 i3lock -n "${PARAM[@]}" -i "/tmp/lock.png" > /dev/null 2>&1
-#rm /tmp/lock.png
+rm /tmp/lock.png
