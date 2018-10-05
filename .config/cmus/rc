@@ -1,4 +1,10 @@
 # CMUS config file.
-
 # Status program.
 set status_display_program=~/.config/cmus/status.sh
+
+# Theme, duh.
+# Thanks xero for your great theme.
+colorscheme blaquemagick
+
+# Start out with shuffle.
+set shuffle=true
