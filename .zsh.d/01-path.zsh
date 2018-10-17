@@ -33,7 +33,7 @@ path+=("$GOPATH/bin")
 # Generic local bins
 [ -d /usr/local/sbin ] && path+=(/usr/local/sbin)
 [ -d /usr/local/bin ] && path+=(/usr/local/bin)
-[ -d ~/.bin ] && path=(~/.bin "$path[@]")
+[ -d ~/.local/bin ] && path=(~/.local/bin "$path[@]")
 ##
 # Additions after system path
 ##

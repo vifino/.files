@@ -1,0 +1,28 @@
+#!/bin/sh
+# Basic generic volume applet.
+
+alsa() {
+	if [ -z "$1" ]; then
+		amixer get Master | grep -o "[0-9]*%"
+	else
+		amixer set Master "$1"
+	fi
+}
+
+pa() {
+	if [ -z "$1" ]; then
+		# not sure if this is working, i don't really use pulse.
+		pactl list sinks | grep "Volume: 0:" | awk '{print $3}'
+	else
+		pactl set-sink-volume 0 "$1"
+	fi
+}
+
+if hasbin pactl; then
+	pa "$1"
+elif hasbin amixer; then
+	alsa "$1"
+else
+	echo "Couldn't find anything, sorry."
+	exit 1
+fi

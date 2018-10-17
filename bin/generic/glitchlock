@@ -5,7 +5,6 @@
 #
 # author: vifino <vifino@tty.sh> http://tty.sh
 # original by xero <x@xero.nu> http://xero.nu
-# requires: i3lock-color, imagemagick, 
 
 if ! hasbin xscreenshot ff-glitch png2ff ff2png i3lock; then
 	echo "Need xscreenshot, farbfeld tools, ff-glitch, ff-overlay and i3lock-color."

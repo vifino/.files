@@ -115,30 +115,33 @@ def_key "1"
   show_playlist
 
 def_key "2"
+  show_browser
+
+def_key "3"
   show_media_library
 
-def_key "2"
+def_key "3"
   toggle_media_library_columns_mode
 
-def_key "3"
+def_key "4"
   show_search_engine
 
-def_key "3"
+def_key "4"
   reset_search_engine
 
-def_key "4"
+def_key "5"
   show_visualizer
 
-def_key "5"
-  show_outputs
-
 def_key "6"
-  dummy
+  show_outputs
 
 def_key "7"
   dummy
 
 def_key "8"
+  dummy
+
+def_key "9"
   dummy
 
 #def_key "="

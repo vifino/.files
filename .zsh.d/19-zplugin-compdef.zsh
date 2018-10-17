@@ -1,2 +1,0 @@
-# Zplugin
-zplugin cdreplay -q

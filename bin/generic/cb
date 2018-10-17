@@ -1,0 +1,51 @@
+#!/bin/sh
+# Clipboard. yay.
+usage() {
+		echo "Usage: $(basename $0) get/set"
+		exit $1
+}
+
+ACTION="$1"
+if [ -z "$1" ]; then # detect
+	ACTION=set
+	[ -t 0 ] && ACTION=get
+fi
+
+has(){
+		command -v "$1" > /dev/null
+		return $?
+}
+
+cb_set() {
+		if has termux-clipboard-set; then
+				exec termux-clipboard-set
+		elif has xsel; then
+				exec xsel -i --clipboard
+		elif has xclip; then
+				 exec xclip -i -sel clipboard
+		else
+				echo "No clipboard tool found. Supporting: xsel, xclip."
+				exit 1
+		fi
+}
+
+cb_get() {
+		if has termux-clipboard-get; then
+				exec termux-clipboard-get
+		elif hasbin xsel; then
+				exec xsel -o --clipboard
+		elif hasbin xclip; then
+				 exec xclip -o -sel clipboard
+		else
+				echo "No clipboard tool found. Supporting: xsel, xclip."
+				exit 1
+		fi
+}
+
+
+case "$ACTION" in
+		get) cb_get ;;
+		set) cb_set ;;
+		'-h') usage 0 ;;
+		*) usage 1 ;;
+esac

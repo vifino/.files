@@ -4,23 +4,23 @@
 
 # Playback control
 XF86Audio{Prev,Next}
-    mpc -q {prev,next}
+	song {prev,next}
 XF86AudioPlay
-    mpc -q toggle
+	song toggle
 
 # Brightness
 XF86MonBrightness{Up,Down}
-    xbacklight -{inc,dec} 10
+	xbacklight -{inc,dec} 10
 
 # Audio
 XF86Audio{Raise,Lower}Volume
-    pactl set-sink-volume 0 {+,-}10%
+	vol {+,-}10%
 XF86AudioMute
-    pactl set-sink-mute 0 toggle
+	vol toggle
 
 # Lock
 XF86ScreenSaver
-	i3lock -ni ~/Documents/heroku.png
+	lock
 
 # Other stuff
 XF86Launch1

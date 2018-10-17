@@ -20,14 +20,14 @@ visualizer_in_stereo = yes
 #visualizer_sync_interval = 30
 
 ## Available values: spectrum, wave, wave_filled, ellipse.
-visualizer_type = wave_filled
+visualizer_type = wave
 #visualizer_look = ●▮
 #visualizer_color = blue, cyan, green, yellow, magenta, red
 visualizer_color = 41, 83, 119, 155, 185, 215, 209, 203, 197, 161
 #system_encoding = ""
 
 # Behavior
-screen_switcher_mode = playlist, media_library, search_engine, visualizer, clock
+screen_switcher_mode = playlist, browser, media_library, search_engine, visualizer, clock
 
 # >>> START STEALING FROM XERO <<<
 # █▓▒░ Display Settings
@@ -46,7 +46,8 @@ autocenter_mode = "yes"
 centered_cursor = "yes"
 progressbar_color = "black"
 progressbar_elapsed_color = "black"
-progressbar_look = "▒▓░"
+#progressbar_look = "▒▓░"
+progressbar_look = "━━─"
 titles_visibility = "no"
 mouse_support = "no"
 discard_colors_if_item_is_selected = "yes"

@@ -1,0 +1,86 @@
+###
+## MEDIA KEYS
+###
+
+# Playback control
+XF86Audio{Prev,Next}
+	song {prev,next}
+XF86AudioPlay
+	song toggle
+
+# Brightness
+XF86MonBrightness{Up,Down}
+	xbacklight -{inc,dec} 10
+
+# Audio
+XF86Audio{Raise,Lower}Volume
+	vol {+,-}10%
+XF86AudioMute
+	vol toggle
+
+# Lock
+XF86ScreenSaver
+	lock
+
+# Other stuff
+XF86Launch1
+	rofi -show run
+
+###
+## WINDOWCHEF STUFF
+###
+
+# Basic window manipulation
+super + {Left,Down,Up,Right}
+	waitron window_cardinal_focus {left,down,up,right}
+
+super + shift + {Left,Down,Up,Right}
+	waitron window_move {-20 0, 0 20, 0 -20, 20 0}
+
+super + ctrl + {Left,Down,Up,Right}
+	waitron window_resize {-20 0, 0 20, 0 -20, 20 0}
+
+super + f
+	waitron window_maximize
+
+super + shift + q
+	waitron window_close
+
+super + b
+	waitron window_hor_maximize
+
+super + v
+	waitron window_ver_maximize
+
+super + m
+	waitron window_monocle
+
+super + Tab
+	waitron window_cycle
+
+super + shift + Tab
+	waitron window_rev_cycle
+
+alt + ctrl + Tab
+	waitron window_focus_last
+
+super + {Insert,Prior,Delete,Next,End}
+	waitron window_snap {topleft,topright,bottomleft,bottomright,middle}
+
+# Group management
+super + {_,shift +}{1-9}
+	waitron {group_toggle,group_add_window} {1-9}
+
+super + r
+	waitron group_remove_window
+
+super + ctrl + {1-4}
+	waitron group_remove_all_windows {1-4}
+
+# Other.
+super + shift + e
+	waitron wm_quit 0
+
+super + t
+	$TERMINAL
+
