@@ -3,6 +3,6 @@
 ;; maybe make some flycheck package for openscad?
 ;; openscad needs an output file though, but .ast should do. should be quick.
 
-(req-package scad-mode
+(use-package scad-mode
   :mode "\\.scad\\'"
   :functions scad-mode)

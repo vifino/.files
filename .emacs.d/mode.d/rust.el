@@ -1,5 +1,5 @@
 ;; rust!!
-(req-package rust-mode :ensure t
+(use-package rust-mode :ensure t
   :mode "\\.rs\\'"
   :bind (("C-c C-f" . rust-format-buffer))
   :init
@@ -16,9 +16,9 @@
 ;  (add-hook 'racer-mode-hook #'eldoc-mode)
 ;  (add-hook 'racer-mode-hook #'company-mode))
 
-;; sadly not ready yet. crashes often. very often.
-(req-package lsp-rust :ensure t
-;  :require lsp-mode rust-mode
+;; sadly crashes often. very often.
+(use-package lsp-rust :ensure t
+  :after (lsp-mode rust-mode)
   :commands lsp-rust-enable
   :init
   (add-hook 'rust-mode-hook (lambda ()

@@ -1,8 +1,10 @@
 # List of known mailing lists.
 # Note: This is a tiny list, but those that I am interested in.
 
+# CCCmailing lists.
+lists public@lists.ccc-ffm.de intern@lists.ccc-ffm.de
+lists intern@lists.ccc.de
+
 # Lua/LuaJIT mailing list.
 lists lua-l@lists.lua.org luajit@freelists.org
 
-# CCC-FFM mailing lists.
-lists public@lists.ccc-ffm.de intern@lists.ccc-ffm.de

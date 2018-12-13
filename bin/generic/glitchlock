@@ -6,8 +6,8 @@
 # author: vifino <vifino@tty.sh> http://tty.sh
 # original by xero <x@xero.nu> http://xero.nu
 
-if ! hasbin xscreenshot ff-glitch png2ff ff2png i3lock; then
-	echo "Need xscreenshot, farbfeld tools, ff-glitch, ff-overlay and i3lock-color."
+if ! hasbin ffshot ff-glitch png2ff ff2png i3lock; then
+	echo "Need ffshot, farbfeld tools, ff-glitch, ff-overlay and i3lock-color."
 	exit 1
 fi
 
@@ -17,7 +17,7 @@ PARAM=(--bar-indicator --bar-position h --bar-direction 1 --redraw-thread -t "" 
 	--bar-color 00000077 --keyhlcolor 00666666 --ringvercolor cc87875f --wrongcolor ffff0000 \
 	--veriftext="" --wrongtext="" --noinputtext="" )
 
-time xscreenshot | ff-glitch | ff-overlay <(cat "$GLITCHICON" | png2ff) | ff2png > /tmp/lock.png
+time ffshot | ff-glitch | ff-overlay <(cat "$GLITCHICON" | png2ff) | ff2png > /tmp/lock.png
 
 i3lock -n "${PARAM[@]}" -i "/tmp/lock.png" > /dev/null 2>&1
 rm /tmp/lock.png

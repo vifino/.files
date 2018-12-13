@@ -20,6 +20,10 @@ unset record
 unset postponed
 unset mask
 
+# GPG
+unset pgp_default_key
+unset pgp_sign_as
+
 HEAD
 
 # Try to switch to the new one

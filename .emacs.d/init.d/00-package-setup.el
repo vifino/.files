@@ -19,7 +19,6 @@
           (package-refresh-contents)
           (package-install 'diminish)))
     (require 'use-package)
-    (use-package req-package :ensure t)
     (add-to-list 'load-path "~/.emacs.d/pkg")))
 
 (require 'diminish)

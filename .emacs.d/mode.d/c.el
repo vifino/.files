@@ -1,33 +1,33 @@
 ;; C and friends.
 
 ;; irony
-(req-package irony :ensure t
+(use-package irony :ensure t
   :commands (irony-mode irony-cdb-autosetup-compile-options))
 
-(req-package company-irony :ensure t
-	:require company irony
+(use-package company-irony :ensure t
+	:after (company irony)
 	:commands company-irony)
 
-(req-package flycheck-irony :ensure t
-	:require flycheck irony
+(use-package flycheck-irony :ensure t
+	:after (flycheck irony)
 	:commands flycheck-irony-setup)
 
-(req-package irony-eldoc :ensure t
-	:require irony
+(use-package irony-eldoc :ensure t
+	:after (irony)
 	:commands irony-eldoc)
 
 ;; irony hooks
 (defun vifino/c-hook ()
   (rainbow-delimiters-mode)
   (irony-cdb-autosetup-compile-options)
+  (irony-mode)
   (setq company-backends '(company-irony))
+  (flycheck-mode)
   (flycheck-irony-setup)
   (irony-eldoc)
   (add-to-list 'write-file-functions 'delete-trailing-whitespace)
-  (flycheck-mode)
   (set (make-local-variable 'compile-command)
-       (format "make -C %s" (file-name-directory (get-closest-pathname "Makefile"))))
-  (irony-mode))
+       (format "make -C %s" (file-name-directory (get-closest-pathname "Makefile")))))
 
 (add-hook 'c++-mode-hook 'vifino/c-hook)
 (add-hook 'c-mode-hook 'vifino/c-hook)

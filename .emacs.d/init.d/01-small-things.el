@@ -51,7 +51,7 @@
       text-quoting-style 'straight)
 
 ;; small keybinding
-(req-package compile
+(use-package compile
   :functions compile
   :defines compile-command
   :bind (("<f5>" . compile)))

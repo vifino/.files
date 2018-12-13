@@ -1,5 +1,5 @@
 ;; emacs-async for some speedups, maybe.
-(req-package async :ensure t
+(use-package async :ensure t
   :commands (async-start-process async-get async-ready
              async-wait async-inject-variables async-let)
   :init

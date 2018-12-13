@@ -1,8 +1,8 @@
 ;; Tramp settings.
 ;; Not really a language, but close enough.
 
-(req-package tramp
-	:commands (tramp-version tramp-cleanup-all-buffers)
+(use-package tramp
+  :commands (tramp-version tramp-cleanup-all-buffers)
   :config
   (progn
     (setq tramp-default-mode "ssh"

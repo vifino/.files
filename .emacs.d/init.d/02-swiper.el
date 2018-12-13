@@ -1,7 +1,7 @@
 ;; ivy, counsel and swiper.
 ;; big part stolen from https://pastebin.com/g867n8h6
 
-(req-package ivy :ensure t
+(use-package ivy :ensure t
   :diminish "Ivy"
   :commands (ivy-read ivy--reset-state)
   :bind
@@ -12,7 +12,7 @@
    ("C-'" . ivy-avy)
    :map ivy-minibuffer-map
    ("M-RET" . ivy-next-line-and-call))
-  :config
+  :init
   (defalias 'ido-mode-real 'ido-mode)
   (defalias 'ido-mode 'ivy-mode)
   (with-eval-after-load 'ido
@@ -30,7 +30,7 @@
                                 (counsel-grep-or-swiper . ivy--regex-plus)
                                 (t . ivy--regex-fuzzy))))
 
-(req-package counsel :ensure t
+(use-package counsel :ensure t
   :diminish "Counsel"
   :bind*
   (("M-x" . counsel-M-x)
@@ -70,7 +70,7 @@
          ;; File names ending with # or ~
          "\\|\\(?:\\`.+?[#~]\\'\\)")))
 
-(req-package swiper :ensure t
+(use-package swiper :ensure t
   :diminish "Swiper"
   :bind
   (("C-s" . swiper)

@@ -1,7 +1,7 @@
 ;; (e)lisp settings.
 
 ;; eldoc
-(req-package eldoc :ensure t
+(use-package eldoc :ensure t
   :commands (turn-on-eldoc-mode eldoc-mode)
   :config (add-hook 'emacs-lisp-mode-hook 'eldoc-mode))
 

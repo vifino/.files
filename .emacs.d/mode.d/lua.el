@@ -1,6 +1,6 @@
 ;; Lua stuff.
 
-(req-package lua-mode
+(use-package lua-mode
   :load-path "pkg"
   :mode "\\.lua\\'"
   :init
@@ -11,8 +11,8 @@
   :config
   (setq lua-indent-level 2))
 
-(req-package company-lua :ensure t
-  :require lua-mode
+(use-package company-lua :ensure t
+  :after (lua-mode company)
   :init
   (add-hook 'lua-mode-hook (lambda ()
                              (push 'company-lua (make-local-variable company-backends)))))
