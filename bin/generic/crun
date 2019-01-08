@@ -1,5 +1,5 @@
 #!/bin/sh
-# CRUN V1.0
+# CRUN V1.1
 # Runs a C source file like a script.
 # Parses comments looking like this:
 # // @ CFLAGS = -Os -Wall
@@ -14,7 +14,28 @@ set -e
 [ -z "$1" ] && echo "Usage: $(basename $0) myscript.c" && exit 1
 [ ! -f "$1" ] && echo "crun: file not found: $1" && exit 1
 
-SOURCE="$(readlink -f "$1")"
+has_bin() {
+	command -v "$1" > /dev/null
+}
+if has_bin realpath; then
+	RP() {
+		realpath "$1"
+	}
+else
+	RP() {
+		_OURPWD=$PWD
+		cd "$(dirname "$1")"
+		LINK=$(readlink "$(basename "$1")")
+		while [ "$LINK" ]; do
+			cd "$(dirname "$LINK")"
+			LINK=$(readlink "$(basename "$1")")
+		done
+		echo "$PWD/$(basename "$1")"
+		cd "$_OURPWD"
+}
+fi
+
+SOURCE="$(RP "$1")"
 shift # rest is arguments
 
 # Where we store our build.
