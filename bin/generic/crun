@@ -11,7 +11,7 @@
 
 set -e
 
-[ -z "$1" ] && echo "Usage: $(basename $0) myscript.c" && exit 1
+[ -z "$1" ] && echo "Usage: $(basename "$0") myscript.c" && exit 1
 [ ! -f "$1" ] && echo "crun: file not found: $1" && exit 1
 
 has_bin() {
@@ -42,7 +42,7 @@ shift # rest is arguments
 CACHEFILE="$HOME/.cache/crun/$SOURCE.bin"
 mkdir -p "$(dirname "$CACHEFILE")"
 
-if [ -f "$CACHEFILE" ] && [ "$CACHEFILE" -nt "$SOURCE" ]; then
+if [ -f "$CACHEFILE" ] && [ -n "$(find -L "$CACHEFILE" -prune -newer "$SOURCE")" ]; then
 	# Cache file exists and is newer than the source code.
 	exec "$CACHEFILE" "$@"
 fi
@@ -52,12 +52,12 @@ getvar() {
 	# parses lines that look like this: // @ CFLAGS = -Os -lwhatever
 	# ugly because of the eval, but it works.
 	VAR="$(awk -F "=" "/\/\/ @ CPPFLAGS/ { OFS=\"=\"; \$1=\"\"; sub(FS,\"\"); print \$0}" "$2")"
-	[ -z "$VAR" ] && eval "echo \$$1" && return
-	echo $VAR
+	[ -z "$VAR" ] && eval "echo \"\$$1\"" && return # fallback to our env
+	echo "$VAR"
 }
 
 # Load all kinds of variables.
-CC_NEW=$(getvar CC "$SOURCE")
+CC=$(getvar CC "$SOURCE")
 [ -z "$CC" ] && CC=cc
 CFLAGS=$(getvar CFLAGS "$SOURCE")
 [ -z "$CFLAGS" ] && CFLAGS="-O2 -march=native"
