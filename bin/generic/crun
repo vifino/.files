@@ -22,17 +22,23 @@ if has_bin realpath; then
 		realpath "$1"
 	}
 else
-	RP() {
-		_OURPWD=$PWD
-		cd "$(dirname "$1")"
-		LINK=$(readlink "$(basename "$1")")
-		while [ "$LINK" ]; do
-			cd "$(dirname "$LINK")"
+	if has_bin readlink && readlink -f / >/dev/null; then
+		RP() {
+			readlink -f "$1"
+		}
+	else
+		RP() {
+			_OURPWD=$PWD
+			cd "$(dirname "$1")"
 			LINK=$(readlink "$(basename "$1")")
-		done
-		echo "$PWD/$(basename "$1")"
-		cd "$_OURPWD"
-}
+			while [ "$LINK" ]; do
+				cd "$(dirname "$LINK")"
+				LINK=$(readlink "$(basename "$1")")
+			done
+			echo "$PWD/$(basename "$1")"
+			cd "$_OURPWD"
+		}
+	fi
 fi
 
 SOURCE="$(RP "$1")"

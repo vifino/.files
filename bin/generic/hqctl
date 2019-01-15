@@ -27,10 +27,10 @@ case "$FN" in
 	door) door "$@" ;;
 	cyber)
 		export HASS="http://hub.cccffm.space"
-		hass switch on lounge_blue_light
+		hass light on lounge_blue_light
 		[ -z "$1" ] || sleep "$1"
 		[ -z "$1" ] && sleep 4
-		hass switch off lounge_blue_light
+		hass light off lounge_blue_light
 		;;
 	*)
 		echo "Usage hqctl door ..."
