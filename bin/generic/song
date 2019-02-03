@@ -1,5 +1,7 @@
 #!/bin/sh
-# Song: A small (hopefully soon multi player compatible) music player controller.
+# song v1.0 by vifino.
+# A small music player controller.
+# Supports: MPD, CMUS and Spotify on OSX.
 set -e
 
 usage() {
@@ -18,7 +20,7 @@ Commands:
 EOF
 }
 
-# MPD
+# Interfaces to the players.
 export MPC_FORMAT="[[%artist% - ]%title%]|[%file%]"
 mpd() {
 	case "$1" in
@@ -48,6 +50,32 @@ cmus() {
 	esac
 }
 
+spotify_mac() {
+	# On Macs we have to use different things.
+	# Because OSX has to always be incompatible. Duh.
+	TS() {
+		osascript -e "tell application \"Spotify\" to $*"
+	}
+	case "$1" in
+		playing) [ "$(TS player state as string)" = "playing" ] ;;
+		name) printf "%s - %s\n" "$(TS artist of current track as string)" "$(TS name of current track as string)" ;;
+		toggle) TS playpause ;;
+		play) spotify_mac playing || TS playpause ;;
+		pause) spotify_mac playing && TS playpause ;;
+		next) TS next track ;;
+		prev) TS previous track ;;
+		stop) spotify_mac pause ;; # there is no stop apparently.
+		vol)
+			if [ -z "$2" ]; then
+				TS sound volume as integer
+			else
+				TS set sound volume to "$2"
+			fi ;;
+		*) echo "Unknown command: $1"; usage; return 1 ;;
+	esac
+}
+
+# Our interface.
 CMD="$1"
 [ -z "$CMD" ] && CMD=name || shift
 
@@ -61,5 +89,10 @@ if running cmus; then
 	exit
 fi
 
-echo "No supported players found. Currently supports: mpd, cmus."
+if [ `uname` == "Darwin" ] && running Spotify; then
+	spotify_mac "$CMD" "$@"
+	exit
+fi
+
+echo "No supported players found. Currently supports: mpd, cmus, Spotify (OSX)."
 exit 1
