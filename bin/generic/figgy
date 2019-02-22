@@ -7,5 +7,4 @@ for fb in toilet figlet; do
 	fi
 done
 [ -z "$FB" ] && echo "Error: No Figlet found." && exit 1
-	
 "$FB" "$@"

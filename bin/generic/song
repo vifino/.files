@@ -89,7 +89,7 @@ if running cmus; then
 	exit
 fi
 
-if [ `uname` == "Darwin" ] && running Spotify; then
+if [ `uname` = "Darwin" ] && running Spotify; then
 	spotify_mac "$CMD" "$@"
 	exit
 fi
