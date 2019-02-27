@@ -11,4 +11,4 @@ L="$HOME/.local"
 
 # If one does not set a preferred destination,
 # do it in the home directory.
-[ -z "$DESTDIR" ] && export DESTDIR="$L"
+[ -z "$PREFIX" ] && export PREFIX="$L"

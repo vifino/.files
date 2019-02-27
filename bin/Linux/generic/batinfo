@@ -2,28 +2,53 @@
 
 # Helpers
 if [ -d /proc/acpi/battery ]; then
+	bat_present() {
+		[ `grep "present:" "/proc/acpi/battery/$1/state" | sed 's/.*:\s*//'` = "yes" ]
+	}
+	bat_state() {
+		echo "yes"
+	}
 	bat_cap() {
 		echo $(grep "last full capacity:" "/proc/acpi/battery/$1/info" | sed 's/.*:\s*//' | cut -d' ' -f1).0
 	}
 	bat_rem() {
 		grep "remaining capacity:" "/proc/acpi/battery/$1/state" | sed 's/.*:\s*//'
 	}
-	bat_present() {
-		[ `grep "present:" "/proc/acpi/battery/$1/state" | sed 's/.*:\s*//'` = "yes" ]
+	bat_volt() {
+		echo "unknown"
+	}
+	bat_rate() {
+		echo "unknown"
 	}
 	BATTERIES=$(ls /proc/acpi/battery)
 elif [ -d /sys/class/power_supply/BAT0 ]; then
 	P=/sys/class/power_supply
 	BATTERIES=$(ls $P | grep BAT)
 
+	rescale() {
+		echo "scale=2; (($*)/1000000)" | bc
+	}
+
 	bat_present() {
 		[ `cat "$P/$1/present"` = 1 ] 
 	}
+	bat_state() {
+		cat "$P/$1/status"
+	}
+	bat_volt() {
+		echo $(rescale `cat "$P/$1/voltage_now"`) V
+	}
+	bat_volt_nom() {
+		rescale `cat "$P/$1/voltage_min_design"`
+	}
 	bat_cap() {
-		echo $(echo "scale=2; (`cat "$P/$1/energy_full"`/1000000)" | bc) Wh
+		echo $(rescale "`cat "$P/$1/charge_full"`*`bat_volt_nom $1`") Wh
 	}
 	bat_rem() {
-		echo $(echo "scale=2; (`cat "$P/$1/energy_now"`/1000000)" | bc) Wh
+		echo $(rescale "`cat "$P/$1/charge_now"`*`bat_volt_nom $1`") Wh
+	}
+	bat_rate() {
+		echo $(rescale "`cat $P/$1/current_now` * `cat $P/$1/voltage_now` / 1000000") W
 	}
 else
 	UPOWER_PATH=/org/freedesktop/UPower/devices
@@ -38,11 +63,20 @@ else
 	bat_present() {
 		[ `bat_info "$1" "present"` = "yes" ]
 	}
+	bat_state() {
+		bat_info "$1" "state"
+	}
 	bat_cap() {
 		bat_info "$1" "energy-full"
 	}
 	bat_rem() {
 		bat_info "$1" "energy"
+	}
+	bat_volt() {
+		bat_info "$1" "voltage"
+	}
+	bat_rate() {
+		bat_info "$1" "energy-rate"
 	}
 fi
 
@@ -56,9 +90,12 @@ for bat in $BATTERIES; do
 		max_no=$(echo $max | cut -d' ' -f1)
 		(
 			printf "present:            yes\n"
-			printf "max capacity:       %s\n" "$max"
-			printf "remaining capacity: %s\n" "$rem"
+			printf "state:              %s\n" "$(bat_state $bat)"
 			printf "remaining percent:  %.0f%%\n" $(echo "scale=2; ($rem_no/$max_no)*100" | bc)
+			printf "remaining capacity: %s\n" "$rem"
+			printf "max capacity:       %s\n" "$max"
+			printf "voltage:            %s\n" "$(bat_volt $bat)"
+			printf "transfer rate:      %s\n" "$(bat_rate $bat)"
 		) | sed 's/^.*$/\t\0/'
 	else
 		printf "\tpresent:            no\n"

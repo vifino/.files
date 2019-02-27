@@ -1,5 +1,5 @@
 #!/bin/sh
-# CRUN V1.0
+# CRUN V1.1
 # Runs a C source file like a script.
 # Parses comments looking like this:
 # // @ CFLAGS = -Os -Wall
@@ -11,17 +11,44 @@
 
 set -e
 
-[ -z "$1" ] && echo "Usage: $(basename $0) myscript.c" && exit 1
+[ -z "$1" ] && echo "Usage: $(basename "$0") myscript.c" && exit 1
 [ ! -f "$1" ] && echo "crun: file not found: $1" && exit 1
 
-SOURCE="$(readlink -f "$1")"
+has_bin() {
+	command -v "$1" > /dev/null
+}
+if has_bin realpath; then
+	RP() {
+		realpath "$1"
+	}
+else
+	if has_bin readlink && readlink -f / >/dev/null; then
+		RP() {
+			readlink -f "$1"
+		}
+	else
+		RP() {
+			_OURPWD=$PWD
+			cd "$(dirname "$1")"
+			LINK=$(readlink "$(basename "$1")")
+			while [ "$LINK" ]; do
+				cd "$(dirname "$LINK")"
+				LINK=$(readlink "$(basename "$1")")
+			done
+			echo "$PWD/$(basename "$1")"
+			cd "$_OURPWD"
+		}
+	fi
+fi
+
+SOURCE="$(RP "$1")"
 shift # rest is arguments
 
 # Where we store our build.
 CACHEFILE="$HOME/.cache/crun/$SOURCE.bin"
 mkdir -p "$(dirname "$CACHEFILE")"
 
-if [ -f "$CACHEFILE" ] && [ "$CACHEFILE" -nt "$SOURCE" ]; then
+if [ -f "$CACHEFILE" ] && [ -n "$(find -L "$CACHEFILE" -prune -newer "$SOURCE")" ]; then
 	# Cache file exists and is newer than the source code.
 	exec "$CACHEFILE" "$@"
 fi
@@ -31,12 +58,12 @@ getvar() {
 	# parses lines that look like this: // @ CFLAGS = -Os -lwhatever
 	# ugly because of the eval, but it works.
 	VAR="$(awk -F "=" "/\/\/ @ CPPFLAGS/ { OFS=\"=\"; \$1=\"\"; sub(FS,\"\"); print \$0}" "$2")"
-	[ -z "$VAR" ] && eval "echo \$$1" && return
-	echo $VAR
+	[ -z "$VAR" ] && eval "echo \"\$$1\"" && return # fallback to our env
+	echo "$VAR"
 }
 
 # Load all kinds of variables.
-CC_NEW=$(getvar CC "$SOURCE")
+CC=$(getvar CC "$SOURCE")
 [ -z "$CC" ] && CC=cc
 CFLAGS=$(getvar CFLAGS "$SOURCE")
 [ -z "$CFLAGS" ] && CFLAGS="-O2 -march=native"
