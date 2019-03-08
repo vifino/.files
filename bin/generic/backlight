@@ -1,4 +1,30 @@
 #!/bin/sh
+# backlight: generic backlight utility
+# Version 0.1
+
+# rescale val oldmax newmax
+rescale() {
+	V="$(echo "scale=2; ($1)/($2)*($3)" | bc | cut -d. -f1)"
+	if [ -z "$V" ]; then
+		echo "0"
+	else
+		echo "$V"
+	fi
+}
+
+if [ -d /sys/class/backlight/backlight-lvds0 ]; then
+	D="/sys/class/backlight/backlight-lvds0"
+	MAX="$(cat $D/max_brightness)"
+	if [ -z "$1" ]; then
+		CUR="$(cat $D/brightness)"
+		VAL="$(rescale "$CUR" $MAX 100)"
+		echo "$VAL%"
+	else
+		VAL="$(rescale "$1" 100 $MAX)"
+		echo $VAL | sudo tee $D/brightness
+	fi
+	exit
+fi
 
 [ -z "$BACKLIGHTTOOL" ] && echo "Error: \$BACKLIGHTTOOL not set. Set it to 'xbacklight -set', 'intel_backlight', etc..." && exit 1
 
