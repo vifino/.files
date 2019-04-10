@@ -9,8 +9,8 @@ has() {
 for util in host dig curl wget; do
 	if has "$util"; then
 		case "$util" in
-			host) host myip.opendns.com resolver1.opendns.com ;;
-			dig) dig @resolver1.opendns.com ANY myip.opendns.com +short;;
+			dig) dig @resolver1.opendns.com ANY myip.opendns.com +short ;;
+			host) host -t ANY myip.opendns.com resolver1.opendns.com | tail -n1 | cut -d" " -f5 ;;
 			curl) curl -sL https://ifconfig.me/ip ;;
 			wget) wget -O - 
 		esac
