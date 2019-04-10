@@ -1,0 +1,21 @@
+#!/bin/sh
+# extip: get external ip.
+# requires drill or dig.
+
+has() {
+	command -v "$1" >/dev/null
+}
+
+for util in host dig curl wget; do
+	if has "$util"; then
+		case "$util" in
+			host) host myip.opendns.com resolver1.opendns.com ;;
+			dig) dig @resolver1.opendns.com ANY myip.opendns.com +short;;
+			curl) curl -sL https://ifconfig.me/ip ;;
+			wget) wget -O - 
+		esac
+		exit
+	fi
+done
+echo "No utils found."
+exit 1

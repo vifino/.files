@@ -1,6 +1,11 @@
 #!/usr/bin/env zsh
 # Various settings. Mainly keybinds.
 
+# History.
+HISTSIZE=1024
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+
 # Report things taking longer than 10 seconds.
 REPORTTIME=10
 

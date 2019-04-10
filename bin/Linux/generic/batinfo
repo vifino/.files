@@ -21,7 +21,7 @@ if [ -d /proc/acpi/battery ]; then
 		echo "unknown"
 	}
 	BATTERIES=$(ls /proc/acpi/battery)
-elif [ -d /sys/class/power_supply/BAT0 ]; then
+elif [ -f /sys/class/power_supply/BAT0/state ]; then
 	P=/sys/class/power_supply
 	BATTERIES=$(ls $P | grep BAT)
 
@@ -52,10 +52,9 @@ elif [ -d /sys/class/power_supply/BAT0 ]; then
 	}
 else
 	UPOWER_PATH=/org/freedesktop/UPower/devices
-	BATTERIES=$(upower -e | grep '_battery$' | sed -e "s#^$UPOWER_PATH/##" -e "s/_battery$//")
-
+	BATTERIES=$(upower -e | grep 'battery' | sed -e "s#^$UPOWER_PATH/##" -e "s/_battery$//")
 	bat_info() {
-		upower -i "$UPOWER_PATH/$1_battery" | \
+		upower -i "$UPOWER_PATH/$1" | \
 			 grep "$2:" | \
 			 sed 's/^.*:\s*//'
 	}

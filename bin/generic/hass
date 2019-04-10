@@ -43,7 +43,7 @@ list_entities() {
 }
 
 escape() {
-	printf "$1" | tr '"' '\"' | tr '\\' tr '\\\\'
+	printf "$1" | tr '"' '\"' | tr '\\' '\\\\'
 }
 
 case "$ACTION" in

@@ -1,7 +1,12 @@
 #!/bin/sh
 
 usage() {
-	echo "Usage: $(basename $0) {door,cyber} [...]"
+	echo "Usage: $(basename $0) cmd [...]"
+	echo "CCC-FFM CLI. Made by vifino."
+	echo "Subcommands:"
+	echo "  - status: set HQ status."
+	echo "  - door: control back door."
+	echo "  - switch: control network switch."
 	exit 1
 }
 
@@ -23,8 +28,29 @@ door() {
 	esac
 }
 
+switch() {
+	case "$1" in
+		on) hass switch on hallway_switch ;;
+		off) hass switch off hallway_switch ;;
+		*)
+			echo "Usage: hqctl switch on/off"
+			exit 1
+	esac
+}
+
+status() {
+	case "$1" in
+		open|private|close) hass mqtt "hq/status" "$1" ;;
+		*)
+			echo "Usage: hqctl status open/private/close"
+			exit 1
+	esac
+}
+
 case "$FN" in
 	door) door "$@" ;;
+	switch) switch "$@" ;;
+	status) status "$@" ;;
 	cyber)
 		export HASS="http://hub.cccffm.space"
 		hass light on lounge_blue_light
@@ -32,7 +58,5 @@ case "$FN" in
 		[ -z "$1" ] && sleep 4
 		hass light off lounge_blue_light
 		;;
-	*)
-		echo "Usage hqctl door ..."
-		exit 1
+	*) usage
 esac
