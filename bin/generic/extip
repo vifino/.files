@@ -12,7 +12,7 @@ for util in host dig curl wget; do
 			dig) dig @resolver1.opendns.com ANY myip.opendns.com +short ;;
 			host) host -t ANY myip.opendns.com resolver1.opendns.com | tail -n1 | rev | cut -d" " -f1 | rev ;;
 			curl) curl -sL https://ifconfig.me/ip ;;
-			wget) wget -O - 
+			wget) wget -qO - https://ifconfig.me/ip ;;
 		esac
 		exit
 	fi
