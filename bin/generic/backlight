@@ -12,17 +12,18 @@ rescale() {
 	fi
 }
 
-if [ -d /sys/class/backlight/backlight-lvds0 ]; then
-	D="/sys/class/backlight/backlight-lvds0"
-	MAX="$(cat $D/max_brightness)"
-	if [ -z "$1" ]; then
-		CUR="$(cat $D/brightness)"
-		VAL="$(rescale "$CUR" $MAX 100)"
-		echo "$VAL%"
-	else
-		VAL="$(rescale "$1" 100 $MAX)"
-		echo $VAL | sudo tee $D/brightness
-	fi
+if [ -d /sys/class/backlight/* ]; then
+	for D in /sys/class/backlight/*; do
+		MAX="$(cat $D/max_brightness)"
+		if [ -z "$1" ]; then
+			CUR="$(cat $D/brightness)"
+			VAL="$(rescale "$CUR" $MAX 100)"
+			echo "$VAL%"
+		else
+			VAL="$(rescale "$1" 100 $MAX)"
+			echo $VAL | sudo tee $D/brightness
+		fi
+	done
 	exit
 fi
 

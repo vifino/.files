@@ -51,11 +51,6 @@ font:
 
   # Point size of the font
   size: 10.0
-  # Offset is the extra space around each character. offset.y can be thought of
-  # as modifying the linespacing, and offset.x as modifying the letter spacing.
-  offset:
-    x: -0.5
-    y: -0.2
 
   # OS X only: use thin stroke font rendering. Thin strokes are suitable
   # for retina displays, but for non-retina you probably want this set to
@@ -64,10 +59,6 @@ font:
 
 # Should display the render timer
 render_timer: false
-
-# Use custom cursor colors. If true, display the cursor in the cursor.foreground
-# and cursor.background colors, otherwise invert the colors of the cursor.
-custom_cursor_colors: true
 
 # Colors: My own creation, no name yet.
 colors:
@@ -232,13 +223,12 @@ mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
 
 mouse:
+  hide_when_typing: true
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
-
-hide_cursor_when_typing: false
 
 # Shell
 #

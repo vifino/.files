@@ -21,7 +21,7 @@ if [ -d /proc/acpi/battery ]; then
 		echo "unknown"
 	}
 	BATTERIES=$(ls /proc/acpi/battery)
-elif [ -f /sys/class/power_supply/BAT0/state ]; then
+elif [ -f /sys/class/power_supply/BAT0/status ]; then
 	P=/sys/class/power_supply
 	BATTERIES=$(ls $P | grep BAT)
 

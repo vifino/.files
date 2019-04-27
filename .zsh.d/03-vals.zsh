@@ -1,6 +1,7 @@
 # Some vals to set
 
 [ -z "$LANG" ] && export LANG="en_US.UTF-8" # might break things, but could fix things, too.
+[ -z "$TMPDIR" ] && export TMPDIR=/tmp
 
 export CLICOLOR=true
 
