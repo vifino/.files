@@ -2,6 +2,14 @@
 # backlight: generic backlight utility
 # Version 0.1
 
+[ -z "$1" ] && cat <<EOF && exit 1
+Usage: $(basename $0) <percentage>
+Example: $0 50
+EOF
+
+# Deliberatly NOT escaping the tool variable.
+[ ! -z "$BACKLIGHTTOOL" ] && exec $BACKLIGHTTOOL "$1"
+
 # rescale val oldmax newmax
 rescale() {
 	V="$(echo "scale=2; ($1)/($2)*($3)" | bc | cut -d. -f1)"
@@ -28,11 +36,3 @@ if [ -d /sys/class/backlight/* ]; then
 fi
 
 [ -z "$BACKLIGHTTOOL" ] && echo "Error: \$BACKLIGHTTOOL not set. Set it to 'xbacklight -set', 'intel_backlight', etc..." && exit 1
-
-[ -z "$1" ] && cat <<EOF && exit 1
-Usage: $(basename $0) <percentage>
-Example: $0 50
-EOF
-
-# Deliberatly NOT escaping the tool variable.
-exec $BACKLIGHTTOOL "$1"

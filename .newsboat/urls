@@ -27,7 +27,7 @@ https://en.wikinews.org/w/index.php?title=Special:NewPages&feed=atom "~Wikinews"
 # Blogs I find worth reading.
 http://blog.z3bra.org/rss/feed.xml "~z3bra" "Blog" "Technology" "UNIX"
 https://nullprogram.com/feed/ "Blog" "Technology" "UNIX" "C"
-https://blog.fefe.de/rss.xml "~Fefe's Blog" "German" "Blog" "Technology" "News" "Politics" 
+#https://blog.fefe.de/rss.xml "~Fefe's Blog" "German" "Blog" "Technology" "News" "Politics" 
 https://acassis.wordpress.com/feed "~Alan C. Assis' Blog" "Blog" "NuttX" "UNIX" "Technology"
 https://oscarliang.com/feed "Blog" "FPV" "RC"
 https://www.revk.uk/feeds/posts/default "~RevK's Rants" "Blog" "Technology"

@@ -17,10 +17,12 @@ PARAM=(--bar-indicator --bar-position h --bar-direction 1 --redraw-thread -t "" 
 	--bar-color 00000077 --keyhlcolor 00666666 --ringvercolor cc87875f --wrongcolor ffff0000 \
 	--veriftext="" --wrongtext="" --noinputtext="" )
 
+export GARGS="3 5"
+
 if [ -f "$GLITCHICON" ]; then
-	time ffshot | ff-glitch | ff-overlay <(cat "$GLITCHICON" | png2ff) | ff2png > /tmp/lock.png
+	time ffshot | ff-glitch $GARGS | ff-overlay <(cat "$GLITCHICON" | png2ff) | ff2png > /tmp/lock.png
 else
-	time ffshot | ff-glitch | ff2png > /tmp/lock.png
+	time ffshot | ff-glitch $GARGS | ff2png > /tmp/lock.png
 fi
 i3lock -n "${PARAM[@]}" -i "/tmp/lock.png" > /dev/null 2>&1
-rm /tmp/lock.png
+#rm /tmp/lock.png

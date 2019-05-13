@@ -1,0 +1,6 @@
+#!/bin/sh
+# Runs k20 in small splits
+for client in "$@"; do
+	tmux split-window -l 3 "k20 -n \"k20 $client\" \"$client\""
+	tmux last-pane
+done
