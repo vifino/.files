@@ -1,0 +1,60 @@
+#!/bin/sh
+# vifino's hacky auto open thing.
+# For graphical sessions
+
+usage() {
+	echo "Usage: $(basename $0) file/uri"
+	exit 1
+}
+
+[ -z "$1" ] && usage
+
+# String utilities
+# Just because of lazyness.
+first() { echo "$1"; }
+rematch() { echo "$1" | egrep "$1" >/dev/null; }
+replace() { echo "$2" | sed "$1"; }
+
+getmime() {
+	file -b --mime-type "$1"
+}
+
+# Program search.
+hasbin() {
+	for bin in "$@"; do
+		command -v "$bin" > /dev/null
+		[ $? -eq 0 ] || exit 1
+	done
+}
+
+try_commands() {
+	for prog in "$@"; do
+		echo "Checking $prog"
+		_bin="$(first "$prog")"
+		if hasbin "$_bin"; then
+			eval "$prog" && return 0
+		else
+			echo no such bin
+		fi
+	done
+	return 1
+}
+
+openfile() {
+	case "$(getmime "$1")" in
+		*/pdf) zathura "$1" ;;
+		image/*) try_commands "feh '$1'" "display '$1'" ;;
+		video/*) mpv "$1" ;;
+		application/x-shellscript) try_commands "$TERMINAL -e '$1'" "xterm -e '$1'";;
+		*) [ ! -z "$VISUAL" ] && $VISUAL "$1" || $TERMINAL -e $EDITOR '$1' ;;
+	esac
+}
+
+for ref in "$@"; do
+	if rematch "^https?" "$ref"; then
+		# it's a http url, better pass that to the browser.
+		browser "$ref"
+	fi
+	# strip file://
+	openfile "$(replace "s#^file://##" "$ref")"
+done

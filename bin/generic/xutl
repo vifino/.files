@@ -24,6 +24,12 @@ Known commands:
   rot     # rotate display, args: rot mon dir
           # ex: rot DP1 right
           # valid dirs: normal, left, right, inverted
+
+  ######## GPU COMMANDS #######################################################
+  gpus     # list gpu providers, args: [provider_number]
+  sgpu     # set gpu providers, args: primary dedicated
+  gpuexec  # execute program with offloading enabled
+
   ######## INPUT COMMANDS #####################################################
   lip     # list input devices, no args
   lin     # list input device names, no args
@@ -82,6 +88,17 @@ case "$CMD" in
 	rot) # rotate
 		check_args "$1" "$2"
 		exec xrandr --output "$1" --rotate "$2" ;;
+
+	# gpu commands
+	gpus)
+		exec xrandr --listproviders ;;
+	sgpu)
+		check_args "$1" "$2"
+		exec xrandr --setprovideroffloadsink "$2" "$1" ;;
+	gpuexec)
+		export DRI_PRIME=1
+		exec "$@" ;;
+
 	# input commands
 	lip) # list input devices
 		exec xinput --list ;;

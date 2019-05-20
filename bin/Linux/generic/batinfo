@@ -1,7 +1,34 @@
 #!/bin/sh
 
 # Helpers
-if [ -d /proc/acpi/battery ]; then
+if hasbin upower; then
+	UPOWER_PATH=/org/freedesktop/UPower/devices
+	BATTERIES=$(upower -e | grep 'battery' | sed -e "s#^$UPOWER_PATH/##" )
+	bat_info() {
+		upower -i "$UPOWER_PATH/$1" | \
+			 grep "$2:" | \
+			 sed 's/^.*:\s*//'
+	}
+
+	bat_present() {
+		[ `bat_info "$1" "present"` = "yes" ]
+	}
+	bat_state() {
+		bat_info "$1" "state"
+	}
+	bat_cap() {
+		bat_info "$1" "energy-full"
+	}
+	bat_rem() {
+		bat_info "$1" "energy"
+	}
+	bat_volt() {
+		bat_info "$1" "voltage"
+	}
+	bat_rate() {
+		bat_info "$1" "energy-rate"
+	}
+elif [ -d /proc/acpi/battery ]; then
 	bat_present() {
 		[ `grep "present:" "/proc/acpi/battery/$1/state" | sed 's/.*:\s*//'` = "yes" ]
 	}
@@ -51,37 +78,13 @@ elif [ -f /sys/class/power_supply/BAT0/status ]; then
 		echo $(rescale "`cat $P/$1/current_now` * `cat $P/$1/voltage_now` / 1000000") W
 	}
 else
-	UPOWER_PATH=/org/freedesktop/UPower/devices
-	BATTERIES=$(upower -e | grep 'battery' | sed -e "s#^$UPOWER_PATH/##" -e "s/_battery$//")
-	bat_info() {
-		upower -i "$UPOWER_PATH/$1" | \
-			 grep "$2:" | \
-			 sed 's/^.*:\s*//'
-	}
-
-	bat_present() {
-		[ `bat_info "$1" "present"` = "yes" ]
-	}
-	bat_state() {
-		bat_info "$1" "state"
-	}
-	bat_cap() {
-		bat_info "$1" "energy-full"
-	}
-	bat_rem() {
-		bat_info "$1" "energy"
-	}
-	bat_volt() {
-		bat_info "$1" "voltage"
-	}
-	bat_rate() {
-		bat_info "$1" "energy-rate"
-	}
+	echo "No supported batteries found." >/dev/stderr
+	exit 1
 fi
 
 
 for bat in $BATTERIES; do
-	echo "$bat:"
+	echo "$(echo "$bat" | sed -e 's/^battery_//' -e 's/_battery$//'):" # small cleanup
 	if bat_present $bat; then
 		rem=$(bat_rem $bat)
 		max=$(bat_cap $bat)
