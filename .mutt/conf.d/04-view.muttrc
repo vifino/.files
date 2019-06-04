@@ -11,11 +11,13 @@ alternative_order text/enriched text/plain text/html text
 
 # urlview
 bind attach g noop
-macro index,pager,attach,compose go "\
-	<enter-command> set my_pipe_decode=~4~pipe_decode pipe_decode<Enter>\
-	<pipe-message> urlview<Enter>\
-	<enter-command> set pipe_decode=~4~my_pipe_decode; unset my_pipe_decode<Enter>" \
-	"call urlview to extract URLs out of a message"
+macro index,pager go "\
+	:set my_tmp_pipe_decode=\$pipe_decode\n\
+	:set pipe_decode\n\
+	|urlview\n\
+	:set pipe_decode=\$my_tmp_pipe_decode\n\
+	:unset my_tmp_pipe_decode\n" \
+	'call urlview to extract URLs out of a message'
 
 # Show incoming.
 macro index y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"

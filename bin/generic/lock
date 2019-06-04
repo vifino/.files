@@ -1,17 +1,46 @@
 #!/bin/sh
 # Selects a program, then locks the session with it.
 
-if graphical; then
+# Don't ask.
+graphical
+_G=$?
+
+graph() {
+	return $_G
+}
+
+prelock() {
+	if graph; then
+		# Disable VT switch.
+		setxkbmap -option srvrkeys:none
+	fi
+}
+
+postlock() {
+	if graph; then
+		# Reenable VT switch.
+		setxkbmap -option -option $(setxkbmap -query | sed -n 's/options:\s*\(srvrkeys:[^:]*,\)\?\|,srvrkeys:[^,]*//gp')
+	fi
+}
+
+if graph; then
 	if [ ! -z "$GLOCKER" ]; then
 		exec "$GLOCKER"
 	fi
 
+	# Run our prelocking hooks.
+	prelock
+
 	for locker in glitchlock i3lock slock; do
 		if hasbin $locker; then
 			"$locker"
-			[ "$?" -eq 0 ] && exit
+			[ "$?" -eq 0 ] && postlock && exit
 		fi
 	done
+
+	# Run our postlock hooks anyway.
+	postlock
+
 	echo "No graphical locker found."
 	exit 1
 fi

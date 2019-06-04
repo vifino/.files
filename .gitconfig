@@ -14,6 +14,7 @@
 	fixup = rebase -i --autosquash HEAD@{u}
 	pfush = push --force-with-lease
 	amen = commit --amend --no-edit
+	root = rev-parse --show-toplevel
 
 [commit]
 	gpgsign = false # for now
