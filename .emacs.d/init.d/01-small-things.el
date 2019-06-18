@@ -44,6 +44,8 @@
       auto-save-default nil
       gc-cons-threshold (* 10 1024 1024)
       large-file-warning-threshold (* 10 1024 1024)
+      max-specpdl-size 4096
+      max-lisp-eval-depth 2048
       dired-use-ls-dired nil
       tls-checktrust t
       gnutls-verify-error t

@@ -26,8 +26,10 @@
   (flycheck-irony-setup)
   (irony-eldoc)
   (add-to-list 'write-file-functions 'delete-trailing-whitespace)
-  (set (make-local-variable 'compile-command)
-       (format "make -C %s" (file-name-directory (get-closest-pathname "Makefile")))))
+  (let ((makefile (or (get-closest-pathname "GNUmakefile") (get-closest-pathname "Makefile"))))
+    (and makefile
+         (set (make-local-variable 'compile-command)
+              (format "make -C %s" (file-name-directory makefile))))))
 
 (add-hook 'c++-mode-hook 'vifino/c-hook)
 (add-hook 'c-mode-hook 'vifino/c-hook)

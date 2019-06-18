@@ -20,6 +20,9 @@ unset record
 unset postponed
 unset mask
 
+unset imap_pass
+unset smtp_pass
+
 # GPG
 unset pgp_default_key
 unset pgp_sign_as
