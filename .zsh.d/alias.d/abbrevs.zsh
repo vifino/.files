@@ -33,3 +33,8 @@ silent wh herbstclient && alias hc=herbstclient
 
 # Music
 alias np=song
+
+# Custom stuff.
+alias o=vopen
+alias open=vopen
+

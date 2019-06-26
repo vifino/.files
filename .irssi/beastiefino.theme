@@ -77,7 +77,7 @@ abstracts = {
 
   ########### messages #################################
   # the basic styling of how to print message, $0 = nick mode, $1 = nick
-  msgnick = " {nick $1}$0 %K│> %n";
+  msgnick = " {nick $1}$0 %K|> %n";
 
   # $0 = nick mode, $1 = nick
   ownmsgnick = "{msgnick $0 $1}";

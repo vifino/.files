@@ -4,11 +4,19 @@
 if [[ $- == *i* ]] ; then
 
 # CTRL-T: Place the selected file path in the command line
-__fzy_fsel () {
-	command find -L . \( -path '*/\.*' -o -fstype dev -o -fstype proc \) -prune \
+__fzy_listfiles() {
+	if git branch >/dev/null 2>&1; then
+		command git ls-files
+	else
+		command find -L . \( -path '*/\.*' -o -fstype dev -o -fstype proc \) -prune \
 			-o -type f -print \
 			-o -type d -print \
-			-o -type l -print 2> /dev/null | sed 1d | cut -b3- | \
+			-o -type l -print 2> /dev/null | sed 1d | cut -b3-
+	fi
+
+}
+__fzy_fsel () {
+	__fzy_listfiles | \
 		fzy -p 'file> ' | while read -r item ; do
 		echo -n "${(q)item}"
 	done
