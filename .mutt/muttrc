@@ -3,5 +3,7 @@
 ##  vifino's muttrc
 #  email responsibly
 
-# Sourc config dir.
+set shell = "/bin/sh"
+
+# Source config dir.
 source 'exec ~/.mutt/srcall ~/.mutt/conf.d|'

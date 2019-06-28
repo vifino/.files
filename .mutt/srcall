@@ -1,4 +1,12 @@
 #!/bin/sh
-# Simply cats all files together.
+# Iterate over the provided directory, catting rc files and running scripts.
+[ -z "$1" ] && echo "Usage: $(basename $0) dir" >/dev/stderr && exit 1
 
-exec cat -- "$1"/*.muttrc
+for f in "$1"/*; do
+	echo "### File: $f ###"
+
+	case "$f" in
+		*.muttrc) cat "$f" ;;
+		*.sh) . "$f" ;;
+	esac
+done

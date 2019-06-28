@@ -1,6 +1,7 @@
 #!/bin/sh
 
 cat <<HEAD
+# ACCOUNT SWITCHER PRELUDE
 # Sync, refresh
 exec sync-mailbox
 exec refresh
@@ -16,6 +17,7 @@ unset signature
 unset mbox_type
 unset mbox
 unset folder
+unset spoolfile
 unset record
 unset postponed
 unset mask
@@ -27,6 +29,7 @@ unset smtp_pass
 unset pgp_default_key
 unset pgp_sign_as
 
+# END PRELUDE
 HEAD
 
 # Try to switch to the new one

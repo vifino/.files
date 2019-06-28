@@ -6,13 +6,11 @@ ACC_SWITCH=~/.mutt/acc-switch
 
 echo "# Macros for switching."
 
-i=1
 for f in ~/.mutt/accs.d/*.muttrc ; do
 	AN=$(basename "$f" | rev | cut -d. -f2- | rev)
 	cat <<MCRO
 macro index A$i "<enter-command>source 'exec $ACC_SWITCH $AN|'<enter>" "show account $AN"
 MCRO
-	i=$((i+1))
 done
 
 echo

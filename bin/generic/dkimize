@@ -1,0 +1,3 @@
+#!/bin/sh
+# Converts a public key to a DKIM-style text.
+sed -e '1d' -e '$ d' -e '2 s/^/v=DKIM1; k=rsa; p=/' | tr -d '\n'
