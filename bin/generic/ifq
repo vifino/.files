@@ -1,0 +1,135 @@
+#!/bin/sh
+# ifq: interface query.
+# A (trying to be) portable interface to interfaces!
+# WTFPL (C) 2019 Adrian "vifino" Pistol
+
+usage() {
+	echo "Usage: $(basename "$0") <cmd..>"
+	echo "Commands: "
+	echo "         list [all/up]"
+	echo "         list [all/up] wired/wireless/virtual/any"
+	echo "         wifi connected <device>"
+	echo "         wifi ssid <device>"
+	echo
+	echo "Some abbreviations are supported."
+	exit $1
+}
+
+[ -z "$1" ] && usage 1
+
+# Utils
+error() {
+	echo "Error: $1" >/dev/stderr
+	[ -z "$2" ] && usage 1
+	exit $2
+}
+
+has() {
+	command -v "$1" > /dev/null
+}
+req() {
+	if ! has "$1"; then
+		error "$CMD: Need the tool $1 to work. You seem to lack it." 2
+	fi
+}
+
+# ifs <all: true/false>
+ifs() {
+	if has ifconfig; then
+		IFA=""
+		[ "x$1" = xtrue ] && IFA="-a"
+		ifconfig $IFA | sed -E -n 's/^([^[[:space:]].*):.*$/\1/p'
+	elif has ip; then
+		IPA=""
+		[ "x$1" = xtrue ] && IPA="up"
+		ip link show $IPA | sed -E -e '/^[^0-9]/ d' -e 's/^[0-9]*: (.*):.*$/\1/' -e 's/@.*$//'
+	else
+		error "$CMD: You don't seem to have ifconfig or ip. How do you even list interfaces?" 2
+	fi
+}
+
+filter() {
+	# Aliases.
+	IFT="$1"
+	case "$1" in
+		eth) IFT="wired" ;;
+		wifi|wlan) IFT="wireless" ;;
+		virt) IFT="virtual" ;;
+	esac
+
+	# Let only the right interfaces through.
+	case "$OS" in
+		Linux)
+			case "$IFT" in
+				wired) grep -E "^(en|eth)" ;;
+				wireless) grep "^wl" ;;
+				virtual) grep -Ev "^(en|eth|wl)" ;;
+				*) error "$CMD: Invalid type $1." ;;
+			esac ;;
+		*BSD)
+			case "$IFT" in
+				wired) grep -E "^(en|em|ixl|fxp|alc)" ;;
+				wireless) grep -E "^(ath|iwi|iwl|iwn|ral|ural|rum|run)" ;;
+				virtual) grep -E "^(vether|bridge|enc|vlan|pflog)" ;;
+				*) error "$CMD: Invalid type $1." ;;
+			esac ;;
+
+		*) error "$CMD: $OS is not supported. Add support?" 2 ;;
+	esac
+}
+
+reqtype() {
+	OUT="$(echo "$2" | filter "$1")"
+	[ -z "$OUT" ] && error "$CMD: Interface $2 is not type $1."
+	echo "$2"
+}
+
+# Commands
+cmd_list() {
+	# Lists interfaces.
+	ALL=false
+	case "$1" in
+		a|all) ALL=true && shift;;
+		u|up) ALL=false && shift;;
+	esac
+
+	if [ -z "$1" ] || [ "$1" = "any" ]; then
+		ifs "$ALL"
+	else
+		ifs "$ALL" | filter "$1"
+	fi
+}
+
+cmd_wifi() {
+	# WiFi specific commands.
+	[ -z "$1" ] && error "$CMD: Need subcommand."
+
+	SCMD="$1"
+	shift
+	case "$SCMD" in
+		c|conn|connected)
+				[ -z "$1" ] && error "$CMD: $SCMD: Need device name."
+				[ ! -z "$(cmd_wifi ssid "$1")" ] ;;
+		ssid)
+			case "$OS" in
+				Linux)
+					req iw
+					[ -z "$1" ] && error "$CMD: $SCMD: Need device name."
+					iw dev "$(reqtype wifi "$1")" info | sed -En 's/^[[:space:]]*ssid (.*)$/\1/p' ;;
+				*) error "$CMD: $SCMD not implemented for $OS." 2 ;;
+			esac ;;
+		*) error "$CMD: Subcommand $SCMD not known." ;;
+	esac
+}
+
+# Entry point.
+[ -z "$OS" ] && export OS="$(uname)"
+
+CMD="$1"
+shift
+case "$CMD" in
+	l|list) cmd_list "$@" ;;
+	w|wifi) cmd_wifi "$@" ;;
+	*) error "No such command: $CMD" ;;
+esac
+
