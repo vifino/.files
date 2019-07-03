@@ -2,5 +2,10 @@
 # Check if a captive portal exists.
 set -e
 
+if ! command -v curl >/dev/null; then
+	echo "Error: $(basename $0): Need curl to actually detect captive portal." >/dev/stderr
+	exit 2
+fi
+
 res=$(curl -sL -w "%{http_code)\\n" "http://gstatic.com/generate_204" -o /dev/null)
-[ $res = 204 ]
+[ $res != 204 ]

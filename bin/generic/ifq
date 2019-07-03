@@ -38,7 +38,7 @@ ifs() {
 	if has ifconfig; then
 		IFA=""
 		[ "x$1" = xtrue ] && IFA="-a"
-		ifconfig $IFA | sed -E -n 's/^([^[[:space:]].*):.*$/\1/p'
+		ifconfig $IFA | sed -E -n 's/^([^[:space:]].+)[:\t].*$/\1/p'
 	elif has ip; then
 		IPA=""
 		[ "x$1" = xtrue ] && IPA="up"
