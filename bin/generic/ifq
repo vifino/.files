@@ -37,12 +37,12 @@ req() {
 ifs() {
 	if has ifconfig; then
 		IFA=""
-		[ "x$1" = xtrue ] && IFA="-a"
-		ifconfig $IFA | sed -E -n 's/^([^[:space:]].+)[:\t].*$/\1/p'
+		[ "x$1" = xall ] && IFA="-a"
+		ifconfig $IFA | sed -ne '/^[[:space:]]/d' -e 's/[:[:space:]].*$//' -e '/^[^[:space:]]/p'
 	elif has ip; then
 		IPA=""
-		[ "x$1" = xtrue ] && IPA="up"
-		ip link show $IPA | sed -E -e '/^[^0-9]/ d' -e 's/^[0-9]*: (.*):.*$/\1/' -e 's/@.*$//'
+		[ "x$1" = xall ] && IPA="up"
+		ip link show $IPA | sed -E -e '/^[^0-9]/d' -e 's/^[0-9]*: (.*):.*$/\1/' -e 's/@.*$//'
 	else
 		error "$CMD: You don't seem to have ifconfig or ip. How do you even list interfaces?" 2
 	fi
@@ -87,16 +87,16 @@ reqtype() {
 # Commands
 cmd_list() {
 	# Lists interfaces.
-	ALL=false
+	STATE=active
 	case "$1" in
-		a|all) ALL=true && shift;;
-		u|up) ALL=false && shift;;
+		a|all) STATE=all && shift;;
+		u|up)  STATE=active && shift;;
 	esac
 
 	if [ -z "$1" ] || [ "$1" = "any" ]; then
-		ifs "$ALL"
+		ifs "$STATE"
 	else
-		ifs "$ALL" | filter "$1"
+		ifs "$STATE" | filter "$1"
 	fi
 }
 
@@ -105,16 +105,16 @@ cmd_wifi() {
 	[ -z "$1" ] && error "$CMD: Need subcommand."
 
 	SCMD="$1"
+	[ -z "$2" ] && error "$CMD: $SCMD: Need device name."
 	shift
+
 	case "$SCMD" in
 		c|conn|connected)
-				[ -z "$1" ] && error "$CMD: $SCMD: Need device name."
 				[ ! -z "$(cmd_wifi ssid "$1")" ] ;;
 		ssid)
 			case "$OS" in
 				Linux)
 					req iw
-					[ -z "$1" ] && error "$CMD: $SCMD: Need device name."
 					iw dev "$(reqtype wifi "$1")" info | sed -En 's/^[[:space:]]*ssid (.*)$/\1/p' ;;
 				*) error "$CMD: $SCMD not implemented for $OS." 2 ;;
 			esac ;;
