@@ -19,7 +19,7 @@ usage() {
 
 # Utils
 error() {
-	echo "Error: $1" >/dev/stderr
+	echo "Error: $1" >&2
 	[ -z "$2" ] && usage 1
 	exit $2
 }
