@@ -5,8 +5,9 @@
 *.un~
 *.swp
 
-# Ignore Mutt Accounts.
+# Ignore Accounts/Secret stuff.
 .mutt/accs.d
+.config/aerc/accounts.conf
 
 # IRSSI
 .irssi/saved_nick_colors

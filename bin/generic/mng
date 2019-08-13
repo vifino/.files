@@ -1,0 +1,166 @@
+#!/bin/sh
+# mng version 0.2
+# Manage/Query servers, unixly.
+# ISC (C) vifino 2019
+set -e
+
+# Variables
+GROUPDIR="$HOME/.config/mng"
+
+###
+##   DON'T TOUCH AFTER HERE
+## (or do, I'm not your mom.)
+###
+
+usage() {
+	[ ! -z "$1" ] && echo "Error: $1"
+	echo "Usage: $(basename "$0") group command..."
+	echo "Available commands:"
+	echo " quiet: pipe to /dev/null"
+	echo "        syn: quiet cmd.."
+	echo "  name: filter hosts by name glob"
+	echo "        syn: name 'fra1-*'"
+	echo "  list: list hosts"
+	echo "        syn: list"
+	echo "  ping: ping hosts"
+	echo "        syn: ping [ping args..]"
+	echo "  ipmi: run ipmi commands"
+	echo "        syn: ipmi [ipmitool command..]"
+	echo "   ssh: execute commands via ssh"
+	echo "        syn: ssh [ssh arguments..]"
+	echo
+	echo "Available groups:"
+	ls ~/.config/mng
+	exit 1
+}
+
+# Ensure we got all the requirements for usage.
+if [ ! -d ~/.config/mng ]; then
+	echo "Error: The directory ~/.config/mng does not exist."
+	echo "You might wanna create that directory with files named after"
+	echo "your group of hosts. Then insert newline seperated entries with"
+	echo "the first column being the name, second being the command,"
+	echo "followed by the command-specific arguments,"
+	echo "all with a single space inbetween the columns."
+	echo
+	echo "Example:"
+	echo "myserver ping 10.20.30.40"
+	echo "myserver ipmi -I lanplus -H 10.20.30.41 -U ADMIN -P admin"
+	echo "myserver ssh root@10.20.30.40"
+	exit 1
+fi
+
+# Arguments.
+GROUP="$1"
+[ -z "$1" ] && usage "Lacking group."
+shift
+
+[ -z "$1" ] && usage "Lacking command."
+
+# Internal functions.
+has_bin() {
+	command -v "$1" >/dev/null
+}
+require_bin() {
+	has_bin "$1" || usage "Need '$1', it isn't in the path."
+}
+
+cmd() {
+	echo "\$ $*"
+	"$@"
+	STATUS=$?
+	if [ $STATUS -ne 0 ]; then
+		log fail "Command failed: $*" $STATUS
+	fi
+}
+
+over_group() {
+	# $1 is the group name, rest is command.
+	GROUP="$1"
+	if [ ! -f "$GROUPDIR/$GROUP" ]; then
+		echo "Error: Invalid group: '$GROUP'."
+		exit 1
+	fi
+
+	FN="$2"
+	if [ -z "$FN" ]; then
+		echo "Error: Lacking a valid function name to run."
+		exit 1
+	fi
+	shift 2
+
+	while read -r NAME CMD ARGS; do
+		[ ! -z "$NAME" ] && "$FN" "$@" < /dev/null
+	done < $GROUPDIR/$GROUP
+}
+
+# Generic (helper) commands
+g_silent() {
+	run_cmd "$@" >/dev/null
+}
+
+g_name() {
+	[ -z "$1" ] && usage "name needs pattern"
+	WANTED="$1"
+	shift
+
+	case "$NAME" in
+		$WANTED) run_cmd "$@" ;;
+	esac
+}
+
+# Actual commands.
+act_list() {
+	echo "$NAME: $CMD $ARGS"
+}
+
+act_ping() {
+	[ "$CMD" != "ping" ] && return
+
+	echo "# $NAME:"
+	cmd ping -c 3 "@" $ARGS
+}
+
+act_ssh() {
+	[ "$CMD" != "ssh" ] && return
+	[ -z "$1" ] && usage "Command ssh needs arguments."
+
+	echo "# $NAME:"
+	cmd ssh -Tn $ARGS "$@"
+}
+
+act_ipmi() {
+	[ "$CMD" != "ipmi" ] && return
+	[ -z "$1" ] && usage "Command ipmi needs arguments."
+
+	echo "# $NAME:"
+	cmd ipmitool $ARGS "$@"
+}
+
+# Running commands.
+run_cmd() {
+	COMMAND="$1"
+	[ -z "$1" ] && usage "run_cmd has no command." && exit 1
+	shift
+
+	case "$COMMAND" in
+		# Helper commands
+		silent|quiet)
+			over_group "$GROUP" g_silent "$@" ;;
+		name)
+			over_group "$GROUP" g_name "$@" ;;
+		# Actual commands
+		list|ping)
+			over_group "$GROUP" "act_$COMMAND" "$@" ;;
+		ssh)
+			require_bin ssh
+			over_group "$GROUP" act_ssh "$@" ;;
+		ipmi)
+			require_bin ipmitool
+			over_group "$GROUP" act_ipmi "$@" ;;
+		*) usage "No such command: $COMMAND" ;;
+	esac
+}
+
+# Our entry point.
+run_cmd "$@"

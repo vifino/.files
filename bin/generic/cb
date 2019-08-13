@@ -30,7 +30,7 @@ cb_set() {
 	elif has xsel; then
 		exec xsel -i --clipboard
 	else
-		echo "No clipboard tool found. Supporting: xsel, xclip, pbcopy/pbpaste, Termux."
+		echo "No clipboard tool found. Supporting: xclip, xsel, pbcopy/pbpaste, Termux."
 		exit 1
 	fi
 }
@@ -45,7 +45,7 @@ cb_get() {
 	elif hasbin xclip; then
 		 exec xclip -o -sel clipboard
 	else
-		echo "No clipboard tool found. Supporting: xsel, xclip, pbcopy/pbpaste, Termux."
+		echo "No clipboard tool found. Supporting: xclip, xsel, pbcopy/pbpaste, Termux."
 		exit 1
 	fi
 }

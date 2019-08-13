@@ -1,0 +1,13 @@
+# vim: set ft=awk :
+BEGIN {
+	dim = "\x1B[2m"
+	cyan = "\x1B[36m"
+	reset = "\x1B[0m"
+}
+{
+	if ($0 ~ /^On .*, .* wrote:/ || $0 ~ /^>+/) {
+		print dim cyan $0 reset
+	} else {
+		print $0
+	}
+}
