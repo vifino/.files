@@ -230,6 +230,9 @@ mouse:
   hide_when_typing: true
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
+  url:
+    launcher:
+      program: vopen
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"

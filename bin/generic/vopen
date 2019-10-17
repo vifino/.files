@@ -12,7 +12,7 @@ usage() {
 # String utilities
 # Just because of lazyness.
 first() { echo "$1"; }
-rematch() { echo "$1" | egrep "$1" >/dev/null; }
+rematch() { echo "$2" | egrep "$1" >/dev/null; }
 replace() { echo "$2" | sed "$1"; }
 
 getmime() {
@@ -46,15 +46,17 @@ openfile() {
 		image/*) try_commands "feh '$1'" "display '$1'" ;;
 		video/*) mpv "$1" ;;
 		application/x-shellscript) try_commands "$TERMINAL -e '$1'" "xterm -e '$1'";;
-		*) [ ! -z "$VISUAL" ] && $VISUAL "$1" || $TERMINAL -e $EDITOR '$1' ;;
+		*) [ ! -z "$VISUAL" ] && $VISUAL "$1" || $TERMINAL -e $EDITOR "$1" ;;
 	esac
 }
 
 for ref in "$@"; do
 	if rematch "^https?" "$ref"; then
+		echo its an url
 		# it's a http url, better pass that to the browser.
 		browser "$ref"
+	else
+		# strip file://
+		openfile "$(replace "s#^file://##" "$ref")"
 	fi
-	# strip file://
-	openfile "$(replace "s#^file://##" "$ref")"
 done
