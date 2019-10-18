@@ -1,0 +1,31 @@
+#!/bin/sh
+# monkeywrap v1.0
+# Wrap executables, monkeypatching-style.
+# WTFPL (C) vifino 2019
+
+if [ -z "$1" ]; then
+	echo "Error: Need wrapper script to run." >/dev/stderr
+	exit 1
+fi
+
+WRAPPER="`readlink -f $1`"
+BIN_NAME="`basename "$1"`"
+shift
+
+next() {
+	unset _MW_FIRST _MW_FOUND_SELF _MW_NEXT
+	for bin in `findbins "$BIN_NAME"`; do
+		[ -z "$_MW_FIRST" ] && _MW_FIRST="$bin"
+		if [ ! -z "$_MW_FOUND_SELF" ]; then
+			[ "$bin" != "$WRAPPER" ] && _MW_NEXT="$bin" && break
+		else
+			[ "$bin" = "$WRAPPER" ] && _MW_FOUND_SELF=1
+		fi
+	done
+	[ -z "$_MW_FOUND_SELF" ] && _MW_NEXT="$_MW_FIRST"
+	unset _MW_FIRST _MW_FOUND_SELF
+	"$_MW_NEXT" "$@"
+	unset _MW_NEXT
+}
+
+. "$WRAPPER"

@@ -1,0 +1,12 @@
+-- Fancy(TM) GHCI.
+-- Simple tweaks to make GHCI a bit prettier.
+
+-- Fancier prompt.
+:set prompt "\ESC[1;34m\STX%s\n\ESC[0;34m\STXλ> \ESC[m\STX"
+:set prompt-cont "\ESC[0;34m\STX | \ESC[m\STX"
+
+-- Pretty Printing! Full color!
+:set -package pretty-simple
+:def nopp (\_ -> return ":set -interactive-print=print")
+:def pp (\_ -> return ":set -interactive-print=Text.Pretty.Simple.pPrint")
+:pp

@@ -1,0 +1,19 @@
+#!/bin/sh
+set -f
+
+if [ -z "$1" ]; then
+	echo "Error: Need bin name." >/dev/stderr
+	exit 1
+fi
+
+IFS=:
+for d in $PATH; do
+	set +f
+	[ -d "$d" ] || continue
+	for f in "$d"/*; do
+		case "$f" in
+			*/"$1") [ -x "$f" ] && printf '%s\n' "$f"
+		esac
+	done
+done
+

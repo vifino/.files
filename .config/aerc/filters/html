@@ -1,8 +1,25 @@
 #!/bin/sh
-# aerc filter which runs w3m using socksify (from the dante package) to prevent
-# any phoning home by rendered emails
-export SOCKS_SERVER="127.0.0.1:1"
-exec socksify w3m \
+# aerc filter which runs w3m using socksify (from the dante package) or firejail
+# to prevent any phoning home by rendered emails
+
+if ! hasbin w3m; then
+	echo "/* Lacking w3m, can't parse HTML. */"
+	echo
+	exec cat
+fi
+
+WRAPPER=""
+if hasbin firejail; then
+	WRAPPER="firejail --quiet --profile=default --net=none"
+elif hasbin socksify; then
+	export SOCKS_SERVER="127.0.0.1:1"
+	WRAPPER=socksify
+else
+	echo "/* Lacking a network jail. Install firejail or socksify. */"
+	echo
+fi
+
+exec $WRAPPER w3m \
 	-T text/html \
 	-cols $(tput cols) \
 	-dump \

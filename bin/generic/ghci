@@ -1,0 +1,19 @@
+#!/usr/bin/env monkeywrap
+# vifino's GHCI wrapper, for added fanciness.
+
+if ! hasbin ghc-pkg; then
+	echo "Error: Looks like you don't have GHC. Get it."
+	exit 1
+fi
+
+has_pkg() { ghc-pkg list | grep "$1" >/dev/null; }
+
+if [ -t 1 ]; then
+	if has_pkg pretty-simple; then
+		next -ghci-script ~/.ghci.fancy "$@"
+		exit $?
+	fi
+	echo "/* Lacking Haskell Package 'pretty-simple', can't make things fancy - it's too hard! */" >/dev/stderr
+fi
+
+next "$@"
