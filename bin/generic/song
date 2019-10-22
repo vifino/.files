@@ -1,5 +1,5 @@
 #!/bin/sh
-# song v1.0 by vifino.
+# song v1.1 by vifino.
 # A small music player controller.
 # Supports: MPD, CMUS and Spotify on OSX.
 set -e
@@ -16,38 +16,54 @@ Commands:
   toggle:       Toggle playing.
     next:       Skip to the next song.
     prev:       Go to the last song/beginning of the current song.
-   vol N:       Set the volume to N.
+   vol [N]:     Get the volume, optionally set to N.
 EOF
 }
 
 # Interfaces to the players.
 export MPC_FORMAT="[[%artist% - ]%title%]|[%file%]"
 mpd() {
-	case "$1" in
-		playing) mpc status -f "" | grep playing >/dev/null ;;
-		name) mpc current ;;
-		play|pause|toggle|next|prev) mpc -q $1; mpc current ;;
-		stop) mpc -q $1 ;;
-		vol) mpc -q "$@" | cut -d" " -f2 ;;
-		*) echo "Unknown command: $1"; usage; return 1 ;;
-	esac
+	while :; do
+		[ -z "$1" ] && break
+		CMD="$1"; shift;
+		case "$CMD" in
+			playing) mpc status -f "" | grep playing >/dev/null ;;
+			file) mpc status -f "[%file%]" ;;
+			name) mpc current ;;
+			play|pause|toggle|next|prev) mpc -q $CMD; mpc current ;;
+			stop) mpc -q $CMD ;;
+			vol)
+				if [ ! -z "$1" ]; then
+					mpc -q volume "$1" >/dev/null
+					shift
+				fi
+				mpc | sed -E 's/volume:(.*)%.*$/\1%/' ;;
+			*) echo "Unknown command: $CMD"; usage; return 1 ;;
+		esac
+	done
 }
 
 cmus() {
-	case "$1" in
-		playing) cmus-remote -Q | grep -m 1 playing >/dev/null ;;
-		name) cmus-remote -C "format_print '%a - %t'" ;;
-		play|pause|next|prev) cmus-remote --$1 && cmus name ;;
-		toggle) cmus playing && cmus pause || cmus play ;;
-		stop) cmus-remote --$1 ;;
-		vol)
-			if [ -z "$2" ]; then
-				cmus-remote -Q | grep vol_right | cut -d" " -f3
-			else
-				cmus-remote -v $2
-			fi ;;
-		*) echo "Unknown command: $1"; usage; return 1 ;;
-	esac
+	while :; do
+		[ -z "$1" ] && break
+		CMD="$1"; shift;
+		case "$CMD" in
+			playing) cmus-remote -Q | grep -m 1 playing >/dev/null ;;
+			file) cmus-remote -C "format_print '%f'" ;;
+			name) cmus-remote -C "format_print '%a - %t'" ;;
+			play|pause|next|prev) cmus-remote --$CMD && cmus name ;;
+			toggle) cmus playing && cmus pause || cmus play ;;
+			stop) cmus-remote --$CMD ;;
+			vol)
+				if [ -z "12" ]; then
+					cmus-remote -Q | grep vol_right | cut -d" " -f3
+				else
+					cmus-remote -v "$1"
+					shift
+				fi ;;
+			*) echo "Unknown command: $CMD"; usage; return 1 ;;
+		esac
+	done
 }
 
 spotify_mac() {
@@ -56,42 +72,45 @@ spotify_mac() {
 	TS() {
 		osascript -e "tell application \"Spotify\" to $*"
 	}
-	case "$1" in
-		playing) [ "$(TS player state as string)" = "playing" ] ;;
-		name) printf "%s - %s\n" "$(TS artist of current track as string)" "$(TS name of current track as string)" ;;
-		toggle) TS playpause ;;
-		play) spotify_mac playing || TS playpause ;;
-		pause) spotify_mac playing && TS playpause ;;
-		next) TS next track ;;
-		prev) TS previous track ;;
-		stop) spotify_mac pause ;; # there is no stop apparently.
-		vol)
-			if [ -z "$2" ]; then
-				TS sound volume as integer
-			else
-				TS set sound volume to "$2"
-			fi ;;
-		*) echo "Unknown command: $1"; usage; return 1 ;;
-	esac
+	while :; do
+		[ -z "$1" ] && break
+		CMD="$1"; shift;
+		case "$CMD" in
+			playing) [ "$(TS player state as string)" = "playing" ] ;;
+			name) printf "%s - %s\n" "$(TS artist of current track as string)" "$(TS name of current track as string)" ;;
+			toggle) TS playpause ;;
+			play) spotify_mac playing || TS playpause ;;
+			pause) spotify_mac playing && TS playpause ;;
+			next) TS next track ;;
+			prev) TS previous track ;;
+			stop) spotify_mac pause ;; # there is no stop apparently.
+			vol)
+				if [ -z "$1" ]; then
+					TS sound volume as integer
+				else
+					TS set sound volume to "$1"
+					shift
+				fi ;;
+			*) echo "Unknown command: $CMD"; usage; return 1 ;;
+		esac
+	done
 }
 
 # Our interface.
-CMD="$1"
-[ -z "$CMD" ] && CMD=name || shift
-
+[ -z "$1" ] && DFLT=name
 if [ ! -z "$MPD_HOST" ] || running mpd; then
-	mpd "$CMD" "$@"
-	exit
+	mpd $DFLT "$@"
+	exit $?
 fi
 
 if running cmus; then
-	cmus "$CMD" "$@"
-	exit
+	cmus $DFLT "$@"
+	exit $?
 fi
 
 if [ `uname` = "Darwin" ] && running Spotify; then
-	spotify_mac "$CMD" "$@"
-	exit
+	spotify_mac $DFLT "$@"
+	exit $?
 fi
 
 echo "No supported players found. Currently supports: mpd, cmus, Spotify (OSX)."
