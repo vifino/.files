@@ -11,12 +11,13 @@ Usage: song [cmd] [args..]
 Commands:
  playing:       Check if a song is playing.
     name:       Get the playing song if the player is playing.
+    file:       Get the file path of the current song.
    pause:       Pause the playing song.
     play:       Resume playing.
   toggle:       Toggle playing.
     next:       Skip to the next song.
     prev:       Go to the last song/beginning of the current song.
-   vol [N]:     Get the volume, optionally set to N.
+   vol [N%]:     Get the volume, optionally set to N%.
 EOF
 }
 
@@ -55,8 +56,8 @@ cmus() {
 			toggle) cmus playing && cmus pause || cmus play ;;
 			stop) cmus-remote --$CMD ;;
 			vol)
-				if [ -z "12" ]; then
-					cmus-remote -Q | grep vol_right | cut -d" " -f3
+				if [ -z "$1" ]; then
+					printf "%s%%\n" "$(cmus-remote -Q | grep vol_right | cut -d" " -f3)"
 				else
 					cmus-remote -v "$1"
 					shift

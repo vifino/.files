@@ -27,3 +27,5 @@ KBDFILE=~/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}
 [[ -n "${key[PageUp]}"   ]]  && bindkey "${key[PageUp]}"   beginning-of-buffer-or-history
 [[ -n "${key[PageDown]}" ]]  && bindkey "${key[PageDown]}" end-of-buffer-or-history
 
+bindkey "^[[1;5C" emacs-forward-word
+bindkey "^[[1;5D" backward-word

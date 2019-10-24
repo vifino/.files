@@ -16,6 +16,7 @@
 	amen = commit --amend --no-edit
 	root = rev-parse --show-toplevel
 	contains = branch --contains
+	stat = diff --stat
 
 [commit]
 	gpgsign = false # for now
