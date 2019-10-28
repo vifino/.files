@@ -6,7 +6,17 @@
 :set prompt-cont "\ESC[0;34m\STX | \ESC[m\STX"
 
 -- Pretty Printing! Full color!
-:set -package pretty-simple
+:set -package text -package pretty-simple
+
+:{
+vifino_print :: Show a => a -> IO ()
+vifino_print a = do
+  putStr "\ESC[1;90m:: "
+  Data.Text.Lazy.IO.putStrLn $
+    Data.Text.Lazy.replace (Data.Text.Lazy.pack "\n")
+                           (Data.Text.Lazy.pack "\n   ")
+                           (Text.Pretty.Simple.pShow a)
+:}
 :def nopp (\_ -> return ":set -interactive-print=print")
-:def pp (\_ -> return ":set -interactive-print=Text.Pretty.Simple.pPrint")
+:def pp (\_ -> return ":set -interactive-print=vifino_print")
 :pp
