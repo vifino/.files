@@ -3,7 +3,7 @@
 # Helpers
 if hasbin upower; then
 	UPOWER_PATH=/org/freedesktop/UPower/devices
-	BATTERIES=$(upower -e | grep 'battery' | sed -e "s#^$UPOWER_PATH/##" )
+	BATTERIES=$(upower -e | sed -e "s#^$UPOWER_PATH/##" | grep battery )
 	bat_info() {
 		upower -i "$UPOWER_PATH/$1" | \
 			 grep "$2:" | \
@@ -84,22 +84,27 @@ fi
 
 
 for bat in $BATTERIES; do
-	echo "$(echo "$bat" | sed -e 's/^battery_//' -e 's/_battery$//'):" # small cleanup
 	if bat_present $bat; then
-		rem=$(bat_rem $bat)
-		max=$(bat_cap $bat)
-		rem_no=$(echo $rem | cut -d' ' -f1)
-		max_no=$(echo $max | cut -d' ' -f1)
-		(
-			printf "present:            yes\n"
-			printf "state:              %s\n" "$(bat_state $bat)"
-			printf "remaining percent:  %.0f%%\n" $(echo "scale=2; ($rem_no/$max_no)*100" | bc)
-			printf "remaining capacity: %s\n" "$rem"
-			printf "max capacity:       %s\n" "$max"
-			printf "voltage:            %s\n" "$(bat_volt $bat)"
-			printf "transfer rate:      %s\n" "$(bat_rate $bat)"
-		) | sed 's/^.*$/\t\0/'
+		STATE="$(bat_state $bat)"
+		if echo $STATE | grep -v unknown >/dev/null; then
+			echo "$(echo "$bat" | sed -e 's/^battery_//' -e 's/_battery$//'):"
+
+			rem=$(bat_rem $bat)
+			max=$(bat_cap $bat)
+			rem_no=$(echo $rem | cut -d' ' -f1)
+			max_no=$(echo $max | cut -d' ' -f1)
+			(
+				printf "present:            yes\n"
+				printf "state:              %s\n" "$STATE"
+				printf "remaining percent:  %.0f%%\n" $(echo "scale=2; ($rem_no/$max_no)*100" | bc)
+				printf "remaining capacity: %s\n" "$rem"
+				printf "max capacity:       %s\n" "$max"
+				printf "voltage:            %s\n" "$(bat_volt $bat)"
+				printf "transfer rate:      %s\n" "$(bat_rate $bat)"
+			) | sed 's/^.*$/\t\0/'
+		fi
 	else
+		echo "$(echo "$bat" | sed -e 's/^battery_//' -e 's/_battery$//'):"
 		printf "\tpresent:            no\n"
 	fi
 done

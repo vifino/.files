@@ -19,11 +19,14 @@ Known commands:
           # ex: selm LVDS1 1366x768_70.00_rb
   arr     # arrange displays, args: mon side ref
           # ex: arr DP1 left LVDS1
-          #   positions DP1 left of LVDS1
+          #     positions DP1 left of LVDS1
           # valid sides: left, right, up/above, down/down
   rot     # rotate display, args: rot mon dir
           # ex: rot DP1 right
           # valid dirs: normal, left, right, inverted
+  bri     # gets or sets brightness, args: [0-1]
+          # ex: bri eDP-1 0.4
+          #     sets brightness of of eDP-1 to 40%
 
   ######## GPU COMMANDS #######################################################
   gpus     # list gpu providers, args: [provider_number]
@@ -59,7 +62,7 @@ case "$CMD" in
 	lao) # list active outputs
 		xrandr -q | grep -o '.* connected' | cut -d" " -f1 ;;
 	newm) # add mode, opts: x y hz [cvt12 opts]
-		tmp=$(cvt12 "$@")
+		tmp=$(cvt "$@")
 		ml=$(echo "$tmp" | tail -n-1 | cut -d" " -f2- | sed 's/"//g')
 		xrandr --newmode $ml
 		echo $ml | cut -d" " -f1
@@ -88,6 +91,19 @@ case "$CMD" in
 	rot) # rotate
 		check_args "$1" "$2"
 		exec xrandr --output "$1" --rotate "$2" ;;
+	bri) # brightness
+		check_args "$1"
+		if [ -z "$2" ]; then
+			ACTIVE=""
+			xrandr --query --verbose | fgrep -e "$1" -e "Brightness" | while read -r line; do
+				case "$line" in
+					"$1 connected"*) ACTIVE=1 ;;
+					*"Brightness:"*) [ $ACTIVE = 1 ] && echo "$line" | cut -f2 -d' ' ;;
+				esac
+			done
+		else
+			exec xrandr --output "$1" --brightness "$2"
+		fi ;;
 
 	# gpu commands
 	gpus)
@@ -96,7 +112,7 @@ case "$CMD" in
 		check_args "$1" "$2"
 		exec xrandr --setprovideroffloadsink "$2" "$1" ;;
 	gpuexec)
-		export DRI_PRIME=1
+		export __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia
 		exec "$@" ;;
 
 	# input commands

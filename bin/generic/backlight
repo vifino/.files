@@ -35,4 +35,15 @@ if [ -d /sys/class/backlight/* ]; then
 	exit
 fi
 
+if graphical X11; then
+	for mon in $(xutl lao); do
+		if [ -z "$1" ]; then
+			echo "$(rescale $(xutl bri $mon) 1 100)%"
+		else
+			xutl bri $mon "$(rescale "$1" 100 1)"
+		fi
+	done
+fi
+
 [ -z "$BACKLIGHTTOOL" ] && echo "Error: \$BACKLIGHTTOOL not set. Set it to 'xbacklight -set', 'intel_backlight', etc..." && exit 1
+eval "$BACKLIGHTTOOL $@"

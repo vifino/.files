@@ -1,0 +1,6 @@
+#!/bin/sh
+xutl bri eDP-1 0.3
+
+xutl disi "TouchPad"
+xset m 1/1 1
+

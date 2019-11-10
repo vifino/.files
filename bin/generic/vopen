@@ -41,6 +41,7 @@ try_commands() {
 }
 
 openfile() {
+	[ -x "$(first $1)" ] && exec $1
 	case "$(getmime "$1")" in
 		*/pdf) zathura "$1" ;;
 		image/*) try_commands "feh '$1'" "display '$1'" ;;

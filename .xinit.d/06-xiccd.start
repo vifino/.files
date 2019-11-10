@@ -1,0 +1,4 @@
+#!/bin/sh
+if hasbin xiccd; then
+	xiccd &
+fi

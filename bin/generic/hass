@@ -28,13 +28,22 @@ ACTION="$1"
 shift
 [ -z "$HASS" ] && echo "Set \$HASS to the Home Assistant URL." && exit 1
 
+# mcurl <curl opts>
+mcurl() {
+	if [ -z "$HASS_APIKEY" ]; then
+		curl "$@"
+	else
+		curl -H "Authorization: Bearer $HASS_APIKEY" "$@"
+	fi
+}
 # api "services/switch/turn_off" '{"entity_id": "switch.lounge_blue_light"}'
 api() {
 	CURL_OPTS="-H 'Content-Type: application/json'"
+
 	if [ -z "$2" ]; then
-		curl -sL $CURL_OPTS "$HASS/api/$1"
+		mcurl -sL $CURL_OPTS "$HASS/api/$1"
 	else
-		curl -sL $CURL_OPTS -d "$2" "$HASS/api/$1"
+		mcurl -sL $CURL_OPTS -d "$2" "$HASS/api/$1"
 	fi
 }
 
