@@ -17,6 +17,7 @@
 	root = rev-parse --show-toplevel
 	contains = branch --contains
 	stat = diff --stat
+	todo = grep TODO
 
 [commit]
 	gpgsign = false # for now

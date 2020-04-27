@@ -28,10 +28,10 @@ https://en.wikinews.org/w/index.php?title=Special:NewsFeed&feed=atom&categories=
 # Blogs I find worth reading.
 https://blog.z3bra.org/rss/feed.xml "~z3bra" "Blog" "Technology" "NIX"
 https://nullprogram.com/feed/ "Blog" "Technology" "NIX" "C"
-#https://blog.fefe.de/rss.xml "~Fefe's Blog" "German" "Blog" "Technology" "News" "Politics" 
 https://acassis.wordpress.com/feed "~Alan C. Assis' Blog" "Blog" "NuttX" "NIX" "Technology"
 https://oscarliang.com/feed "Blog" "FPV" "RC"
 https://www.revk.uk/feeds/posts/default "~RevK's Rants" "Blog" "Technology"
 https://poolp.org/feeds/all.atom.xml "Blog" "Technology" "BSD" "NIX" "OpenSMTPD"
 https://ck-hack.blogspot.com/feeds/posts/default "~Con Kolivas' Blog" "Blog" "NIX" "Linux"
 https://vermaden.wordpress.com/feed.xml "~Vermaden's Blog" "Blog" "NIX" "BSD" "Technology"
+https://pyra-handheld.com/boards/forums/pyra-news.250/index.rss "Blog" "Hardware"

@@ -67,13 +67,15 @@ filter() {
 				*) error "$CMD: Invalid type $1." ;;
 			esac ;;
 		*BSD)
-			case "$IFT" in
-				wired) grep -E "^(en|em|ixl|fxp|alc)" ;;
-				wireless) grep -E "^(ath|iwi|iwl|iwn|ral|ural|rum|run)" ;;
-				virtual) grep -E "^(vether|bridge|enc|vlan|pflog)" ;;
-				*) error "$CMD: Invalid type $1." ;;
-			esac ;;
-
+			while read IF; do
+				MEDIA="$(ifconfig "$IF" | sed -En 's/^.*media: ([^ ]*).*$/\1/p')"
+				case "$IFT" in
+					wired) [ "$MEDIA" = "Ethernet" ] && echo "$IF" ;;
+					wireless) [ "$MEDIA" = "IEEE802.11" ] && echo "$IF" ;;
+					virtual) [ -z "$MEDIA" ] && echo "$IF" ;;
+					*) error "$CMD: Invalid type $1." ;;
+				esac
+			done ;;
 		*) error "$CMD: $OS is not supported. Add support?" 2 ;;
 	esac
 }

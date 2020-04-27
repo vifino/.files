@@ -38,7 +38,7 @@ servers = (
     use_tls = "yes";
   },
   {
-    address = "irc.hackint.net";
+    address = "irc.hackint.org";
     chatnet = "HackInt";
     port = "6697";
     use_tls = "yes";
