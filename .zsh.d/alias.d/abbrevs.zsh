@@ -16,6 +16,16 @@ e() { # Editor
 		"$EDITOR" "$@"
 	fi
 }
+ez() {
+	for edit in micro nano pico vim vi; do
+		if hasbin $edit; then
+			$edit "$@"
+			break
+		fi
+	done
+}
+
+
 p() { # Pager
 	if [ -z "$PAGER" ] ; then
 		echo '$PAGER not set.'

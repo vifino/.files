@@ -11,7 +11,7 @@ Usage: song [cmd] [args..]
 Commands:
  playing:       Check if a song is playing.
     name:       Get the playing song if the player is playing.
-    file:       Get the file path of the current song.
+     uri:       Get the URI of the current song.
    pause:       Pause the playing song.
     play:       Resume playing.
   toggle:       Toggle playing.
@@ -19,6 +19,37 @@ Commands:
     prev:       Go to the last song/beginning of the current song.
    vol [N%]:     Get the volume, optionally set to N%.
 EOF
+}
+
+# Helpers
+hasbin() {
+	command -v "$1" > /dev/null
+}
+
+make_uri() {
+	sed 's%^/%file:///%'
+}
+
+rescale_tof() {
+	VAL="$(sed 's/[^0-9.]//g')"
+	if [ "$VAL" = "$1" ]; then
+		echo 1
+	else
+		# BC drops leading zeros.
+		printf "0"
+		echo "scale=2; ($VAL) / $1" | bc
+	fi
+}
+
+rescale_top() {
+	VAL="$(sed 's/[^0-9.]//g')"
+	if [ "$VAL" = "$1" ]; then
+		echo 100%
+	elif [ "$VAL" = "0" ]; then
+		echo 0%
+	else
+		echo "scale=2; ($VAL) * (100/$1)" | bc | sed -e 's/^0$/0%/' -e 's/^1$/100%/' -e 's/\.0*$/%/'
+	fi
 }
 
 # Interfaces to the players.
@@ -29,7 +60,7 @@ mpd() {
 		CMD="$1"; shift;
 		case "$CMD" in
 			playing) mpc status -f "" | grep playing >/dev/null ;;
-			file) mpc status -f "[%file%]" ;;
+			uri) mpc status -f "[%file%]" | make_uri;;
 			name) mpc current ;;
 			play|pause|toggle|next|prev) mpc -q $CMD; mpc current ;;
 			stop) mpc -q $CMD ;;
@@ -50,7 +81,7 @@ cmus() {
 		CMD="$1"; shift;
 		case "$CMD" in
 			playing) cmus-remote -Q | grep -m 1 playing >/dev/null ;;
-			file) cmus-remote -C "format_print '%f'" ;;
+			uri) cmus-remote -C "format_print '%f'" | make_uri ;;
 			name) cmus-remote -C "format_print '%a - %t'" ;;
 			play|pause|next|prev) cmus-remote --$CMD && cmus name ;;
 			toggle) cmus playing && cmus pause || cmus play ;;
@@ -62,6 +93,31 @@ cmus() {
 					cmus-remote -v "$1"
 					shift
 				fi ;;
+			*) echo "Unknown command: $CMD"; usage; return 1 ;;
+		esac
+	done
+}
+
+mpris_playerctl() {
+	while :; do
+		[ -z "$1" ] && break
+		CMD="$1"; shift;
+		case "$CMD" in
+			playing) [ "$(playerctl status)" = "Playing" ] ;;
+			name) mpris_playerctl playing && playerctl metadata -f "{{ artist }} - {{ title }}" ;;
+			file) mpris_playerctl playing && playerctl metadata -f "{{ mpris:trackid }}" ;;
+			play|pause|stop|next) playerctl $CMD ;;
+			toggle) playerctl play-pause ;;
+			prev) playerctl previous ;;
+			vol)
+				if [ -z "$1" ]; then
+					playerctl volume | rescale_top 1
+				else
+					NV="$(echo "$1" | rescale_tof 100)"
+					playerctl volume "$NV"
+					shift
+				fi ;;
+
 			*) echo "Unknown command: $CMD"; usage; return 1 ;;
 		esac
 	done
@@ -87,7 +143,7 @@ spotify_mac() {
 			stop) spotify_mac pause ;; # there is no stop apparently.
 			vol)
 				if [ -z "$1" ]; then
-					TS sound volume as integer
+					printf "%s%%\n" $(TS sound volume as integer)
 				else
 					TS set sound volume to "$1"
 					shift
@@ -109,10 +165,15 @@ if running cmus; then
 	exit $?
 fi
 
+if hasbin playerctl; then
+	mpris_playerctl $DFLT "$@"
+	exit $?
+fi
+
 if [ `uname` = "Darwin" ] && running Spotify; then
 	spotify_mac $DFLT "$@"
 	exit $?
 fi
 
-echo "No supported players found. Currently supports: mpd, cmus, Spotify (OSX)."
+echo "No supported players found. Currently supports: mpd, cmus, playerctl, Spotify (OSX)."
 exit 1
