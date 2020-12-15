@@ -42,7 +42,8 @@
       ediff-window-setup-function 'ediff-setup-windows-plain
       make-backup-files nil
       auto-save-default nil
-      gc-cons-threshold (* 10 1024 1024)
+      gc-cons-threshold (* 64 1024 1024)
+      read-process-output-max (* 1024 1024)
       large-file-warning-threshold (* 10 1024 1024)
       max-specpdl-size 4096
       max-lisp-eval-depth 2048
@@ -61,3 +62,9 @@
 ;; rainbow delimiters, these need to be specifically activated by each mode.
 (use-package rainbow-delimiters :ensure t
   :commands (rainbow-delimiters-mode))
+
+;; magic undo!
+(use-package undo-tree :ensure t
+  :diminish undo-tree-mode
+  :init
+  (global-undo-tree-mode))

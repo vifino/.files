@@ -1,27 +1,17 @@
-;; emacs-lsp
-;; pretty buggy, at the moment, unfortunately.
-;; manual clone of https://github.com/emacs-lsp/lsp-mode to ~/.emacs.d/pkg/lsp-mode recommended, currently.
+(setq lsp-keymap-prefix "C-c l")
+
 (use-package lsp-mode :ensure t
-  :diminish "LSP"
-  :commands (lsp-mode lsp-define-stdio-client lsp-client-on-notification
-            lsp-make-traverser lsp-capabilites lsp-mode-line lsp-define-tcp-client)
+  :hook (
+         (rust-mode . lsp-deferred)
+         (go-mode . lsp-deferred))
+  :commands (lsp lsp-deferred)
   :config
-  (setq lsp-enable-eldoc t)
-  (setq lsp-response-timeout 25))
+  (defun lsp-go-install-save-hooks ()
+    (add-hook 'before-save-hook #'lsp-format-buffer t t)
+    (add-hook 'before-save-hook #'lsp-organize-imports t t)))
 
 (use-package lsp-ui :ensure t
-  :after (flycheck lsp-mode)
-  :commands lsp-ui-mode
-  :init
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+  :commands lsp-ui-mode)
 
-(use-package company-lsp :ensure t
-  :after (company lsp-mode)
-  :commands company-lsp
-  :config
-  (setq company-lsp-async t)
-  (setq company-lsp-enable-recompletion t)
-  :init
-  (add-hook 'lsp-mode-hook (lambda () (progn
-                                        (require 'company-lsp)
-                                        (push 'company-lsp (make-local-variable company-backends))))))
+(use-package lsp-ivy :ensure t
+  :commands lsp-ivy-workspace-symbol)

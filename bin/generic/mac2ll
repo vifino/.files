@@ -1,0 +1,41 @@
+#!/usr/bin/env crun
+// MAC to IPv6 LL address converter.
+// MAC: XX:XX:XX:XX:XX:XX
+// LL:  fe80::xyxx:xxff:fexx:xxxx
+// y = x xor 2
+
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+
+void usage(FILE* f) {
+	fprintf(f, "Usage: mac2ll 01:23:45:67:89:ab\n");
+}
+
+int parse_mac(const char* str, uint8_t mac[6]) {
+	if (strlen(str) != (6*2 + 5))
+		return 0;
+	return sscanf(str, "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx%*c", &mac[0], &mac[1], &mac[2], &mac[3], &mac[4], &mac[5]) == 6;
+}
+
+int main(int argc, char* argv[]) {
+	if (argc < 2) {
+		usage(stderr);
+		return 1;
+	}
+
+	char* str_mac = argv[1];
+	uint8_t mac[6];
+
+	if (!parse_mac(str_mac, mac)) {
+		fprintf(stderr, "Error: MAC address does not seem to be correct: %s\n", str_mac);
+		return 1;
+	}
+
+	// Invert second bit from the right in first byte.
+	mac[0] = mac[0] ^ 2;
+
+	printf("fe80::%02x%02x:%02xff:fe%02x:%02x%02x\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+
+	return 0;
+}

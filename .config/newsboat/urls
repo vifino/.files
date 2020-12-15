@@ -8,6 +8,7 @@ https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml "~Analyzed CVE Feed
 # Update feeds.
 https://openbsd-current-rss.appspot.com/ "BSD" "NIX" "Technology" "Open Source"
 https://www.FreeBSD.org/news/rss.xml "BSD" "NIX" "Technology" "Open Source"
+https://maemo-leste.github.io/feeds/all.atom.xml "Linux" "Open Source"
 https://github.com/shinyblink/sled/commits/master.atom "~sled:master" "GitHub" "Open Source"
 https://github.com/opentx/opentx/commits/2.3.atom "~OpenTX:2.3" "GitHub" "Open Source" "RC"
 https://github.com/betaflight/betaflight/commits/master.atom "~BetaFlight:master" "GitHub" "Open Source" "RC"
@@ -16,13 +17,13 @@ https://github.com/blacksphere/blackmagic/commits/master.atom "~BlackMagic Debug
 
 # Tech news feeds.
 https://www.phoronix.com/rss.php "Technology" "News" "BSD" "Linux" "NIX" "Open Source"
-https://feeds.feedburner.com/arstechnica/open-source "Ars Technica" "News" "Technology" "Open Source"
-https://feeds.feedburner.com/arstechnica/technology-lab "Ars Technica" "News" "Technology"
+https://feeds.feedburner.com/arstechnica/open-source "Ars Technica" "News" "Technology" "Open Source" "Company"
+https://feeds.feedburner.com/arstechnica/technology-lab "Ars Technica" "News" "Technology" "Company"
 
 # "Regular" news feeds.
 https://www.the-postillon.com/feeds/posts/default?alt=rss "News" "Independant" # Only the most serious news.
 https://feeds.feedburner.com/blogspot/rkEL "German" "News" "Independant" # German variant of the above, it's more active.
-https://www.spiegel.de/international/index.rss "Real" "News" # I like the tag order.
+https://www.spiegel.de/international/index.rss "Real" "News" "Company" # I like the tag order.
 https://en.wikinews.org/w/index.php?title=Special:NewsFeed&feed=atom&categories=Published&notcategories=No%20publish%7C%7CAutoArchived%7Cdisputed&namespace=0&ordermethod=categoryadd&stablepages=only&count=30 "~Wikinews" "Real" "Independant" "News"
 
 # Blogs I find worth reading.
@@ -36,3 +37,7 @@ https://ck-hack.blogspot.com/feeds/posts/default "~Con Kolivas' Blog" "Blog" "NI
 https://vermaden.wordpress.com/feed.xml "~Vermaden's Blog" "Blog" "NIX" "BSD" "Technology"
 https://pyra-handheld.com/boards/forums/pyra-news.250/index.rss "Blog" "Hardware"
 https://vincent.bernat.ch/en/blog/atom.xml "~Vincent Bernat's Blog" "Blog" "Technology"
+https://www.earth.li/~noodles/blog/feed.xml "Blog" "Technology"
+https://usethe.computer/rss.xml "Blog" "Technology"
+https://blog.thelifeofkenneth.com/atom.xml "Blog" "Technology"
+https://blog.cloudflare.com/feed "Blog" "Technology" "Company"

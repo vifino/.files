@@ -89,9 +89,9 @@ over_group() {
 	fi
 	shift 2
 
-	while read -r NAME CMD ARGS; do
+	sed '/^#/d' "$GROUPDIR/$GROUP" | while read -r NAME CMD ARGS; do
 		[ ! -z "$NAME" ] && "$FN" "$@" < /dev/null
-	done < $GROUPDIR/$GROUP
+	done
 }
 
 # Generic (helper) commands

@@ -1,0 +1,6 @@
+#!/bin/sh
+if ! hasbin ssh; then
+	echo "Need SSH." >/dev/stderr
+fi
+
+ssh -F none "$@"

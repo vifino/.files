@@ -117,7 +117,9 @@ cmd_wifi() {
 			case "$OS" in
 				Linux)
 					req iw
-					iw dev "$(reqtype wifi "$1")" info | sed -En 's/^[[:space:]]*ssid (.*)$/\1/p' ;;
+					SSID=`iw dev "$(reqtype wifi "$1")" info | sed -En 's/^[[:space:]]*ssid (.*)$/\1/p'`
+					# Dash's printf doesn't seem to interpret the hex escapes, so here's this.
+					/usr/bin/printf "$SSID\n";;
 				*) error "$CMD: $SCMD not implemented for $OS." 2 ;;
 			esac ;;
 		*) error "$CMD: Subcommand $SCMD not known." ;;

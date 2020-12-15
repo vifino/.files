@@ -53,7 +53,6 @@ openfile() {
 
 for ref in "$@"; do
 	if rematch "^https?" "$ref"; then
-		echo its an url
 		# it's a http url, better pass that to the browser.
 		browser "$ref"
 	else
