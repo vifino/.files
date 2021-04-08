@@ -1,16 +1,8 @@
 # Little helpers
 
-bash_source() {
-  alias shopt=':'
-  alias _expand=_bash_expand
-  alias _complete=_bash_comp
-  emulate -L sh
-  setopt kshglob noshglob braceexpand
-
-  source "$@"
-}
-
 # Returns 0 if the specified string contains the specified substring, otherwise returns 1.
+hasbin() { [[ $commands[$1] ]] }
+
 contains() {
 	local string="$1"
 	local substring="$2"
@@ -25,6 +17,16 @@ silent() {
 	resolved=$(whence "$1")
 	[ $? = 0 ] && prog="$resolved"
 	"$prog" "$@" &> /dev/null
+}
+
+bash_source() {
+  alias shopt=':'
+  alias _expand=_bash_expand
+  alias _complete=_bash_comp
+  emulate -L sh
+  setopt kshglob noshglob braceexpand
+
+  source "$@"
 }
 
 

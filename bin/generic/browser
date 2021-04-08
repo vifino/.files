@@ -11,7 +11,7 @@ run_browser() {
 	fi
 }
 
-graphical && run_browser "$GBROWSER" "$@"
+graphical any && run_browser "$GBROWSER" "$@"
 run_browser "$BROWSER" "$@"
 
 check_browser() {
@@ -20,7 +20,7 @@ check_browser() {
 	hasbin "$B" && exec "$B" "$@"
 }
 
-if graphical; then
+if graphical any; then
 	for browser in luakit waterfox firefox google-chrome dwb; do
 		check_browser "$browser" "$@"
 	done

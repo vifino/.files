@@ -8,6 +8,7 @@ TYPE="none"
 [ "$TYPE" = none ] && exit 1
 
 [ -z "$1" ] && echo "$TYPE" && exit
+[ "$1" = "any" ] && exit
 [ "$TYPE" = "$1" ] && exit
 exit 1
 

@@ -1,6 +1,7 @@
 #!/bin/sh
 # Runs k20 in small splits
-for client in $(printf "%s\n" "$@" | tac); do
-	tmux split-window -l 3 "k20 -n \"k20 $client\" \"$client\""
+printf "%s\n" "$@" | tac| while read client; do
+	tmux split-window -l 3 "k20 -n \"k20 '$client'\" '$client'"
+	echo tmux split-window -l 3 "k20 -n \"k20 '$client'\" '$client'"
 	tmux last-pane
 done

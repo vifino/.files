@@ -29,7 +29,7 @@
 	todo = grep TODO
 
 [pager]
-	diff = false
+#	diff = false
 	branch = false
 	pull = false
 	todo = false
@@ -37,6 +37,16 @@
 	contains = false
 	stat = false
 	contributors = false
+
+# Delta config.
+[delta]
+    features = side-by-side line-numbers decorations
+    whitespace-error-style = 22 reverse
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
 
 # LFS stuff.
 [filter "lfs"]

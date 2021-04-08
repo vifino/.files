@@ -2,6 +2,7 @@
 
 browser "browser"
 auto-reload yes
+reload-threads 8
 
 # Colors
 color listnormal        cyan default

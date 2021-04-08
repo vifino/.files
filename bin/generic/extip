@@ -24,7 +24,7 @@ try_utils() {
 		if has "$util"; then
 			OUT="$(run_util "$util")"
 			RET=$?
-			if [ "$RET" -eq 0 ]; then
+			if [ "$RET" -eq 0 ] && [ ! -z "$OUT" ]; then
 				echo "$OUT"
 				exit
 			fi

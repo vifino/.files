@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/home/vifino/src/vifino-overlay/dev-python/colour'
+let g:netrw_dirhist_3='/home/vifino/src/work/efero/efero-api/src/server'
+let g:netrw_dirhist_2='/home/vifino/src/work/efero/efero-dcmgr/tests/support'
+let g:netrw_dirhist_1='/home/vifino/.config/nvim'
