@@ -15,9 +15,10 @@ if hasbin kubectl; then
 	mkdir -p "${CUSTOM_KUBE_CONTEXTS}"
 
 	EXTRA="$(find "${CUSTOM_KUBE_CONTEXTS}" -type f -name "*.yml" | tr -s '\n' ':' )"
-	export KUBECONFIG="$EXTRA$KUBECONFIG"
+	export KUBECONFIG="$KUBECONFIG:$EXTRA"
 fi
 
-hasbin kubecolor && alias kubectl="kubecolor"
 hasbin kubeadm   && source <(kubeadm completion zsh)
+hasbin kubectl   && source <(kubectl completion zsh)
+hasbin kubecolor && alias kubectl="kubecolor" && complete -o default -F __start_kubectl kubecolor
 hasbin helm      && source <(helm    completion zsh)

@@ -110,7 +110,7 @@ return require('packer').startup({
 			end
 		}
 		use { "beauwilliams/statusline.lua",
-			requires = {'kyazdani42/nvim-web-devicons', opt = true}
+			requires = {"kyazdani42/nvim-web-devicons", "kosayoda/nvim-lightbulb", opt = true}
 		}
 
 

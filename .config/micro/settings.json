@@ -11,6 +11,8 @@
     "cursorline": true,
     "diff": true,
     "diffgutter": true,
+    "divchars": "|-",
+    "divreverse": true,
     "editorconfig": true,
     "encoding": "utf-8",
     "eofnewline": true,
