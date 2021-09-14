@@ -73,7 +73,7 @@ return require('packer').startup({
 			end
 		}
 
-		use { "nvim-telescope/telescope.nvim", 
+		use { "nvim-telescope/telescope.nvim",
 			requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
 			cmd = "Telescope",
 			setup = function()
@@ -113,12 +113,24 @@ return require('packer').startup({
 			requires = {"kyazdani42/nvim-web-devicons", "kosayoda/nvim-lightbulb", opt = true}
 		}
 
-
-		-- Additional language support which isn't solved by Treesitter/LSP.
-		use { "Lattay/vim-openscad",
-			ft = "openscad",
+		-- Find with skim.
+		use { 'lotabout/skim',
+			run = "./install",
+			requires = {"lotabout/skim.vim", after = "skim"}
 		}
 
+		-- Additional language support which isn't solved by Treesitter/LSP.
+		use { 'salkin-mada/openscad.nvim',
+			config = function()
+				vim.g.openscad_default_mappings = true
+				require('openscad')
+			end
+		}
+
+		-- Small things.
+		use { "dhulihan/vim-rfc",
+			cmd = "RFC"
+		}
 	end,
 	config = {}
 })

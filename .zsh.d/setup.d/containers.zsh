@@ -22,3 +22,4 @@ hasbin kubeadm   && source <(kubeadm completion zsh)
 hasbin kubectl   && source <(kubectl completion zsh)
 hasbin kubecolor && alias kubectl="kubecolor" && complete -o default -F __start_kubectl kubecolor
 hasbin helm      && source <(helm    completion zsh)
+hasbin velero    && source <(velero  completion zsh)

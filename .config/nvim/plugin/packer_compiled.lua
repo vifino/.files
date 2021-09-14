@@ -121,6 +121,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/vifino/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
   },
+  ["openscad.nvim"] = {
+    config = { "\27LJ\2\2X\0\0\2\0\5\0\b6\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\3\0'\1\4\0B\0\2\1K\0\1\0\ropenscad\frequire\30openscad_default_mappings\6g\bvim\0" },
+    loaded = true,
+    path = "/home/vifino/.local/share/nvim/site/pack/packer/start/openscad.nvim"
+  },
   ["packer.nvim"] = {
     loaded = false,
     needs_bufread = false,
@@ -134,6 +139,14 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/vifino/.local/share/nvim/site/pack/packer/start/popup.nvim"
   },
+  skim = {
+    loaded = true,
+    path = "/home/vifino/.local/share/nvim/site/pack/packer/start/skim"
+  },
+  ["skim.vim"] = {
+    loaded = true,
+    path = "/home/vifino/.local/share/nvim/site/pack/packer/start/skim.vim"
+  },
   ["statusline.lua"] = {
     loaded = true,
     path = "/home/vifino/.local/share/nvim/site/pack/packer/start/statusline.lua"
@@ -141,13 +154,14 @@ _G.packer_plugins = {
   ["telescope.nvim"] = {
     commands = { "Telescope" },
     loaded = false,
-    needs_bufread = false,
+    needs_bufread = true,
     path = "/home/vifino/.local/share/nvim/site/pack/packer/opt/telescope.nvim"
   },
-  ["vim-openscad"] = {
+  ["vim-rfc"] = {
+    commands = { "RFC" },
     loaded = false,
-    needs_bufread = true,
-    path = "/home/vifino/.local/share/nvim/site/pack/packer/opt/vim-openscad"
+    needs_bufread = false,
+    path = "/home/vifino/.local/share/nvim/site/pack/packer/opt/vim-rfc"
   },
   ["zephyr-nvim"] = {
     config = { "\27LJ\2\2&\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\vzephyr\frequire\0" },
@@ -165,18 +179,22 @@ time([[Setup for telescope.nvim]], false)
 time([[Setup for lspsaga.nvim]], true)
 try_loadstring("\27LJ\2\2ü\1\0\0\5\0\b\0\0146\0\0\0'\1\1\0B\0\2\0029\1\2\0'\2\3\0'\3\4\0'\4\5\0B\1\4\0019\1\2\0'\2\3\0'\3\6\0'\4\a\0B\1\4\1K\0\1\0\24:Lspsaga rename<cr>\15<leader>rr\29:Lspsaga code_action<cr>\15<leader>ca\6n\bmap\19vifino.helpers\frequire\0", "setup", "lspsaga.nvim")
 time([[Setup for lspsaga.nvim]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-try_loadstring("\27LJ\2\2∫\1\0\0\3\0\n\0\r6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0005\2\4\0=\2\5\0015\2\6\0=\2\a\0015\2\b\0=\2\t\1B\0\2\1K\0\1\0\frainbow\1\0\1\venable\2\vindent\1\0\1\venable\1\14highlight\1\0\1\venable\2\1\0\1\21ensure_installed\15maintained\nsetup\28nvim-treesitter.configs\frequire\0", "config", "nvim-treesitter")
-time([[Config for nvim-treesitter]], false)
--- Config for: nvim-colorizer.lua
-time([[Config for nvim-colorizer.lua]], true)
-try_loadstring("\27LJ\2\0027\0\0\2\0\3\0\0066\0\0\0'\1\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0", "config", "nvim-colorizer.lua")
-time([[Config for nvim-colorizer.lua]], false)
 -- Config for: nvim-lspconfig
 time([[Config for nvim-lspconfig]], true)
 try_loadstring("\27LJ\2\2˛\2\0\0\5\0\21\0,6\0\0\0009\0\1\0009\0\2\0006\1\3\0'\2\4\0B\1\2\0026\2\0\0009\2\5\0029\2\6\0029\2\a\2B\2\1\0029\3\b\0029\3\t\0039\3\n\3+\4\2\0=\4\v\3\18\3\0\0'\4\f\0B\3\2\2\15\0\3\0X\4\6Ä9\3\r\0019\3\14\0035\4\15\0=\2\16\4B\3\2\1X\3\4Ä9\3\17\0019\3\14\0034\4\0\0B\3\2\0019\3\18\0019\3\14\0034\4\0\0B\3\2\0019\3\19\0019\3\14\0034\4\0\0B\3\2\0019\3\20\0019\3\14\0034\4\0\0B\3\2\1K\0\1\0\bhls\ngopls\vclangd\brls\17capabilities\1\0\0\nsetup\18rust_analyzer\18rust-analyzer\19snippetSupport\19completionItem\15completion\17textDocument\29make_client_capabilities\rprotocol\blsp\14lspconfig\frequire\15executable\afn\bvim\0", "config", "nvim-lspconfig")
 time([[Config for nvim-lspconfig]], false)
+-- Config for: nvim-colorizer.lua
+time([[Config for nvim-colorizer.lua]], true)
+try_loadstring("\27LJ\2\0027\0\0\2\0\3\0\0066\0\0\0'\1\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0", "config", "nvim-colorizer.lua")
+time([[Config for nvim-colorizer.lua]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+try_loadstring("\27LJ\2\2∫\1\0\0\3\0\n\0\r6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0005\2\4\0=\2\5\0015\2\6\0=\2\a\0015\2\b\0=\2\t\1B\0\2\1K\0\1\0\frainbow\1\0\1\venable\2\vindent\1\0\1\venable\1\14highlight\1\0\1\venable\2\1\0\1\21ensure_installed\15maintained\nsetup\28nvim-treesitter.configs\frequire\0", "config", "nvim-treesitter")
+time([[Config for nvim-treesitter]], false)
+-- Config for: openscad.nvim
+time([[Config for openscad.nvim]], true)
+try_loadstring("\27LJ\2\2X\0\0\2\0\5\0\b6\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\3\0'\1\4\0B\0\2\1K\0\1\0\ropenscad\frequire\30openscad_default_mappings\6g\bvim\0", "config", "openscad.nvim")
+time([[Config for openscad.nvim]], false)
 -- Config for: nvim-compe
 time([[Config for nvim-compe]], true)
 try_loadstring("\27LJ\2\2è\2\0\0\4\0\18\0\0216\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\4\0'\1\5\0B\0\2\0029\0\6\0005\1\a\0005\2\b\0005\3\t\0=\3\n\0025\3\v\0=\3\f\0025\3\r\0=\3\14\0025\3\15\0=\3\16\2=\2\17\1B\0\2\1K\0\1\0\vsource\15treesitter\1\0\1\tmenu\n[TRS]\rnvim_lua\1\0\1\tmenu\n[Lua]\rnvim_lsp\1\0\1\tmenu\n[LSP]\vbuffer\1\0\1\tmenu\n[BUF]\1\0\1\tpath\2\1\0\1\fenabled\2\nsetup\ncompe\frequire\26menu,menuone,noselect\16completeopt\6o\bvim\0", "config", "nvim-compe")
@@ -194,22 +212,11 @@ time([[Sequenced loading]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-vim.cmd [[command! -nargs=* -range -bang -complete=file Telescope lua require("packer.load")({'telescope.nvim'}, { cmd = "Telescope", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Lspsaga lua require("packer.load")({'lspsaga.nvim'}, { cmd = "Lspsaga", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Lspsaga lua require("packer.load")({'lspsaga.nvim'}, { cmd = "Lspsaga", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Telescope lua require("packer.load")({'telescope.nvim'}, { cmd = "Telescope", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file RFC lua require("packer.load")({'vim-rfc'}, { cmd = "RFC", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 time([[Defining lazy-load commands]], false)
 
-vim.cmd [[augroup packer_load_aucmds]]
-vim.cmd [[au!]]
-  -- Filetype lazy-loads
-time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType openscad ++once lua require("packer.load")({'vim-openscad'}, { ft = "openscad" }, _G.packer_plugins)]]
-time([[Defining lazy-load filetype autocommands]], false)
-vim.cmd("augroup END")
-vim.cmd [[augroup filetypedetect]]
-time([[Sourcing ftdetect script at: /home/vifino/.local/share/nvim/site/pack/packer/opt/vim-openscad/ftdetect/openscad.vim]], true)
-vim.cmd [[source /home/vifino/.local/share/nvim/site/pack/packer/opt/vim-openscad/ftdetect/openscad.vim]]
-time([[Sourcing ftdetect script at: /home/vifino/.local/share/nvim/site/pack/packer/opt/vim-openscad/ftdetect/openscad.vim]], false)
-vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
 end)
