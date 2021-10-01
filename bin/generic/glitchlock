@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ┏━┓┳  o┏┓┓┏━┓┳ ┳┳  ┏━┓┏━┓┳┏ 
 # ┃ ┳┃  ┃ ┃ ┃  ┃━┫┃  ┃ ┃┃  ┣┻┓
 # ┇━┛┇━┛┇ ┇ ┗━┛┇ ┻┇━┛┛━┛┗━┛┇ ┛
@@ -6,23 +6,23 @@
 # author: vifino <vifino@tty.sh> http://tty.sh
 # original by xero <x@xero.nu> http://xero.nu
 
-if ! hasbin ffshot ff-glitch png2ff ff2png i3lock; then
+if ! hasbin ffshot ff-glitch png2ff ff2png i3lock-color; then
 	echo "Need ffshot, farbfeld tools, ff-glitch, ff-overlay and i3lock-color."
 	exit 1
 fi
 
 GLITCHICON=${GLITCHICON:="$HOME/img/stop.png"}
-PARAM=(--bar-indicator --bar-position h --bar-direction 1 --redraw-thread -t "" \
-	--bar-step 50 --bar-width 250 --bar-base-width 50 --bar-max-height 100 --bar-periodic-step 50 \
-	--bar-color 00000077 --keyhlcolor 00666666 --ringvercolor cc87875f --wrongcolor ffff0000 \
-	--veriftext="" --wrongtext="" --noinputtext="" )
+PARAM=(--bar-indicator --bar-orientation horizontal --bar-direction 1 --redraw-thread -t "" \
+	--bar-step 50 --bar-total-width 250 --bar-base-width 50 --bar-max-height 100 --bar-periodic-step 50 \
+	--bar-color 00000077 --keyhl-color 00666666 --ringver-color cc87875f --wrong-color ffff0000 \
+	--verif-text="" --wrong-text="" --noinput-text="" )
 
 export GARGS="3 5"
 
 if [ -f "$GLITCHICON" ]; then
 	time ffshot | ff-glitch $GARGS | ff-overlay <(cat "$GLITCHICON" | png2ff) | ff2png > /tmp/lock.png
 else
-	time ffshot | ff-glitch $GARGS | ff2png > /tmp/lock.png
+	time (ffshot | ff-glitch $GARGS | ff2png > /tmp/lock.png)
 fi
-i3lock -n "${PARAM[@]}" -i "/tmp/lock.png" > /dev/null 2>&1
+i3lock-color -n "${PARAM[@]}" -i "/tmp/lock.png" >/dev/null
 #rm /tmp/lock.png

@@ -16,6 +16,7 @@ end
 -- Require other parts of the config.
 require("vifino.settings")
 require("vifino.plugins")
+require("vifino.autoreload")
 
 if firstrun then
 	require("packer").sync()

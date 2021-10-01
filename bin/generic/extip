@@ -1,21 +1,46 @@
 #!/bin/sh
-# extip: get external ip.
-# requires drill or dig.
+# extip: get external IP(s).
+# requires drill, dig, host, curl or wget.
 
 has() {
 	command -v "$1" >/dev/null
 }
 
-run_util() {
+run_util_v4() {
 	case "$1" in
-		dig) dig @resolver1.opendns.com ANY myip.opendns.com +short ;;
+		drill) drill -4 myip.opendns.com @resolver1.opendns.com A | awk '/^myip.opendns.com./ { print $5 }';;
+		dig) dig -4 +short myip.opendns.com @resolver1.opendns.com A ;;
 		host)
-			out="$(host -t ANY myip.opendns.com resolver1.opendns.com)"
+			out="$(host -4t A myip.opendns.com resolver1.opendns.com)"
 			ret=$?
 			[ ! "$ret" -eq 0 ] && return $ret
 			echo "$out" | tail -n1 | rev | cut -d" " -f1 | rev ;;
-		curl) curl -sL https://ifconfig.me/ip ;;
-		wget) wget -qO - https://ifconfig.me/ip ;;
+	esac
+}
+
+run_util_v6() {
+	case "$1" in
+		drill) drill -6 myip.opendns.com @resolver1.opendns.com AAAA | awk '/^myip.opendns.com./ { print $5 }';;
+		dig) dig -6 +short myip.opendns.com @resolver1.opendns.com AAAA ;;
+		host)
+			out="$(host -6t AAAA myip.opendns.com resolver1.opendns.com)"
+			ret=$?
+			[ ! "$ret" -eq 0 ] && return $ret
+			echo "$out" | tail -n1 | rev | cut -d" " -f1 | rev ;;
+	esac
+}
+
+run_util_any() {
+	case "$1" in
+		curl) curl -sL4 https://ifconfig.me/ip ;;
+		wget) wget -q4O - https://ifconfig.me/ip ;;
+	esac
+}
+
+run_util() {
+	case "$1" in
+		curl|wget) run_util_any "$1" ;;
+		*) run_util_v6 "$1" ; run_util_v4 "$1" ;;
 	esac
 }
 
@@ -34,7 +59,7 @@ try_utils() {
 }
 
 # DNS
-try_utils dig host
+try_utils drill dig host
 
 # HTTPS
 try_utils curl wget

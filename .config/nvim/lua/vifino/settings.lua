@@ -1,5 +1,6 @@
 -- Editor settings.
 local h = require("vifino.helpers")
+local au = require("vifino.au")
 local g, o, b, w = vim.g, vim.o, vim.bo, vim.wo
 local has = vim.fn.has
 
@@ -64,5 +65,14 @@ map("n", "<leader>p", ":bprev<cr>")
 
 map("i", "<Tab>", 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 map("i", "<S-Tab>", 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
+
+
+-- Autocommands to override settings.
+au.group("vifino_settings", {
+	{"FileType", "lua", "set ts=2 noet"},
+	{"FileType", "lua", function() print("Hello from Lua!") end},
+	{"FileType", "rust", "set ts=4 et"},
+	{"FileType", "nix", "set ts=2 et"},
+})
 
 return {}

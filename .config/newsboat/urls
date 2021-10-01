@@ -4,7 +4,7 @@
 https://events.ccc.de/feed "Technology" "CCC" "Events"
 https://ccc-ffm.de/feed "CCC" "Events" "German"
 https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml "~Analyzed CVE Feed" "Technology" "Security" "News"
-
+https://xkcd.com/atom.xml "Comic" # I don't think I can tag this with anything that does it justice.
 # Update feeds.
 https://openbsd-current-rss.appspot.com/ "BSD" "NIX" "Technology" "Open Source"
 https://www.FreeBSD.org/news/rss.xml "BSD" "NIX" "Technology" "Open Source"
@@ -50,3 +50,6 @@ https://blog.benjojo.co.uk/rss.xml "Blog" "Technology" "Networking"
 https://9net.org/rss.xml "Blog" "Technology"
 https://laforge.gnumonks.org/blog/rss.xml "Blog" "Technology"
 https://follow.it/mccann-tech "Blog" "Technology" "Networking"
+https://www.codemadness.org/rss_content.xml "Blog" "Technology" "NIX"
+https://www.uninformativ.de/blog/feeds/en.atom "Blog" "Technology" "NIX"
+https://naehrdine.blogspot.com/atom.xml "~Jiska's Blog" "Blog" "Technology" "CCC"

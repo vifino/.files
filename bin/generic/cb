@@ -26,7 +26,7 @@ cb_set() {
 	elif has pbcopy; then
 		exec pbcopy
 	elif has xclip; then
-		 exec xclip -i -sel clipboard
+		 exec xclip -i -sel clipboard >/dev/null
 	elif has xsel; then
 		exec xsel -i --clipboard
 	else
@@ -40,10 +40,10 @@ cb_get() {
 		exec termux-clipboard-get
 	elif hasbin pbpaste; then
 		exec pbpaste
-	elif hasbin xsel; then
-		exec xsel -o --clipboard
 	elif hasbin xclip; then
 		 exec xclip -o -sel clipboard
+	elif hasbin xsel; then
+		exec xsel -o --clipboard
 	else
 		echo "No clipboard tool found. Supporting: xclip, xsel, pbcopy/pbpaste, Termux."
 		exit 1

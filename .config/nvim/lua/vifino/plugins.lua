@@ -1,7 +1,14 @@
 -- Packer plugins
 
+local au = require("vifino.au")
+
+-- Automatically recompile settings here.
+au.group("PackerGroup", {
+		{ "BufWritePost", vim.fn.stdpath("config").."/lua/vifino/plugins.lua", "source <afile> | PackerCompile" },
+})
+
 return require('packer').startup({
-	function(use)	
+	function(use)
 		-- Let packer manage itself.
 		use { "wbthomason/packer.nvim", opt = true}
 
@@ -49,6 +56,35 @@ return require('packer').startup({
 
 				-- Go
 				lspconfig.gopls.setup({})
+
+				-- Lua
+				-- But only for nixos.
+				local runtime_path = vim.split(package.path, ';')
+				table.insert(runtime_path, "lua/?.lua")
+				table.insert(runtime_path, "lua/?/init.lua")
+				lspconfig.sumneko_lua.setup({
+						cmd = { "lua-language-server" },
+						settings = {
+								Lua = {
+										runtime = {
+												version = "LuaJIT",
+												path = runtime_path,
+										},
+										diagnostics = {
+												globals = {"vim"}
+										},
+										workspace = {
+												library = vim.api.nvim_get_runtime_file("", true),
+										},
+										telemetry = {
+												enable = false,
+										},
+								}
+						}
+				})
+
+				-- Nix
+				lspconfig.rnix.setup({})
 
 				-- Haskell
 				lspconfig.hls.setup({})
@@ -125,6 +161,10 @@ return require('packer').startup({
 				vim.g.openscad_default_mappings = true
 				require('openscad')
 			end
+		}
+
+		use { 'LnL7/vim-nix',
+			ft = 'nix',
 		}
 
 		-- Small things.
