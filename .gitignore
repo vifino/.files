@@ -17,3 +17,6 @@
 .emacs.d/elpa
 .emacs.d/irony
 .emacs.d/custom.el
+
+# NeoVim Junk
+.config/nvim/plugin/packer_compiled.lua

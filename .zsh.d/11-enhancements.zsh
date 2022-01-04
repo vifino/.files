@@ -1,18 +1,20 @@
 # Syntax highlighting and other enhancements
 
-zplugin ice silent wait'0' blockf
-zplugin light zsh-users/zsh-history-substring-search
+zinit ice silent wait'0' blockf
+zinit light zsh-users/zsh-history-substring-search
 
-zplugin ice silent wait'0' blockf
-zplugin light zdharma/fast-syntax-highlighting
+zinit ice silent wait'0' blockf
+zinit light zdharma-continuum/fast-syntax-highlighting
 
-#zplugin ice silent wait'0' blockf
-#zplugin light "rimraf/k"
+#zinit ice silent wait'0' blockf
+#zinit light "rimraf/k"
 
-zplugin ice silent wait'0' blockf
-zplugin light "$HOME/.zshplugs/fzy"
+zinit ice silent wait'0' blockf
+zinit light "$HOME/.zshplugs/fzy"
 
 silent which dircolors && {
-	zplugin ice atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh"
-	zplugin light trapd00r/LS_COLORS
+	zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+		atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+		atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+	zinit light trapd00r/LS_COLORS
 }

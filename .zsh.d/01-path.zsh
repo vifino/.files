@@ -8,10 +8,21 @@ ARCH=`uname -m`
 
 export OS ARCH
 
+# Nix stuff.
+[ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ] && . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+
+if [ ! -z "$NIX_PROFILES" ]; then
+	for profile in ${(z)NIX_PROFILES}; do
+		fpath+=($profile/share/zsh/site-functions $profile/share/zsh/$ZSH_VERSION/functions $profile/share/zsh/vendor-completions)
+	done
+fi
+
 # we use the path variable, because it prevents duplication.
-#typeset -U path
+typeset -U ospath
 ospath=("$path[@]")
 path=()
+#typeset -U path
+
 [ -d ~/bin/generic ] && path=(~/bin/generic "$path[@]")
 [ -d ~/bin/$OS/generic ] && path=(~/bin/$OS/generic "$path[@]")
 [ -d ~/bin/$OS/$ARCH ] && path=(~/bin/$OS/$ARCH "$path[@]")

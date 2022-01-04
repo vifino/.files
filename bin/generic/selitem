@@ -1,7 +1,7 @@
 #!/bin/sh
 # Selects a line from stdin the most optimal way available.
 
-if graphical; then
+if graphical > /dev/null; then
 	if hasbin rofi; then
 		exec rofi -dmenu "$@"
 	elif hasbin dmenu; then

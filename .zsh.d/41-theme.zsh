@@ -7,8 +7,8 @@
 if [ "$ZTHEME" = "geometry" ]; then
 	PROMPT_GEOMETRY_COLORIZE_SYMBOL=true
 	PROMPT_GEOMETRY_EXEC_TIME=true
-	zplugin ice src"geometry.zsh" silent
-	zplugin light "geometry-zsh/geometry"
+	zinit ice src"geometry.zsh" silent
+	zinit light "geometry-zsh/geometry"
 elif [ "$ZTHEME" = "blocks" ]; then
 	export PS1="%F{90}░▓█%f "
 fi

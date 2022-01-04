@@ -69,10 +69,13 @@ map("i", "<S-Tab>", 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
 
 -- Autocommands to override settings.
 au.group("vifino_settings", {
-	{"FileType", "lua", "set ts=2 noet"},
+	{"FileType", "lua", "set ts=2 sw=2 noet"},
 	{"FileType", "lua", function() print("Hello from Lua!") end},
-	{"FileType", "rust", "set ts=4 et"},
-	{"FileType", "nix", "set ts=2 et"},
+	{"FileType", "rust", "set ts=4 sw=4 et"},
+	{"FileType", "nix", "set ts=2 sw=2 et"},
+	{"FileType", "markdown", "set ts=2 sw=2 et"},
+	{"FileType", "yaml", "set ts=2 sw=2 noet"},
+	{"BufNewFile,BufRead", "*.sls", "setf yaml"},
 })
 
 return {}

@@ -40,7 +40,7 @@ run_util_any() {
 run_util() {
 	case "$1" in
 		curl|wget) run_util_any "$1" ;;
-		*) run_util_v6 "$1" ; run_util_v4 "$1" ;;
+		*) run_util_v6 "$1" 2>/dev/null; run_util_v4 "$1" 2>/dev/null ;;
 	esac
 }
 

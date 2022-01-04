@@ -3,7 +3,7 @@
 
 alsa() {
 	if [ -z "$1" ]; then
-		amixer get Master | grep -o "[0-9]*%"
+		amixer get Master | grep -o "[0-9]*%" | uniq
 	else
 		amixer set Master "$1"
 	fi

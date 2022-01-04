@@ -1,11 +1,12 @@
 -- Packer plugins
 
-local au = require("vifino.au")
 
 -- Automatically recompile settings here.
+--[[local au = require("vifino.au")
 au.group("PackerGroup", {
-		{ "BufWritePost", vim.fn.stdpath("config").."/lua/vifino/plugins.lua", "source <afile> | PackerCompile" },
+		{ "BufWritePost", vim.fn.stdpath("config").."/lua/vifino/plugins.lua", "source <afile> | PackerSync" },
 })
+--]]
 
 return require('packer').startup({
 	function(use)
@@ -30,12 +31,25 @@ return require('packer').startup({
 					},
 					rainbow = {
 						enable = true
-					}
+					},
+					incremental_selection = {
+						enable = true
+					},
+
 				})
+
+				local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+				parser_config.openscad = {
+						install_info = {
+								url = "https://github.com/bollian/tree-sitter-openscad.git",
+								files = {"src/parser.c"}
+						},
+						filetype = "scad",
+				}
 			end,
 		}
 		use { "neovim/nvim-lspconfig",
-			config = function()
+		  config = function()
 				local hasbin = vim.fn.executable
 
 				local lspconfig = require("lspconfig")
@@ -92,21 +106,120 @@ return require('packer').startup({
 		}
 
 		-- Completion.
-		use { "hrsh7th/nvim-compe",
-			requires = {"neovim/nvim-lspconfig", "nvim-treesitter/nvim-treesitter"},
+		use { "hrsh7th/nvim-cmp",
 			config = function()
-				vim.o.completeopt = "menu,menuone,noselect"
-				require('compe').setup({
-					enabled = true,
-					source = {
-						path = true,
-						buffer =     { menu = "[BUF]" },
-						nvim_lsp =   { menu = "[LSP]" },
-						nvim_lua =   { menu = "[Lua]" },
-						treesitter = { menu = "[TRS]" },
+				local has_words_before = function()
+					local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+					return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+				end
+
+				local luasnip = require("luasnip")
+				local cmp = require("cmp")
+				local lspkind = require("lspkind")
+				cmp.setup {
+					preselect = cmp.PreselectMode.None,
+					completion = { completeopt = "menu,menuone,noselect,noinsert" },
+					snippet = { expand = function(args) require("luasnip").lsp_expand(args.body) end },
+					mapping = {
+						["<C-j>"] = cmp.mapping.select_prev_item({behavior = cmp.SelectBehavior.Select}),
+						["<C-n>"] = cmp.mapping.select_next_item({behavior = cmp.SelectBehavior.Select}),
+						["<C-m>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true, },
+						["<C-d>"] = cmp.mapping.scroll_docs(-4),
+						["<C-u>"] = cmp.mapping.scroll_docs(4),
+						["<C-Space>"] = cmp.mapping.complete(),
+						["<C-c>"] = cmp.mapping.close(),
+						["<CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true, },
+						["<Tab>"] = cmp.mapping(function(fallback)
+							if cmp.visible() then
+								cmp.select_next_item({behavior = cmp.SelectBehavior.Select})
+							elseif has_words_before() and luasnip.expand_or_jumpable() then
+								vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "", true)
+							else fallback() end
+						end, { "i", "s" }),
+						["<S-Tab>"] = cmp.mapping(function()
+							if cmp.visible() then
+								cmp.select_prev_item({behavior = cmp.SelectBehavior.Select})
+							elseif luasnip.jumpable(-1) then
+								vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "", true)
+							end
+						end, { "i", "s" }),
+						["<C-l>"] = cmp.mapping(function()
+							if has_words_before() and luasnip.expand_or_jumpable() then
+								vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "", true)
+							else
+								vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Right>", true, true, true), "", true)
+							end
+						end, { "i", "s" }),
+						["<C-h>"] = cmp.mapping(function()
+							if luasnip.jumpable(-1) then
+								vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "", true)
+							else
+								vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, true, true), "", true)
+							end
+						end, { "i", "s" }),
 					},
-				})
-			end
+					documentation = {
+						border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+						winhighlight = "FloatBorder:TelescopeBorder",
+					},
+					sources = {
+						{ name = "luasnip"  }, { name = "nvim_lua" },
+						{ name = "nvim_lsp" }, { name = "calc" },
+						{ name = "path"	 }, { name = "buffer" },
+						--{ name = "neorg"	}, { name = "cmp_tabnine" },
+					},
+					formatting = {
+						format = lspkind.cmp_format({with_text=true, menu = ({
+							buffer = "[BUF]",
+							nvim_lsp = "[LSP]",
+							luasnip = "[SNP]",
+							calc = "[CAL]",
+							path = "[PTH]",
+							neorg = "[NRG]",
+							cmp_tabnine = "[TB9]",
+						}),
+						border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+						}),
+					},
+					experimental = { ghost_text = false, custom_menu = true }
+				}
+				end,
+				requires = {
+					{ "L3MON4D3/LuaSnip" },
+					{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+					{ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
+					{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
+					{ "hrsh7th/cmp-calc", after = "nvim-cmp" },
+					{ "hrsh7th/cmp-path", after = "nvim-cmp" },
+					{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
+					},
+		}
+
+		use { 'onsails/lspkind-nvim' }
+		use { 'ray-x/lsp_signature.nvim', module = 'lsp_signature' }
+		use { "simrat39/symbols-outline.nvim",
+			setup = function()
+				vim.g.symbols_outline = {
+					highlight_hovered_item = true,
+					show_guides = true,
+					auto_preview = true,
+					position = "right",
+					width = 25,
+					show_numbers = false,
+					show_relative_numbers = false,
+					show_symbol_details = true,
+					keymaps = {
+						close = "q",
+						goto_location  = "<CR>",
+						focus_location = "<space>",
+						hover_symbol   = "K",
+						toggle_preview = "p",
+						rename_symbol  = "r",
+						code_actions   = "a",
+					},
+				}
+			end,
+			cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" }
 		}
 
 		use { "nvim-telescope/telescope.nvim",
@@ -125,7 +238,8 @@ return require('packer').startup({
 				h.map("n", "<leader>cw", ":Telescope lsp_workspace_symbols<cr>")
 			end
 		}
-		use { "glepnir/lspsaga.nvim", requires = "neovim/nvim-lspconfig",
+		use { "tami5/lspsaga.nvim", branch = "nvim51",
+		requires = "neovim/nvim-lspconfig",
 			cmd = "Lspsaga",
 			setup = function()
 				local h = require("vifino.helpers")
@@ -156,18 +270,25 @@ return require('packer').startup({
 		}
 
 		-- Additional language support which isn't solved by Treesitter/LSP.
-		use { 'salkin-mada/openscad.nvim',
+		--[[use { 'salkin-mada/openscad.nvim',
 			config = function()
 				vim.g.openscad_default_mappings = true
 				require('openscad')
 			end
 		}
+		--]]
 
 		use { 'LnL7/vim-nix',
 			ft = 'nix',
 		}
 
 		-- Small things.
+		use { 'RRethy/nvim-align',
+		  module = "align",
+			setup = function()
+				vim.api.nvim_command("command! -range=% -nargs=1 Align lua require'align'.align(<f-args>)")
+			end,
+	}
 		use { "dhulihan/vim-rfc",
 			cmd = "RFC"
 		}

@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# Docker
+hasbin docker && export DOCKER_BUILDKIT=1
+
 # Kubernetes
 if hasbin kubectl; then
 	source <(kubectl completion zsh)
@@ -20,6 +23,8 @@ fi
 
 hasbin kubeadm   && source <(kubeadm completion zsh)
 hasbin kubectl   && source <(kubectl completion zsh)
-hasbin kubecolor && alias kubectl="kubecolor" && complete -o default -F __start_kubectl kubecolor
+#hasbin kubecolor && alias kubectl="kubecolor" #&& complete -o default -F _kubectl kubecolor
 hasbin helm      && source <(helm    completion zsh)
 hasbin velero    && source <(velero  completion zsh)
+
+test -f ~/.krew/bin/kubectl-krew && path+=(~/.krew/bin)

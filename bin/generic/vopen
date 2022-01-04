@@ -52,11 +52,14 @@ openfile() {
 }
 
 for ref in "$@"; do
+	FILE="$(replace "s#^file://##" "$ref")"
 	if rematch "^https?" "$ref"; then
 		# it's a http url, better pass that to the browser.
 		browser "$ref"
+	elif [ -f "$FILE" ]; then
+		openfile "$FILE"
 	else
-		# strip file://
-		openfile "$(replace "s#^file://##" "$ref")"
+		echo "$(basename $0): Sorry, don't know what to do with the following: $ref" >/dev/stderr
+		exit 1
 	fi
 done
