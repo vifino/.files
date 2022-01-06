@@ -1,7 +1,8 @@
 # THEME!
 
 # Dumb terms need not have any fancy prompts, they don't work anyways.
-[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+[[ $TERM == "dumb" ]]  && unsetopt zle && PS1='$ ' && return
+[[ $TERM == "vt420" ]] && PS1="$(printf '\xBB ')" && return
 
 [ -z "$ZTHEME" ] && ZTHEME=geometry
 if [ "$ZTHEME" = "geometry" ]; then
