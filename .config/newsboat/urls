@@ -1,55 +1,117 @@
 # RSS feeds I'm interested in.
 
 # Important feeds.
-https://events.ccc.de/feed "Technology" "CCC" "Events"
-https://ccc-ffm.de/feed "CCC" "Events" "German"
-https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml "~Analyzed CVE Feed" "Technology" "Security" "News"
+https://events.ccc.de/feed Technology CCC Events
+https://ccc-ffm.de/feed CCC Events "German"
+
+# Comic and 'zines.
 https://xkcd.com/atom.xml "Comic" # I don't think I can tag this with anything that does it justice.
+https://webzine.puffy.cafe/atom.xml "Zine" BSD NIX
+
 # Update feeds.
-https://openbsd-current-rss.appspot.com/ "BSD" "NIX" "Technology" "Open Source"
-https://www.FreeBSD.org/news/rss.xml "BSD" "NIX" "Technology" "Open Source"
-https://maemo-leste.github.io/feeds/all.atom.xml "Linux" "Open Source"
-https://github.com/shinyblink/sled/commits/master.atom "~sled:master" "GitHub" "Open Source"
-https://github.com/opentx/opentx/commits/2.3.atom "~OpenTX:2.3" "GitHub" "Open Source" "RC"
-https://github.com/betaflight/betaflight/commits/master.atom "~BetaFlight:master" "GitHub" "Open Source" "RC"
-https://github.com/radare/radare2/commits/master.atom "~radare2:master" "GitHub" "Open Source" "Reverse Engineering" "Debugging"
-https://github.com/blacksphere/blackmagic/commits/master.atom "~BlackMagic Debug:master" "GitHub" "Open Source" "Debugging"
+https://openbsd-current-rss.appspot.com/ BSD NIX Technology "Open Source"
+https://www.FreeBSD.org/news/rss.xml BSD NIX Technology "Open Source"
+https://kb.juniper.net/InfoCenter/index?page=rss&channel=TECHNICAL_BULLETINS&cat=&detail=content "~Juniper Technical Bulletins" Juniper Networking Changelog Company
+https://www.arista.com/en/support/release-notes Changelog Networking Company
+https://mikrotik.com/download.rss "~Mikrotik Releases" Networking Changelog Company
+https://docs.vmware.com/en/VMware-vSphere/rn_rss.xml VMware Changelog Virtualization Company
+
+# Security feeds.
+#https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml "~Analyzed CVE Feed" Technology Security
+https://kb.juniper.net/InfoCenter/index?page=rss&channel=SECURITY_ADVISORIES&cat=SIRT_1&detail=content "~Juniper Security Advisories" Juniper Networking Security Company
+https://www.arista.com/support/fieldnotices-rss "~Arista Field Notices" Networking Security Company
 
 # Tech news feeds.
-https://www.phoronix.com/rss.php "Technology" "News" "BSD" "Linux" "NIX" "Open Source"
-https://feeds.feedburner.com/arstechnica/open-source "Ars Technica" "News" "Technology" "Open Source" "Company"
-https://feeds.feedburner.com/arstechnica/technology-lab "Ars Technica" "News" "Technology" "Company"
+https://www.phoronix.com/rss.php Technology News BSD Linux NIX "Open Source"
+https://feeds.feedburner.com/arstechnica/open-source "Ars Technica" News Technology "Open Source" Company
+https://feeds.feedburner.com/arstechnica/technology-lab "Ars Technica" News Technology Company
+https://maemo-leste.github.io/feeds/all.atom.xml Linux NIX "Open Source"
+https://blog.rust-lang.org/inside-rust/feed.xml Rust "Open Source"
+https://this-week-in-rust.org/atom.xml Rust "Open Source" Weekly
+https://www.redox-os.org/news/index.xml "Open Source" Rust "Operating System"
+https://reactos.org/index.xml "Open Source" "Operating System"
+https://nixos.org/blog/index.html "Open Source" Linux NIX "Operating System" Weekly
+https://asahilinux.org/blog/index.xml "Open Source" Linux NIX "Operating System"
+https://matrix.org/blog/feed "Open Source" Matrix
+https://element.io/blog/rss "Open Source" Matrix
+https://kx.studio/News/?action=feed "Open Source" Audio
+https://dolphin-emu.org/blog/feeds "Open Source" Emulation
+https://pcsx2.net/?format=feed&type=atom "Open Source" Emulation
+https://www.home-assistant.io/atom.xml "Open Source" Automation
+http://undeadly.org/cgi?action=rss BSD NIX Technology "Open Source" News
+https://feeds.feedburner.com/servethehome Technology News
+
+# Game news/blog feeds.
+#https://xonotic.org/index.xml Gaming Blog # WTF?
+https://unvanquished.net/feed/ Gaming Blog
+https://www.gridsagegames.com/blog/feed/ Gaming News
+https://www.bay12games.com/dwarves/dev_now.rss Gaming News
 
 # "Regular" news feeds.
-https://www.the-postillon.com/feeds/posts/default?alt=rss "News" "Independant" # Only the most serious news.
-https://feeds.feedburner.com/blogspot/rkEL "German" "News" "Independant" # German variant of the above, it's more active.
-https://www.spiegel.de/international/index.rss "Real" "News" "Company" # I like the tag order.
-https://en.wikinews.org/w/index.php?title=Special:NewsFeed&feed=atom&categories=Published&notcategories=No%20publish%7C%7CAutoArchived%7Cdisputed&namespace=0&ordermethod=categoryadd&stablepages=only&count=30 "~Wikinews" "Real" "Independant" "News"
+https://www.the-postillon.com/feeds/posts/default?alt=rss News "Independant" # Only the most serious news.
+https://feeds.feedburner.com/blogspot/rkEL "German" News "Independant" # German variant of the above, it's more active.
+https://www.theonion.com/rss News "Independant"
+#https://www.spiegel.de/international/index.rss "Real" News Company # I like the tag order.
+#https://en.wikinews.org/w/index.php?title=Special:NewsFeed&feed=atom&categories=Published&notcategories=No%20publish%7C%7CAutoArchived%7Cdisputed&namespace=0&ordermethod=categoryadd&stablepages=only&count=30 "~Wikinews" "Real" "Independant" News
+#https://www.heise.de/rss/heise-atom.xml "German" "Tech" News
 
 # Blogs I find worth reading.
-https://blog.z3bra.org/rss/feed.xml "~z3bra" "Blog" "Technology" "NIX"
-https://nullprogram.com/feed/ "Blog" "Technology" "NIX" "C"
-https://acassis.wordpress.com/feed "~Alan C. Assis' Blog" "Blog" "NuttX" "NIX" "Technology"
-https://oscarliang.com/feed "Blog" "FPV" "RC"
-https://www.revk.uk/feeds/posts/default "~RevK's Rants" "Blog" "Technology"
-https://poolp.org/feeds/all.atom.xml "Blog" "Technology" "BSD" "NIX" "OpenSMTPD"
-https://ck-hack.blogspot.com/feeds/posts/default "~Con Kolivas' Blog" "Blog" "NIX" "Linux"
-https://vermaden.wordpress.com/feed.xml "~Vermaden's Blog" "Blog" "NIX" "BSD" "Technology"
-https://pyra-handheld.com/boards/forums/pyra-news.250/index.rss "Blog" "Hardware"
-https://vincent.bernat.ch/en/blog/atom.xml "~Vincent Bernat's Blog" "Blog" "Technology" "Networking"
-https://www.earth.li/~noodles/blog/feed.xml "Blog" "Technology"
-https://usethe.computer/rss.xml "Blog" "Technology"
-https://blog.thelifeofkenneth.com/atom.xml "Blog" "Networking" "Technology"
-https://blog.cloudflare.com/feed "Blog" "Technology" "Networking" "Company"
-https://100r.co/links/rss.xml "Blog" "Technology" "Travel"
-https://drewdevault.com/feed.xml "Blog" "Technology"
-https://fabiensanglard.net/rss.xml "Blog" "Technology"
-https://weberblog.net/feed/ "Blog" "Technology" "Networking" "NTP"
-https://datagubbe.se/atom.xml "Blog" "Technology" "NIX" "Amiga"
-https://blog.benjojo.co.uk/rss.xml "Blog" "Technology" "Networking"
-https://9net.org/rss.xml "Blog" "Technology"
-https://laforge.gnumonks.org/blog/rss.xml "Blog" "Technology"
-https://follow.it/mccann-tech "Blog" "Technology" "Networking"
-https://www.codemadness.org/rss_content.xml "Blog" "Technology" "NIX"
-https://www.uninformativ.de/blog/feeds/en.atom "Blog" "Technology" "NIX"
-https://naehrdine.blogspot.com/atom.xml "~Jiska's Blog" "Blog" "Technology" "CCC"
+https://blog.z3bra.org/rss/feed.xml "~z3bra" Blog Technology NIX
+https://nullprogram.com/feed/ Blog Technology NIX Programming
+https://acassis.wordpress.com/feed "~Alan C. Assis' Blog" Blog "NuttX" NIX Technology
+https://oscarliang.com/feed Blog RC
+https://www.revk.uk/feeds/posts/default "~RevK's Rants" Blog Technology
+https://poolp.org/feeds/all.atom.xml Blog Technology BSD NIX
+https://ck-hack.blogspot.com/feeds/posts/default "~Con Kolivas' Blog" Blog NIX Linux
+https://vermaden.wordpress.com/feed.xml "~Vermaden's Blog" Blog BSD NIX Technology
+https://pyra-handheld.com/boards/forums/pyra-news.250/index.rss Blog Hardware
+https://vincent.bernat.ch/en/blog/atom.xml "~Vincent Bernat's Blog" Blog Technology Networking
+https://www.earth.li/~noodles/blog/feed.xml Blog Technology
+https://usethe.computer/rss.xml Blog Technology
+https://blog.thelifeofkenneth.com/atom.xml Blog Networking Technology
+https://blog.cloudflare.com/feed Blog Technology Networking Company
+https://100r.co/links/rss.xml Blog Technology Travelling
+https://drewdevault.com/feed.xml Blog Technology
+https://fabiensanglard.net/rss.xml Blog Technology
+https://weberblog.net/feed/ Blog Technology Networking Time
+https://datagubbe.se/atom.xml Blog Technology NIX Retrocomputing
+https://blog.benjojo.co.uk/rss.xml Blog Technology Networking
+https://9net.org/rss.xml Blog Technology
+https://laforge.gnumonks.org/blog/rss.xml Blog Technology CCC
+https://follow.it/mccann-tech Blog Technology Networking
+https://www.codemadness.org/rss_content.xml Blog Technology NIX
+https://www.uninformativ.de/blog/feeds/en.atom Blog Technology NIX
+https://naehrdine.blogspot.com/atom.xml "~Jiska's Blog" Blog Technology CCC
+https://dancharblog.wordpress.com/feed/ Blog Technology
+https://bsdly.blogspot.com/feeds/posts/default Blog BSD NIX
+https://christine.website/blog.rss Blog Technology
+https://www.tumfatig.net/feed.xml Blog BSD NIX
+https://fishpepper.de/feed Blog RC
+https://margau.net/posts/index.xml Blog Technology Freifunk CCC
+https://netflixtechblog.com/feed Blog Technology Networking Company
+https://blog.sdn.clinic/feed/ Blog Technology Networking
+https://n-o-d-e.net/rss/rss.xml Blog Technology
+https://momcanfixanything.com/feed Blog Technology Networking
+https://github.blog/feed Blog Technology Company
+https://mullvad.net/en/blog/feed/atom/ Blog Technology Networking Company
+https://williamlam.com/feed Blog Technology Virtualization VMware
+https://blogs.vmware.com/arm/feed VMware Blog Technology Virtualization ARM
+https://dataswamp.org/~solene/rss.xml Blog Technology BSD Linux NIX
+https://jcs.org/rss/writings Blog Technology BSD NIX
+https://jvns.ca/atom.xml Blog Technology Networking
+http://test.rosejacobsen.de/index.xml Blog CCC
+https://ianthehenry.com/feed.xml Blog NIX
+https://michael.stapelberg.ch/feed.xml Blog CCC
+https://vincerants.com/feed Blog BSD NIX VMware
+https://igorscheller.de/index.xml Blog BSD NIX Networking CCC
+https://blog.cynthia.re/rss.xml Blog Networking
+https://medium.com/feed/@jobsnijders Blog Networking BSD
+https://next-hopself.net/feed.xml Blog Networking
+http://sdomi.pl/weblog/atom/ Blog NIX
+https://nwhirschfeld.de/feed.xml Blog CCC
+https://blog.cr.yp.to/feed.application=xml "~D. J. Bernstein's Blog" Blog Cryptography
+https://www.jeffgeerling.com/blog.xml Blog NIX Automation Networking ARM
+http://planet.osmocom.org/atom.xml Blog Planet Networking Telephony Technology CCC
+https://grafana.com/blog/index.xml Blog Company Technology NIX
+https://www.networkfuntimes.com/feed Blog Networking Juniper
+https://stubarea51.net/feed/ Blog Networking

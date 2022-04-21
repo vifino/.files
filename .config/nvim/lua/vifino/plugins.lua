@@ -22,7 +22,7 @@ return require('packer').startup({
 			},
 			config = function()
 				require("nvim-treesitter.configs").setup({
-					ensure_installed = "maintained",
+					ensure_installed = "all",
 					highlight = {
 						enable = true
 					},
@@ -54,7 +54,7 @@ return require('packer').startup({
 
 				local lspconfig = require("lspconfig")
 				local capabilities = vim.lsp.protocol.make_client_capabilities()
-				capabilities.textDocument.completion.completionItem.snippetSupport = true
+				capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 				-- Rust
 				if hasbin("rust-analyzer") then
@@ -62,14 +62,20 @@ return require('packer').startup({
 						capabilities = capabilities
 					})
 				else
-					lspconfig.rls.setup({})
+					lspconfig.rls.setup({
+						capabilities = capabilities
+					})
 				end
 
 				-- C/CPP
-				lspconfig.clangd.setup({})
+				lspconfig.clangd.setup({
+					capabilities = capabilities
+				})
 
 				-- Go
-				lspconfig.gopls.setup({})
+				lspconfig.gopls.setup({
+					capabilities = capabilities
+				})
 
 				-- Lua
 				-- But only for nixos.
@@ -78,6 +84,7 @@ return require('packer').startup({
 				table.insert(runtime_path, "lua/?/init.lua")
 				lspconfig.sumneko_lua.setup({
 						cmd = { "lua-language-server" },
+						capabilities = capabilities,
 						settings = {
 								Lua = {
 										runtime = {
@@ -98,10 +105,25 @@ return require('packer').startup({
 				})
 
 				-- Nix
-				lspconfig.rnix.setup({})
+				lspconfig.rnix.setup({
+					capabilities = capabilities
+				})
 
 				-- Haskell
-				lspconfig.hls.setup({})
+				lspconfig.hls.setup({
+					capabilities = capabilities
+				})
+
+				-- Julia
+				-- Run this to install:
+				--   julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.add("LanguageServer")'
+				-- Run this to update:
+				--   julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.update()'
+				-- Make sure project is instantiated:
+				--   julia --project=/path/to/my/project -e 'using Pkg; Pkg.instantiate()'
+				lspconfig.julials.setup({
+					capabilities = capabilities
+				})
 			end
 		}
 
@@ -158,9 +180,11 @@ return require('packer').startup({
 							end
 						end, { "i", "s" }),
 					},
-					documentation = {
-						border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-						winhighlight = "FloatBorder:TelescopeBorder",
+					window = {
+						documentation = {
+							border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+							winhighlight = "FloatBorder:TelescopeBorder",
+						},
 					},
 					sources = {
 						{ name = "luasnip"  }, { name = "nvim_lua" },
@@ -188,7 +212,7 @@ return require('packer').startup({
 					{ "L3MON4D3/LuaSnip" },
 					{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
 					{ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
-					{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
+					{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp", module = "cmp_nvim_lsp" },
 					{ "hrsh7th/cmp-calc", after = "nvim-cmp" },
 					{ "hrsh7th/cmp-path", after = "nvim-cmp" },
 					{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },

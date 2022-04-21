@@ -3,6 +3,7 @@
 browser "browser"
 auto-reload yes
 reload-threads 8
+confirm-mark-feed-read no
 
 # Colors
 color listnormal        cyan default

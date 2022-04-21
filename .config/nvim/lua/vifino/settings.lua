@@ -7,6 +7,7 @@ local has = vim.fn.has
 -- Editor system settings.
 o.autoread = true
 o.inccommand = "nosplit"
+g.clipboard = "unnamed"
 
 -- Editor appearance.
 if has("termguicolors") then o.termguicolors = true end
@@ -25,7 +26,7 @@ protocol.CompletionItemKind = {
 	'ƒ Method',      -- = 2,
 	' Function',    -- = 3,
 	' Constructor', -- = 4,
-	'ƒ Field',         -- = 5,
+	'ƒ Field',       -- = 5,
 	' Variable',    -- = 6,
 	' Class',       -- = 7,
 	'ﰮ Interface',   -- = 8,
@@ -74,7 +75,7 @@ au.group("vifino_settings", {
 	{"FileType", "rust", "set ts=4 sw=4 et"},
 	{"FileType", "nix", "set ts=2 sw=2 et"},
 	{"FileType", "markdown", "set ts=2 sw=2 et"},
-	{"FileType", "yaml", "set ts=2 sw=2 noet"},
+	{"FileType", "yaml", "set ts=2 sw=2 et"},
 	{"BufNewFile,BufRead", "*.sls", "setf yaml"},
 })
 
