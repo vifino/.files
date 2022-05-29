@@ -23,6 +23,7 @@ return require('packer').startup({
 			config = function()
 				require("nvim-treesitter.configs").setup({
 					ensure_installed = "all",
+					ignore_install = { "yaml" },
 					highlight = {
 						enable = true
 					},
@@ -40,11 +41,11 @@ return require('packer').startup({
 
 				local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 				parser_config.openscad = {
-						install_info = {
-								url = "https://github.com/bollian/tree-sitter-openscad.git",
-								files = {"src/parser.c"}
-						},
-						filetype = "scad",
+					install_info = {
+						url = "https://github.com/bollian/tree-sitter-openscad.git",
+						files = {"src/parser.c"}
+					},
+					filetype = "scad",
 				}
 			end,
 		}
@@ -124,6 +125,15 @@ return require('packer').startup({
 				lspconfig.julials.setup({
 					capabilities = capabilities
 				})
+
+				-- Ansible
+				-- Install via package manager or
+				--   npm install -g @ansible/ansible-language-server
+				if hasbin("ansible-language-server") then
+					lspconfig.ansiblels.setup({
+						capabilities = capabilities
+					})
+				end
 			end
 		}
 
@@ -306,13 +316,18 @@ return require('packer').startup({
 			ft = 'nix',
 		}
 
+		use { "momota/junos.vim", ft = "junos" }
+		use { "vifino/cisco.vim", ft = "cisco" }
+
+		use { "pearofducks/ansible-vim", ft = {"ansible", "ansible_hosts", "jinja2"} }
+
 		-- Small things.
 		use { 'RRethy/nvim-align',
-		  module = "align",
+			module = "align",
 			setup = function()
 				vim.api.nvim_command("command! -range=% -nargs=1 Align lua require'align'.align(<f-args>)")
 			end,
-	}
+		}
 		use { "dhulihan/vim-rfc",
 			cmd = "RFC"
 		}

@@ -3,6 +3,8 @@
 # Important feeds.
 https://events.ccc.de/feed Technology CCC Events
 https://ccc-ffm.de/feed CCC Events "German"
+#https://www.bundesnetzagentur.de/SiteGlobals/Functions/RSSFeed/DE/RSSNewsfeed/RSSNewsfeed_Pressemitteilungen.xml Press News German
+https://ftr.fivefilters.net/makefulltextfeed.php?url=https%3A%2F%2Fwww.bundesnetzagentur.de%2FSiteGlobals%2FFunctions%2FRSSFeed%2FDE%2FRSSNewsfeed%2FRSSNewsfeed_Pressemitteilungen.xml&max=3&links=preserve Press News German
 
 # Comic and 'zines.
 https://xkcd.com/atom.xml "Comic" # I don't think I can tag this with anything that does it justice.
@@ -20,37 +22,40 @@ https://docs.vmware.com/en/VMware-vSphere/rn_rss.xml VMware Changelog Virtualiza
 #https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml "~Analyzed CVE Feed" Technology Security
 https://kb.juniper.net/InfoCenter/index?page=rss&channel=SECURITY_ADVISORIES&cat=SIRT_1&detail=content "~Juniper Security Advisories" Juniper Networking Security Company
 https://www.arista.com/support/fieldnotices-rss "~Arista Field Notices" Networking Security Company
+https://nitter.net/bgpstream/rss "~BGPStream" Networking Security
 
 # Tech news feeds.
+https://hackaday.com/blog/feed/ "~Hackaday" Hacking Technology News BSD Linux NIX "Open Source"
 https://www.phoronix.com/rss.php Technology News BSD Linux NIX "Open Source"
-https://feeds.feedburner.com/arstechnica/open-source "Ars Technica" News Technology "Open Source" Company
+#https://feeds.feedburner.com/arstechnica/open-source "Ars Technica" News Technology "Open Source" Company
 https://feeds.feedburner.com/arstechnica/technology-lab "Ars Technica" News Technology Company
 https://maemo-leste.github.io/feeds/all.atom.xml Linux NIX "Open Source"
 https://blog.rust-lang.org/inside-rust/feed.xml Rust "Open Source"
 https://this-week-in-rust.org/atom.xml Rust "Open Source" Weekly
 https://www.redox-os.org/news/index.xml "Open Source" Rust "Operating System"
 https://reactos.org/index.xml "Open Source" "Operating System"
-https://nixos.org/blog/index.html "Open Source" Linux NIX "Operating System" Weekly
+https://nixos.org/blog/announcements-rss.xml "Open Source" Linux NIX "Operating System"
 https://asahilinux.org/blog/index.xml "Open Source" Linux NIX "Operating System"
 https://matrix.org/blog/feed "Open Source" Matrix
 https://element.io/blog/rss "Open Source" Matrix
 https://kx.studio/News/?action=feed "Open Source" Audio
 https://dolphin-emu.org/blog/feeds "Open Source" Emulation
 https://pcsx2.net/?format=feed&type=atom "Open Source" Emulation
-https://www.home-assistant.io/atom.xml "Open Source" Automation
+https://www.home-assistant.io/atom.xml "Open Source" Automation Company
 http://undeadly.org/cgi?action=rss BSD NIX Technology "Open Source" News
 https://feeds.feedburner.com/servethehome Technology News
+https://www.collabora.com/feed "Open Source" Linux Technology News Company
 
 # Game news/blog feeds.
 #https://xonotic.org/index.xml Gaming Blog # WTF?
 https://unvanquished.net/feed/ Gaming Blog
-https://www.gridsagegames.com/blog/feed/ Gaming News
+https://www.gridsagegames.com/blog/feed/ Gaming News Company
 https://www.bay12games.com/dwarves/dev_now.rss Gaming News
 
-# "Regular" news feeds.
-https://www.the-postillon.com/feeds/posts/default?alt=rss News "Independant" # Only the most serious news.
-https://feeds.feedburner.com/blogspot/rkEL "German" News "Independant" # German variant of the above, it's more active.
-https://www.theonion.com/rss News "Independant"
+# "Regular" news feeds. Not interested anymore.
+#https://www.the-postillon.com/feeds/posts/default?alt=rss News "Independant" # Only the most serious news.
+#https://feeds.feedburner.com/blogspot/rkEL "German" News "Independant" # German variant of the above, it's more active.
+#https://www.theonion.com/rss News "Independant"
 #https://www.spiegel.de/international/index.rss "Real" News Company # I like the tag order.
 #https://en.wikinews.org/w/index.php?title=Special:NewsFeed&feed=atom&categories=Published&notcategories=No%20publish%7C%7CAutoArchived%7Cdisputed&namespace=0&ordermethod=categoryadd&stablepages=only&count=30 "~Wikinews" "Real" "Independant" News
 #https://www.heise.de/rss/heise-atom.xml "German" "Tech" News
@@ -95,7 +100,7 @@ https://momcanfixanything.com/feed Blog Technology Networking
 https://github.blog/feed Blog Technology Company
 https://mullvad.net/en/blog/feed/atom/ Blog Technology Networking Company
 https://williamlam.com/feed Blog Technology Virtualization VMware
-https://blogs.vmware.com/arm/feed VMware Blog Technology Virtualization ARM
+https://blogs.vmware.com/arm/feed VMware Blog Technology Virtualization ARM Company
 https://dataswamp.org/~solene/rss.xml Blog Technology BSD Linux NIX
 https://jcs.org/rss/writings Blog Technology BSD NIX
 https://jvns.ca/atom.xml Blog Technology Networking
@@ -115,3 +120,16 @@ http://planet.osmocom.org/atom.xml Blog Planet Networking Telephony Technology C
 https://grafana.com/blog/index.xml Blog Company Technology NIX
 https://www.networkfuntimes.com/feed Blog Networking Juniper
 https://stubarea51.net/feed/ Blog Networking
+https://wonko.de/feed Blog CCC
+https://ipng.ch/feed.xml Blog Networking
+https://flak.tedunangst.com/rss "~tedu's blog" Blog BSD NIX
+https://blogs.gnome.org/hughsie/feed/ Blog "Open Source"
+https://www.flexoptix.net/en/blog/feed/ Networking Blog Company News
+https://www.adyxax.org/blog/index.xml Blog Networking BSD NIX
+https://area-51.blog/feed/ Blog Networking
+https://retrobsd.ddns.net/feed.atom Blog Retrocomputing
+http://www.knubbelmac.de/knubbelmac-rss.html Blog Retrocomputing
+https://danluu.com/atom.xml Blog Programming
+https://coderoasis.com/rss/ Blog
+https://www.packetmischief.ca/feed/index.xml Blog Networking Technology
+https://blog.tmm.cx/feed/ Blog

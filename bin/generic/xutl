@@ -40,6 +40,7 @@ Known commands:
           # ex: eni "Synaptics TouchPad"
   disi    # disable input, args: name
           # ex: disi "Synaptics TouchPad"
+  modup   # sends key up events for stuck modifiers. no args
 USAGE
 }
 
@@ -130,5 +131,7 @@ case "$CMD" in
 		D=$(input_find "$1")
 		echo "Disabling $D"
 		exec xinput disable "$D" ;;
+	modup) # fix stuck modifiers
+		exec xdotool keyup Shift_L Shift_R Control_L Control_R Alt_L Alt_R Super_L Super_R ;;
 	*) usage && exit 1
 esac

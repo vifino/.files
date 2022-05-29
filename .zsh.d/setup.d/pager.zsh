@@ -3,11 +3,11 @@
 # also sets some options
 export LESS="-+F -R -+E -X"
 
-for pager in most less; do
-	silent which $pager && export PAGER=$pager && return
+# Pick the general pager.
+for pager in most less more; do
+	silent which $pager && export PAGER=$pager && break
 done
 
 # Set up the preferred git pager.
-if hasbin delta; then
-	export GIT_PAGER="delta"
-fi
+hasbin delta && export GIT_PAGER="delta"
+

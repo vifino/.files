@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ┏━┓┳  o┏┓┓┏━┓┳ ┳┳  ┏━┓┏━┓┳┏ 
+# ┏━┓┳  o┏┓┓┏━┓┳ ┳┳  ┏━┓┏━┓┳┏
 # ┃ ┳┃  ┃ ┃ ┃  ┃━┫┃  ┃ ┃┃  ┣┻┓
 # ┇━┛┇━┛┇ ┇ ┗━┛┇ ┻┇━┛┛━┛┗━┛┇ ┛
 #
@@ -20,9 +20,9 @@ PARAM=(--bar-indicator --bar-orientation horizontal --bar-direction 1 --redraw-t
 export GARGS="3 5"
 
 if [ -f "$GLITCHICON" ]; then
-	time ffshot | ff-glitch $GARGS | ff-overlay <(cat "$GLITCHICON" | png2ff) | ff2png > /tmp/lock.png
+	time ffshot | ff-glitch $GARGS | ff-sort -y -l 0.2 saturation | ff-overlay <(cat "$GLITCHICON" | png2ff) | ff2png > /tmp/lock.png
 else
-	time (ffshot | ff-glitch $GARGS | ff2png > /tmp/lock.png)
+	time (ffshot | ff-glitch $GARGS | ff-sort -y -l 0.2 saturation | ff2png > /tmp/lock.png)
 fi
 i3lock-color -n "${PARAM[@]}" -i "/tmp/lock.png" >/dev/null
-#rm /tmp/lock.png
+rm -f /tmp/lock.png

@@ -8,6 +8,10 @@
 # Ignore Accounts/Secret stuff.
 .mutt/accs.d
 .config/aerc/accounts.conf
+.zsh.d/hosts/*/*secret*.zsh
+
+# My ssh configs are nobody's business.
+.ssh/conf.d/*
 
 # IRSSI
 .irssi/saved_nick_colors

@@ -5,6 +5,8 @@ auto-reload yes
 reload-threads 8
 confirm-mark-feed-read no
 
+show-read-feeds no
+
 # Colors
 color listnormal        cyan default
 color listfocus         black yellow standout bold

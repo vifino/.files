@@ -3,9 +3,9 @@
 
 if graphical > /dev/null; then
 	if hasbin rofi; then
-		exec rofi -dmenu "$@"
+		exec rofi -dmenu -i "$@"
 	elif hasbin dmenu; then
-		exec dmenu "$@"
+		exec dmenu -i "$@"
 	fi
 fi
 

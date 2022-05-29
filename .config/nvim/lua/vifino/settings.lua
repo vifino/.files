@@ -76,7 +76,10 @@ au.group("vifino_settings", {
 	{"FileType", "nix", "set ts=2 sw=2 et"},
 	{"FileType", "markdown", "set ts=2 sw=2 et"},
 	{"FileType", "yaml", "set ts=2 sw=2 et"},
+	{"FileType", "junos", "set ts=4 sw=4 et"},
+	{"BufNewFile,BufRead", "*.conf.j2", "set ft=junos ft=junos.jinja2"},
 	{"BufNewFile,BufRead", "*.sls", "setf yaml"},
+	
 })
 
 return {}
