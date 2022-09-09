@@ -17,6 +17,7 @@ https://kb.juniper.net/InfoCenter/index?page=rss&channel=TECHNICAL_BULLETINS&cat
 https://www.arista.com/en/support/release-notes Changelog Networking Company
 https://mikrotik.com/download.rss "~Mikrotik Releases" Networking Changelog Company
 https://docs.vmware.com/en/VMware-vSphere/rn_rss.xml VMware Changelog Virtualization Company
+https://opengd77.com/app.php/feed/forum/13 "~OpenGD77 Development Updates" HAM Radio Changelog "Open Source"
 
 # Security feeds.
 #https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml "~Analyzed CVE Feed" Technology Security
@@ -44,7 +45,6 @@ https://pcsx2.net/?format=feed&type=atom "Open Source" Emulation
 https://www.home-assistant.io/atom.xml "Open Source" Automation Company
 http://undeadly.org/cgi?action=rss BSD NIX Technology "Open Source" News
 https://feeds.feedburner.com/servethehome Technology News
-https://www.collabora.com/feed "Open Source" Linux Technology News Company
 
 # Game news/blog feeds.
 #https://xonotic.org/index.xml Gaming Blog # WTF?
@@ -60,7 +60,22 @@ https://www.bay12games.com/dwarves/dev_now.rss Gaming News
 #https://en.wikinews.org/w/index.php?title=Special:NewsFeed&feed=atom&categories=Published&notcategories=No%20publish%7C%7CAutoArchived%7Cdisputed&namespace=0&ordermethod=categoryadd&stablepages=only&count=30 "~Wikinews" "Real" "Independant" News
 #https://www.heise.de/rss/heise-atom.xml "German" "Tech" News
 
-# Blogs I find worth reading.
+# Company Blogs.
+https://blog.cloudflare.com/rss/ Blog Technology Networking Company
+https://engineering.fb.com/feed/ Blog Technology Network Company
+https://netflixtechblog.com/feed Blog Technology Networking Company
+https://github.blog/feed Blog Technology Company
+https://www.flexoptix.net/en/blog/feed/ Networking Blog Company News
+https://mullvad.net/en/blog/feed/atom/ Blog Technology Networking Company
+https://blogs.vmware.com/arm/feed VMware Blog Technology Virtualization ARM Company
+https://grafana.com/blog/index.xml Blog Company Technology NIX
+https://feed.ipspace.net/blog/ Blog Company Networking Technology
+https://blog.meinbergglobal.com/feed/ "~Meinberg Time Synchronisation" Blog Company Time Technology
+https://www.collabora.com/feed "Open Source" Linux Technology News Company
+https://fd.io/latest/news/index.xml Blog "Open Source" Networking Technology Company
+https://www.xantaro.net/feed/ "~Xantaro Blog" Blog Networking Technology Company
+
+# Personal Blogs I find worth reading.
 https://blog.z3bra.org/rss/feed.xml "~z3bra" Blog Technology NIX
 https://nullprogram.com/feed/ Blog Technology NIX Programming
 https://acassis.wordpress.com/feed "~Alan C. Assis' Blog" Blog "NuttX" NIX Technology
@@ -74,7 +89,6 @@ https://vincent.bernat.ch/en/blog/atom.xml "~Vincent Bernat's Blog" Blog Technol
 https://www.earth.li/~noodles/blog/feed.xml Blog Technology
 https://usethe.computer/rss.xml Blog Technology
 https://blog.thelifeofkenneth.com/atom.xml Blog Networking Technology
-https://blog.cloudflare.com/feed Blog Technology Networking Company
 https://100r.co/links/rss.xml Blog Technology Travelling
 https://drewdevault.com/feed.xml Blog Technology
 https://fabiensanglard.net/rss.xml Blog Technology
@@ -93,14 +107,10 @@ https://christine.website/blog.rss Blog Technology
 https://www.tumfatig.net/feed.xml Blog BSD NIX
 https://fishpepper.de/feed Blog RC
 https://margau.net/posts/index.xml Blog Technology Freifunk CCC
-https://netflixtechblog.com/feed Blog Technology Networking Company
 https://blog.sdn.clinic/feed/ Blog Technology Networking
 https://n-o-d-e.net/rss/rss.xml Blog Technology
 https://momcanfixanything.com/feed Blog Technology Networking
-https://github.blog/feed Blog Technology Company
-https://mullvad.net/en/blog/feed/atom/ Blog Technology Networking Company
 https://williamlam.com/feed Blog Technology Virtualization VMware
-https://blogs.vmware.com/arm/feed VMware Blog Technology Virtualization ARM Company
 https://dataswamp.org/~solene/rss.xml Blog Technology BSD Linux NIX
 https://jcs.org/rss/writings Blog Technology BSD NIX
 https://jvns.ca/atom.xml Blog Technology Networking
@@ -117,14 +127,12 @@ https://nwhirschfeld.de/feed.xml Blog CCC
 https://blog.cr.yp.to/feed.application=xml "~D. J. Bernstein's Blog" Blog Cryptography
 https://www.jeffgeerling.com/blog.xml Blog NIX Automation Networking ARM
 http://planet.osmocom.org/atom.xml Blog Planet Networking Telephony Technology CCC
-https://grafana.com/blog/index.xml Blog Company Technology NIX
 https://www.networkfuntimes.com/feed Blog Networking Juniper
 https://stubarea51.net/feed/ Blog Networking
 https://wonko.de/feed Blog CCC
 https://ipng.ch/feed.xml Blog Networking
 https://flak.tedunangst.com/rss "~tedu's blog" Blog BSD NIX
 https://blogs.gnome.org/hughsie/feed/ Blog "Open Source"
-https://www.flexoptix.net/en/blog/feed/ Networking Blog Company News
 https://www.adyxax.org/blog/index.xml Blog Networking BSD NIX
 https://area-51.blog/feed/ Blog Networking
 https://retrobsd.ddns.net/feed.atom Blog Retrocomputing
@@ -133,3 +141,7 @@ https://danluu.com/atom.xml Blog Programming
 https://coderoasis.com/rss/ Blog
 https://www.packetmischief.ca/feed/index.xml Blog Networking Technology
 https://blog.tmm.cx/feed/ Blog
+https://isp-tech.ru/en/feed Blog Networking
+https://fasterthanli.me/index.xml Blog Programming Technology
+https://begriffs.com/atom.xml Blog Programming Technology NIX
+https://fgiesen.wordpress.com/feed/ Blog Programming Retrocomputing

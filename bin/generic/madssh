@@ -4,4 +4,6 @@ if ! hasbin ssh; then
 	exit 1
 fi
 
-ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -o UserKnownHostsFile=/dev/null "$@"
+ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa \
+	-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
+	"$@"

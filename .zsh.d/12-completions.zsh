@@ -15,7 +15,6 @@ zstyle ':completion:*:ssh:*'  tag-order '! users'
 zstyle ':completion:*:scp:*'  tag-order '! users'
 zstyle ':completion:*:sftp:*' tag-order '! users'
 
-
 # Completion plugins
 zinit ice silent wait'0' blockf
 zinit light zsh-users/zsh-completions

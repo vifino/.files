@@ -4,4 +4,6 @@ if ! hasbin scp; then
 	exit 1
 fi
 
-scp -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -o UserKnownHostsFile=/dev/null "$@"
+scp -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa \
+	-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
+	"$@"
