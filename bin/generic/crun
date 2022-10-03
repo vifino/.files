@@ -66,7 +66,7 @@ getvar() {
 CC=$(getvar CC "$SOURCE")
 [ -z "$CC" ] && CC=cc
 CFLAGS=$(getvar CFLAGS "$SOURCE")
-[ -z "$CFLAGS" ] && CFLAGS="-O2 -march=native"
+[ -z "$CFLAGS" ] && CFLAGS="-Os -pipe"
 CPPFLAGS=$(getvar CPPFLAGS "$SOURCE")
 LDFLAGS=$(getvar LDFLAGS "$SOURCE")
 

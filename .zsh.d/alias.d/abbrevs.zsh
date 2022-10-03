@@ -46,5 +46,5 @@ alias np=song
 
 # Custom stuff.
 alias o=vopen
-alias open=vopen
+hasbin open || alias open=vopen
 
