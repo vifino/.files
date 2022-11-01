@@ -11,20 +11,22 @@ run_browser() {
 	fi
 }
 
-graphical any && run_browser "$GBROWSER" "$@"
-run_browser "$BROWSER" "$@"
-
 check_browser() {
 	B="$1"
 	shift
 	hasbin "$B" && exec "$B" "$@"
 }
 
-if graphical any; then
+
+if [ "$(uname)" = "Darwin" ]; then
+	open "$@"
+elif graphical any; then
+	run_browser "$GBROWSER" "$@"
 	for browser in luakit waterfox firefox google-chrome dwb; do
 		check_browser "$browser" "$@"
 	done
 else
+	run_browser "$BROWSER" "$@"
 	for browser in w3m elinks lynx links2 termux-open-url; do
 		check_browser "$browser" "$@"
 	done

@@ -41,7 +41,7 @@ https://matrix.org/blog/feed "Open Source" Matrix
 https://element.io/blog/rss "Open Source" Matrix
 https://kx.studio/News/?action=feed "Open Source" Audio
 https://dolphin-emu.org/blog/feeds "Open Source" Emulation
-https://pcsx2.net/?format=feed&type=atom "Open Source" Emulation
+https://pcsx2.net/blog/index.xml "Open Source" Emulation
 https://www.home-assistant.io/atom.xml "Open Source" Automation Company
 http://undeadly.org/cgi?action=rss BSD NIX Technology "Open Source" News
 https://feeds.feedburner.com/servethehome Technology News
@@ -74,6 +74,7 @@ https://blog.meinbergglobal.com/feed/ "~Meinberg Time Synchronisation" Blog Comp
 https://www.collabora.com/feed "Open Source" Linux Technology News Company
 https://fd.io/latest/news/index.xml Blog "Open Source" Networking Technology Company
 https://www.xantaro.net/feed/ "~Xantaro Blog" Blog Networking Technology Company
+https://en.blog.nic.cz/category/bird/feed "~CZ.NIC BIRD Blog" Blog Networking Technology
 
 # Personal Blogs I find worth reading.
 https://blog.z3bra.org/rss/feed.xml "~z3bra" Blog Technology NIX
@@ -145,3 +146,9 @@ https://isp-tech.ru/en/feed Blog Networking
 https://fasterthanli.me/index.xml Blog Programming Technology
 https://begriffs.com/atom.xml Blog Programming Technology NIX
 https://fgiesen.wordpress.com/feed/ Blog Programming Retrocomputing
+https://boxbase.org/feed.rss Blog Programming NIX Technology
+https://doing-stupid-things.as59645.net/feed.xml Blog BSD NIX Networking
+https://bsdly.blogspot.com/feeds/posts/default Blog BSD NIX Networking
+https://swagspace.org/atom.xml Blog Networking NIX
+https://imbushuo.net/blog/atom.xml Blog Networking NIX
+https://scottstuff.net/posts/index.xml Blog Networking NIX

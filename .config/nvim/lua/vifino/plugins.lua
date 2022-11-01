@@ -54,9 +54,7 @@ return require('packer').startup({
 				local hasbin = vim.fn.executable
 
 				local lspconfig = require("lspconfig")
-				local capabilities = vim.lsp.protocol.make_client_capabilities()
-				capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
+				local capabilities = require('cmp_nvim_lsp').default_capabilities()
 				-- Rust
 				if hasbin("rust-analyzer") then
 					lspconfig.rust_analyzer.setup({
@@ -323,6 +321,7 @@ return require('packer').startup({
 		use { "pearofducks/ansible-vim", ft = {"ansible", "ansible_hosts", "jinja2"} }
 
 		-- Small things.
+		use { 'gpanders/editorconfig.nvim' }
 		use { 'RRethy/nvim-align',
 			module = "align",
 			setup = function()

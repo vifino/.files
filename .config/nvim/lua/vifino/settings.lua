@@ -70,6 +70,7 @@ map("i", "<S-Tab>", 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
 
 -- Autocommands to override settings.
 au.group("vifino_settings", {
+	{"BufWritePre", "*", "execute 'norm m`' | %s/\\s\\+$//e | norm g``"},
 	{"FileType", "lua", "set ts=2 sw=2 noet"},
 	{"FileType", "lua", function() print("Hello from Lua!") end},
 	{"FileType", "rust", "set ts=4 sw=4 et"},
@@ -79,7 +80,6 @@ au.group("vifino_settings", {
 	{"FileType", "junos", "set ts=4 sw=4 et"},
 	{"BufNewFile,BufRead", "*.conf.j2", "set ft=junos ft=junos.jinja2"},
 	{"BufNewFile,BufRead", "*.sls", "setf yaml"},
-	
 })
 
 return {}

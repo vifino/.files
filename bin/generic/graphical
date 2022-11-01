@@ -1,9 +1,16 @@
 #!/bin/sh
 # Simple script that checks if the current session is graphical or not.
-
 TYPE="none"
+
+# Bail out if it's in SSH.
+[ ! -z "$SSH_CONNECTION" ] && exit 1
+
+# Determine based on XDG or X11 variables.
 [ ! -z "$XDG_SESSION_TYPE" ] && TYPE="$XDG_SESSION_TYPE"
 [ ! -z "$DISPLAY" ] && TYPE="X11"
+
+# macOS is always graphical, more or less.
+[ "$(uname)" = "Darwin" ] && TYPE="Quartz"
 
 [ "$TYPE" = none ] && exit 1
 
