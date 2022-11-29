@@ -43,7 +43,7 @@ https://kx.studio/News/?action=feed "Open Source" Audio
 https://dolphin-emu.org/blog/feeds "Open Source" Emulation
 https://pcsx2.net/blog/index.xml "Open Source" Emulation
 https://www.home-assistant.io/atom.xml "Open Source" Automation Company
-http://undeadly.org/cgi?action=rss BSD NIX Technology "Open Source" News
+https://undeadly.org/cgi?action=rss BSD NIX Technology "Open Source" News
 https://feeds.feedburner.com/servethehome Technology News
 
 # Game news/blog feeds.
@@ -74,7 +74,10 @@ https://blog.meinbergglobal.com/feed/ "~Meinberg Time Synchronisation" Blog Comp
 https://www.collabora.com/feed "Open Source" Linux Technology News Company
 https://fd.io/latest/news/index.xml Blog "Open Source" Networking Technology Company
 https://www.xantaro.net/feed/ "~Xantaro Blog" Blog Networking Technology Company
-https://en.blog.nic.cz/category/bird/feed "~CZ.NIC BIRD Blog" Blog Networking Technology
+https://en.blog.nic.cz/category/bird/feed "~CZ.NIC BIRD Blog" Blog Networking Technology Company
+https://weblog.rogueamoeba.com/feed/ Audio Technology Company
+https://labs.ripe.net/feed.xml Blog Networking Technology Company
+https://blog.apnic.net/feed/ Blog Networking Technology Company
 
 # Personal Blogs I find worth reading.
 https://blog.z3bra.org/rss/feed.xml "~z3bra" Blog Technology NIX
@@ -115,7 +118,7 @@ https://williamlam.com/feed Blog Technology Virtualization VMware
 https://dataswamp.org/~solene/rss.xml Blog Technology BSD Linux NIX
 https://jcs.org/rss/writings Blog Technology BSD NIX
 https://jvns.ca/atom.xml Blog Technology Networking
-http://test.rosejacobsen.de/index.xml Blog CCC
+https://test.rosejacobsen.de/index.xml Blog CCC
 https://ianthehenry.com/feed.xml Blog NIX
 https://michael.stapelberg.ch/feed.xml Blog CCC
 https://vincerants.com/feed Blog BSD NIX VMware
@@ -123,7 +126,7 @@ https://igorscheller.de/index.xml Blog BSD NIX Networking CCC
 https://blog.cynthia.re/rss.xml Blog Networking
 https://medium.com/feed/@jobsnijders Blog Networking BSD
 https://next-hopself.net/feed.xml Blog Networking
-http://sdomi.pl/weblog/atom/ Blog NIX
+https://sdomi.pl/weblog/atom/ Blog NIX
 https://nwhirschfeld.de/feed.xml Blog CCC
 https://blog.cr.yp.to/feed.application=xml "~D. J. Bernstein's Blog" Blog Cryptography
 https://www.jeffgeerling.com/blog.xml Blog NIX Automation Networking ARM
@@ -152,3 +155,4 @@ https://bsdly.blogspot.com/feeds/posts/default Blog BSD NIX Networking
 https://swagspace.org/atom.xml Blog Networking NIX
 https://imbushuo.net/blog/atom.xml Blog Networking NIX
 https://scottstuff.net/posts/index.xml Blog Networking NIX
+https://lutz.donnerhacke.de/rss/feed/blog Blog Networking NIX
