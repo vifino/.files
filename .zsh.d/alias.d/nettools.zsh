@@ -7,3 +7,7 @@ if hasbin whois; then
 		whois "$1" | sed -En 's/^org-name: *(.*)$/\1/p'
 	}
 fi
+
+if hasbin traceroute; then
+	alias ristrace="traceroute -A riswhois.ripe.net"
+fi

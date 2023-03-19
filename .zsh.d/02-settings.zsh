@@ -3,6 +3,9 @@
 
 # History.
 HISTSIZE=1024
+SAVEHIST=0
+unset HISTFILE
+
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 
